@@ -8,6 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    let bidPack: Bidpack
+    
+    init() {
+        do {
+            bidPack = try Bidpack()
+        }
+        catch ParserError.sectionDividerNotFoundError {
+            fatalError("SectionDividerNotFound Error... quitting.")
+        }
+        catch ParserError.tokenNotFoundError {
+            fatalError("Token not found... quitting.")
+        }
+        catch {
+            fatalError("Some other error...")
+        }
+    }
     var body: some View {
         VStack {
             Image(systemName: "globe")

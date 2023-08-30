@@ -15,6 +15,11 @@
 		C9ACFC232A9E4AAB009ACF28 /* AeroItinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC222A9E4AAB009ACF28 /* AeroItinUITests.swift */; };
 		C9ACFC252A9E4AAB009ACF28 /* AeroItinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC242A9E4AAB009ACF28 /* AeroItinUITestsLaunchTests.swift */; };
 		C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC322A9E4ACB009ACF28 /* Bidpack.swift */; };
+		C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC392A9E4FDE009ACF28 /* ParserError.swift */; };
+		C9ACFC3C2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9ACFC3B2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc */; };
+		C9ACFC3E2A9E5F0F009ACF28 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */; };
+		C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */; };
+		C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +52,11 @@
 		C9ACFC222A9E4AAB009ACF28 /* AeroItinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AeroItinUITests.swift; sourceTree = "<group>"; };
 		C9ACFC242A9E4AAB009ACF28 /* AeroItinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AeroItinUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C9ACFC322A9E4ACB009ACF28 /* Bidpack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bidpack.swift; sourceTree = "<group>"; };
-		C9ACFC372A9E4B3A009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc */ = {isa = PBXFileReference; lastKnownFileType = text; path = 2023_Sep_MD11_MEM_LINES.asc; sourceTree = "<group>"; };
+		C9ACFC392A9E4FDE009ACF28 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
+		C9ACFC3B2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Sep_MD11_MEM_LINES.asc; sourceTree = "<group>"; };
+		C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+tripHeaderFormatter.swift"; sourceTree = "<group>"; };
+		C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+zulu.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +107,7 @@
 		C9ACFC052A9E4AAA009ACF28 /* AeroItin */ = {
 			isa = PBXGroup;
 			children = (
+				C9ACFC382A9E4FCE009ACF28 /* Errors */,
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
@@ -138,6 +148,9 @@
 			isa = PBXGroup;
 			children = (
 				C9ACFC322A9E4ACB009ACF28 /* Bidpack.swift */,
+				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
+				C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */,
+				C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -145,9 +158,17 @@
 		C9ACFC342A9E4B1B009ACF28 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				C9ACFC372A9E4B3A009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc */,
+				C9ACFC3B2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		C9ACFC382A9E4FCE009ACF28 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				C9ACFC392A9E4FDE009ACF28 /* ParserError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +277,7 @@
 			files = (
 				C9ACFC0F2A9E4AAB009ACF28 /* Preview Assets.xcassets in Resources */,
 				C9ACFC0B2A9E4AAB009ACF28 /* Assets.xcassets in Resources */,
+				C9ACFC3C2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,9 +302,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9ACFC3E2A9E5F0F009ACF28 /* Trip.swift in Sources */,
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
 				C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */,
+				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
+				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
+				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

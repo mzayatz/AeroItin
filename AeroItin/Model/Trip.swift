@@ -7,10 +7,14 @@
 
 import Foundation
 
-struct Trip {
+struct Trip: CustomStringConvertible {
     let textRows: ArraySlice<String>
     let number: String
     let effectiveDates: [Date]
+    let creditHours: TimeInterval
+    let blockHours: TimeInterval
+    let landings: Int
+    let timeAwayFromBase: TimeInterval
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
@@ -51,6 +55,33 @@ struct Trip {
         effectiveDates = Trip.computeValidDatesFrom(firstRowWords, bidMonth: bidMonth, bidYear: bidYear)!.filter {
             daysOfWeek.contains(DateFormatter.tripDayFormatter.string(from: $0).uppercased())
         }
+        
+        guard let lastRowWords = textRows.last?.split(separator: " ").map(String.init),
+              lastRowWords.count == 10
+        else {
+            assertionFailure("Problem reading last row of trip (Trip.swift)")
+            return nil
+        }
+        guard let creditHours = TimeInterval(fromTimeString: lastRowWords[2]),
+              let blockHours = TimeInterval(fromTimeString: lastRowWords[5]),
+              let landings = Int(lastRowWords[7]),
+              let timeAwayFromBase = TimeInterval(fromTimeString: lastRowWords[9]) else {
+            assertionFailure("Problem parsing last row of trip (Trip.swift)")
+            return nil
+        }
+        self.creditHours = creditHours
+        self.blockHours = blockHours
+        self.landings = landings
+        self.timeAwayFromBase = timeAwayFromBase
+    }
+    
+    var description: String {
+"""
+\("".padding(toLength: 47, withPad: "=", startingAt: 0))
+      Trip: \(number.padding(toLength: 6, withPad: " ", startingAt: 0))   ||  \(effectiveDates.first!.formatted(date: .abbreviated, time: .shortened))
+    Credit: \(String(creditHours.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))   ||       Block: \(String(blockHours.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))
+  Landings: \(String(landings).padding(toLength: 6, withPad: " ", startingAt: 0))   ||    TimeAway: \(String(timeAwayFromBase.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))
+"""
     }
     
     static private func computeValidDatesFrom(_ firstRowWords: [String], bidMonth: String, bidYear: String) -> [Date]? {

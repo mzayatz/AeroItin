@@ -44,7 +44,6 @@ struct Bidpack {
         guard let trips = try Bidpack.findAllTripsIn(textRows, tripsStartIndex: 0, tripsEndIndex: endIndicies.trips, bidMonth: month, bidYear: year) else {
             throw ParserError.noTripsFoundError
         }
-
     }
     
     static private func findAllTripsIn(_ textRows: [String], tripsStartIndex: Int?, tripsEndIndex: Int, bidMonth: String, bidYear: String) throws -> [Trip]? {
@@ -115,28 +114,47 @@ struct Bidpack {
     }
     
     enum Base: String {
-        case MEM
-        case IND
-        case LAX
-        case OAK
-        case ANC
-        case EUR
+        case mem = "MEM"
+        case ind = "IND"
+        case lax = "LAX"
+        case oak = "OAK"
+        case anc = "ANC"
+        case eur = "EUR"
         case other
+        
+        func timeZone() -> TimeZone {
+            switch self {
+            case .mem:
+                return TimeZone.mem
+            case .ind:
+                return TimeZone.ind
+            case .lax:
+                return TimeZone.lax
+            case .oak:
+                return TimeZone.oak
+            case .anc:
+                return TimeZone.anc
+            case .eur:
+                return TimeZone.eur
+            case .other:
+                return TimeZone.gmt
+            }
+        }
         
         static func from(_ string: String) -> Base {
             switch string {
             case "MEM":
-                return .MEM
+                return .mem
             case "IND":
-                return .IND
+                return .ind
             case "LAX":
-                 return .LAX
+                 return .lax
             case "OAK":
-                return .OAK
+                return .oak
             case "ANC":
-                return .ANC
+                return .anc
             case "EUR":
-                return .EUR
+                return .eur
             default:
                 return .other
             }
@@ -144,25 +162,25 @@ struct Bidpack {
     }
     
     enum Equipment: String {
-        case MD11
-        case A300
-        case B757
-        case B767
-        case B777
+        case md11 = "MD11"
+        case a300 = "A300"
+        case b757 = "B757"
+        case b767 = "B767"
+        case b777 = "B777"
         case other
         
         static func from(_ string: String) -> Equipment {
             switch string {
             case "MD11":
-                return .MD11
+                return .md11
             case "A300":
-                return .A300
+                return .a300
             case "B757":
-                 return .B757
+                 return .b757
             case "B767":
-                return .B767
+                return .b767
             case "B777":
-                return .B777
+                return .b777
             default:
                 return .other
             }

@@ -20,6 +20,8 @@
 		C9ACFC3E2A9E5F0F009ACF28 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */; };
 		C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */; };
 		C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */; };
+		C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC432AA02353009ACF28 /* TimeInterval+InitWithString.swift */; };
+		C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+tripHeaderFormatter.swift"; sourceTree = "<group>"; };
 		C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+zulu.swift"; sourceTree = "<group>"; };
+		C9ACFC432AA02353009ACF28 /* TimeInterval+InitWithString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+InitWithString.swift"; sourceTree = "<group>"; };
+		C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeZone+Bases.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 		C9ACFC052A9E4AAA009ACF28 /* AeroItin */ = {
 			isa = PBXGroup;
 			children = (
+				C9ACFC482AA02FFA009ACF28 /* Extensions */,
 				C9ACFC382A9E4FCE009ACF28 /* Errors */,
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
@@ -148,8 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				C9ACFC322A9E4ACB009ACF28 /* Bidpack.swift */,
-				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
-				C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */,
 				C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */,
 			);
 			path = Model;
@@ -169,6 +172,17 @@
 				C9ACFC392A9E4FDE009ACF28 /* ParserError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		C9ACFC482AA02FFA009ACF28 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C9ACFC432AA02353009ACF28 /* TimeInterval+InitWithString.swift */,
+				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
+				C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */,
+				C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,7 +321,9 @@
 				C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
+				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
+				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

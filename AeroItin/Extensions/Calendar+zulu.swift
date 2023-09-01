@@ -14,8 +14,10 @@ extension Calendar {
         return calendar
     }
     
-    func allDatesBetween(from startingDate: Date, to endingDate: Date) -> [Date] {
-        var maxIterations = 365
+    func allDatesBetween(from startingDate: Date, to endingDate: Date) throws -> [Date] {
+        guard startingDate < endingDate else {
+            throw DateError.endDateOccursBeforeStartDate("starting date: \(startingDate) > \(endingDate)")
+        }
         var offset = 1
         var lastDate = startingDate
         var allDates = [Date]()

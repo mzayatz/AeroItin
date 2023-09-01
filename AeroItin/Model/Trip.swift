@@ -75,15 +75,6 @@ struct Trip: CustomStringConvertible {
         self.timeAwayFromBase = timeAwayFromBase
     }
     
-    var description: String {
-"""
-\("".padding(toLength: 47, withPad: "=", startingAt: 0))
-      Trip: \(number.padding(toLength: 6, withPad: " ", startingAt: 0))   ||  \(effectiveDates.first!.formatted(date: .abbreviated, time: .shortened))
-    Credit: \(String(creditHours.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))   ||       Block: \(String(blockHours.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))
-  Landings: \(String(landings).padding(toLength: 6, withPad: " ", startingAt: 0))   ||    TimeAway: \(String(timeAwayFromBase.asHours).padding(toLength: 6, withPad: " ", startingAt: 0))
-"""
-    }
-    
     static private func computeValidDatesFrom(_ firstRowWords: [String], bidMonth: String, bidYear: String) -> [Date]? {
         let zuluStartTimeString = firstRowWords[2]
         let zuluStartingMonthString = firstRowWords[6]
@@ -125,7 +116,11 @@ struct Trip: CustomStringConvertible {
                 assertionFailure("starting effective date isn't less than ending effective date")
                 return nil
             }
-            validDates.append(contentsOf: Calendar.zulu.allDatesBetween(from: startingDate, to: endingDate))
+            guard let moreValidDates = try? Calendar.zulu.allDatesBetween(from: startingDate, to: endingDate) else {
+                assertionFailure("a valid date was not properly computed in computeValidDatesFrom (Trip.swift).")
+                return nil
+            }
+            validDates.append(contentsOf: moreValidDates)
         }
         
         return validDates
@@ -150,5 +145,13 @@ struct Trip: CustomStringConvertible {
         }
         assertionFailure("computeYear function could not compute the trip start/end year")
         return nil
+    }
+    var description: String {
+"""
+\("".padding(toLength: 47, withPad: "=", startingAt: 0))
+      Trip: \(number.padding(toLength: 6, withPad: " ", startingAt: 0))   ||  \(effectiveDates.first!.formatted(date: .abbreviated, time: .shortened))
+    Credit: \(String(creditHours.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))   ||       Block: \(String(blockHours.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))
+  Landings: \(String(landings).padding(toLength: 6, withPad: " ", startingAt: 0))   ||    TimeAway: \(String(timeAwayFromBase.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))
+"""
     }
 }

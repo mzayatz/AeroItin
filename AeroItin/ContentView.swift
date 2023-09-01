@@ -21,7 +21,7 @@ struct ContentView: View {
             fatalError("Token not found... quitting.")
         }
         catch {
-            fatalError("Some other error...")
+            fatalError("Other error!\n\(error)")
         }
     }
     var body: some View {

@@ -10,6 +10,7 @@ import Foundation
 struct Bidpack {
     static let sectionDivider = "#####"
     static let tripDivider = "--------------------------------------------------------------------------------------------"
+    static let lineDividerPrefix = "___________________________"
     static let sectionCount = 6
     
     static let testBidpackFilename = "2023_Sep_MD11_MEM_LINES"
@@ -24,6 +25,9 @@ struct Bidpack {
     let equipment: Equipment
     let month: String
     let year: String
+    let startDateLocal: Date
+    let endDateLocal: Date
+    let trips: [Trip]
     
     init() throws {
         let text = try String(contentsOf: Bidpack.testBidpackUrl)
@@ -44,7 +48,73 @@ struct Bidpack {
         guard let trips = try Bidpack.findAllTripsIn(textRows, tripsStartIndex: 0, tripsEndIndex: endIndicies.trips, bidMonth: month, bidYear: year) else {
             throw ParserError.noTripsFoundError
         }
+        
+        self.trips = trips
+        
+        let lineSectionHeader = try Bidpack.findFirstLineSectionHeaderIn(textRows[endIndicies.trips..<endIndicies.captainRegularLines], fromOffset: 0, timeZone: base.timeZone)
+        
+        startDateLocal = lineSectionHeader.startDate
+        endDateLocal = lineSectionHeader.endDate
+        
+        let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal)
+        
+        let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal)
     }
+    
+    static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
+        _ textRows: T, fromOffset: Int, timeZone: TimeZone) throws -> LineSectionHeader where T.Element == String, T.Index == Int
+    {
+        let headerRegex = /(?<month>[A-Z]){3} \((?<start_date>\d\d\d\d-\d\d-\d\d) - (?<end_date>\d\d\d\d-\d\d-\d\d)\)/
+        guard textRows.startIndex + fromOffset + 10 < textRows.endIndex else {
+            throw ParserError.lineSectionHeaderNotFoundWithinFiveLinesOfSectionStart
+        }
+        
+        var header: LineSectionHeader? = nil
+        
+        for row in textRows.prefix(5) {
+            if let matchOutput = String(row).firstMatch(of: headerRegex)?.output {
+                let formatter = ISO8601DateFormatter.localTimeFormatter(with: timeZone)
+                let month = String(matchOutput.month)
+                guard let startDate = formatter.date(from: String(matchOutput.start_date)),
+                      let endDate = formatter.date(from: String(matchOutput.end_date)) else {
+                    throw ParserError.lineSectionHeaderDateParsingError
+                }
+                header = LineSectionHeader(startDate: startDate, endDate: endDate, month: month)
+                break
+            }
+        }
+        guard header != nil else {
+            throw ParserError.lineSectionHeaderDateParsingError
+        }
+        return header!
+    }
+    
+    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date) throws -> [Line]? {
+        var lines = [Line]()
+        
+        var searchStartIndex = try findFirstLineStartIndexIn(textRows[linesStartIndex..<linesEndIndex])
+        
+        var maxLoopIterations = 50000
+        while searchStartIndex < linesEndIndex {
+            guard maxLoopIterations > 0 else {
+                throw ParserError.maxLoopIterationsReachedInLineRowsParser
+            }
+            if let startIndex = try? findFirstLineStartIndexIn(textRows[searchStartIndex..<linesEndIndex]),
+               let endIndex = try? findFirstLineEndIndexIn(textRows[startIndex..<linesEndIndex]) {
+                if let line = Line(textRows: textRows[startIndex..<endIndex], startDateLocal: startDateLocal) {
+                    lines.append(line)
+                } else {
+                    throw ParserError.lineCouldNotBeCreatedError("Near lines \(startIndex) - \(endIndex)")
+                }
+                searchStartIndex = endIndex + 1
+            } else {
+                searchStartIndex += 1
+            }
+            maxLoopIterations -= 1
+        }
+        return lines.isEmpty ? nil : lines
+    }
+    
     
     static private func findAllTripsIn(_ textRows: [String], tripsStartIndex: Int?, tripsEndIndex: Int, bidMonth: String, bidYear: String) throws -> [Trip]? {
         var trips = [Trip]()
@@ -61,6 +131,8 @@ struct Bidpack {
                 }
                 if let trip = Trip(textRows: trimmedTextRows, bidMonth: bidMonth, bidYear: bidYear) {
                     trips.append(trip)
+                } else {
+                    throw ParserError.tripCouldNotBeCreatedError("Near lines \(startIndex) - \(endIndex)")
                 }
                 startIndex = endIndex + 1
             } else {
@@ -71,16 +143,24 @@ struct Bidpack {
         return trips.isEmpty ? nil : trips
     }
     
+    static private func findFirstLineEndIndexIn(_ textRows: ArraySlice<String>) throws -> Int {
+        try Bidpack.findIndexOf("___________________________", in: textRows, fromOffset: 0)
+    }
+    
+    static private func findFirstLineStartIndexIn(_ textRows: ArraySlice<String>) throws -> Int {
+        try Bidpack.findIndexOf("LINE", in: textRows, fromOffset: 0)
+    }
+    
     static private func findFirstTripEndIndexIn(_ textRows: ArraySlice<String>) throws -> Int {
         try Bidpack.findIndexOf(Bidpack.tripDivider, in: textRows, fromOffset: 0)
     }
     
-    static private func findIndexOf<T: RandomAccessCollection>(_ string: String, in textRows: T,
-                                                       fromOffset: Int) throws -> Int where T.Element == String, T.Index == Int {
+    static private func findIndexOf<T: RandomAccessCollection>(
+        _ string: String, in textRows: T, fromOffset: Int) throws -> Int where T.Element == String, T.Index == Int {
         guard let index = textRows[(textRows.startIndex + fromOffset)...].firstIndex(where: {
             $0.starts(with: string)
         }) else {
-            throw ParserError.tokenNotFoundError
+            throw ParserError.tokenNotFoundError("Near line \(textRows.startIndex)")
         }
         return index
     }
@@ -112,6 +192,12 @@ struct Bidpack {
         let firstOfficerReserveLines: Int
         let captainAndFirstOfficerVtoLines: Int
     }
+
+    struct LineSectionHeader {
+        let startDate: Date
+        let endDate: Date
+        let month: String
+    }
     
     enum Base: String {
         case mem = "MEM"
@@ -122,7 +208,7 @@ struct Bidpack {
         case eur = "EUR"
         case other
         
-        func timeZone() -> TimeZone {
+        var timeZone: TimeZone {
             switch self {
             case .mem:
                 return TimeZone.mem
@@ -148,7 +234,7 @@ struct Bidpack {
             case "IND":
                 return .ind
             case "LAX":
-                 return .lax
+                return .lax
             case "OAK":
                 return .oak
             case "ANC":
@@ -176,7 +262,7 @@ struct Bidpack {
             case "A300":
                 return .a300
             case "B757":
-                 return .b757
+                return .b757
             case "B767":
                 return .b767
             case "B777":

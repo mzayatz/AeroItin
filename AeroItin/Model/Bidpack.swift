@@ -30,7 +30,11 @@ struct Bidpack {
     let trips: [Trip]
     
     init() throws {
-        let text = try String(contentsOf: Bidpack.testBidpackUrl)
+        try self.init(with: Bidpack.testBidpackUrl)
+    }
+    
+    init(with url: URL) throws {
+        let text = try String(contentsOf: url)
         textRows = text.components(separatedBy: .newlines)
         
         guard let tripsSectionHeader = textRows.first?.split(separator: " ").map(String.init),
@@ -56,9 +60,11 @@ struct Bidpack {
         startDateLocal = lineSectionHeader.startDate
         endDateLocal = lineSectionHeader.endDate
         
-        let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal)
+        let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips)!
         
-        let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal)
+        let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips)!
+        
+//        print(captainLines.first { $0.number == "1022" }!.trips)
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
@@ -89,7 +95,7 @@ struct Bidpack {
         return header!
     }
     
-    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date) throws -> [Line]? {
+    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date, timeZone: TimeZone, trips: [Trip]) throws -> [Line]? {
         var lines = [Line]()
         
         var searchStartIndex = try findFirstLineStartIndexIn(textRows[linesStartIndex..<linesEndIndex])
@@ -101,7 +107,7 @@ struct Bidpack {
             }
             if let startIndex = try? findFirstLineStartIndexIn(textRows[searchStartIndex..<linesEndIndex]),
                let endIndex = try? findFirstLineEndIndexIn(textRows[startIndex..<linesEndIndex]) {
-                if let line = Line(textRows: textRows[startIndex..<endIndex], startDateLocal: startDateLocal) {
+                if let line = Line(textRows: textRows[startIndex..<endIndex], startDateLocal: startDateLocal, timeZone: timeZone, allTrips: trips) {
                     lines.append(line)
                 } else {
                     throw ParserError.lineCouldNotBeCreatedError("Near lines \(startIndex) - \(endIndex)")

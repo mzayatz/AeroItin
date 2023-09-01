@@ -14,6 +14,12 @@ extension Calendar {
         return calendar
     }
     
+    static func localCalendarFor(timeZone: TimeZone) -> Calendar {
+        var calendar = Calendar.init(identifier: .iso8601)
+        calendar.timeZone = timeZone
+        return calendar
+    }
+    
     func allDatesBetween(from startingDate: Date, to endingDate: Date) throws -> [Date] {
         guard startingDate < endingDate else {
             throw DateError.endDateOccursBeforeStartDate("starting date: \(startingDate) > \(endingDate)")

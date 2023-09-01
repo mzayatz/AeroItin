@@ -11,8 +11,9 @@ struct Line {
     let textRows: ArraySlice<String>
     let number: String
     let summary: LineSummary
+    let trips: [Trip]
     
-    init?(textRows: ArraySlice<String>, startDateLocal: Date) {
+    init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
             assertionFailure("Line textRows != 6. Should be 6.")
             return nil
@@ -30,6 +31,54 @@ struct Line {
             return nil
         }
         self.summary = summary
+        let lineTripNumbersArray = textRows[textRows.startIndex + 4].split(separator: "|").dropFirst().flatMap {
+            $0.split(separator: ":").map{$0.trimmingCharacters(in: .whitespaces)}
+        }
+        let calendarLocal = Calendar.localCalendarFor(timeZone: timeZone)
+        var lineTrips = [Trip]()
+        for (i, tripNumber) in lineTripNumbersArray.enumerated() {
+            if tripNumber.isInt {
+                let tripList = allTrips.filter { $0.number == tripNumber }
+                var trip = Line.matchTrip(tripList: tripList, tripNumber: tripNumber, dayIndex: i, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
+                
+                if trip == nil {
+                    trip = Line.matchTrip(tripList: tripList, tripNumber: tripNumber, dayIndex: i+1, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
+                }
+                
+                guard let trip else {
+                    assertionFailure("Could not find a trip to match the dates")
+                    return nil
+                }
+                lineTrips.append(trip)
+            }
+        }
+        guard lineTripNumbersArray.filter(\.isInt).count == lineTrips.count else {
+            assertionFailure("The line is missing some trips...")
+            return nil
+        }
+        self.trips = lineTrips
+    }
+    
+    static func matchTrip(tripList: [Trip], tripNumber: String, dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date) -> Trip? {
+        guard let date = calendarLocal.date(byAdding: .day, value: dayIndex, to: startDateLocal) else {
+            assertionFailure("Could not calculate date from lineTripsRow...")
+            return nil
+        }
+        
+        let trips = tripList.filter {
+            for effectiveDate in $0.effectiveDates {
+                if(calendarLocal.compare(date, to: effectiveDate, toGranularity: .day) == .orderedSame) {
+                    return true
+                }
+            }
+            return false
+        }
+        
+        guard trips.count == 1 else {
+            return nil
+        }
+        
+        return trips.first!
     }
     
     struct LineSummary: CustomStringConvertible {

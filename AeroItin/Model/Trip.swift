@@ -147,11 +147,6 @@ struct Trip: CustomStringConvertible {
         return nil
     }
     var description: String {
-"""
-\("".padding(toLength: 47, withPad: "=", startingAt: 0))
-      Trip: \(number.padding(toLength: 6, withPad: " ", startingAt: 0))   ||  \(effectiveDates.first!.formatted(date: .abbreviated, time: .shortened))
-    Credit: \(String(creditHours.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))   ||       Block: \(String(blockHours.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))
-  Landings: \(String(landings).padding(toLength: 6, withPad: " ", startingAt: 0))   ||    TimeAway: \(String(timeAwayFromBase.asHours.formatted(.number.precision(.fractionLength(1)))).padding(toLength: 6, withPad: " ", startingAt: 0))
-"""
+        "\(number)"
     }
 }

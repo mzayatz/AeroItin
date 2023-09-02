@@ -28,6 +28,8 @@ struct Bidpack {
     let startDateLocal: Date
     let endDateLocal: Date
     let trips: [Trip]
+    private(set) var captainLines: [Line]
+    private(set) var firstOfficerLines: [Line]
     
     init() throws {
         try self.init(with: Bidpack.testBidpackUrl)
@@ -60,11 +62,12 @@ struct Bidpack {
         startDateLocal = lineSectionHeader.startDate
         endDateLocal = lineSectionHeader.endDate
         
-        let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips)!
-        
-        let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips)!
-        
-//        print(captainLines.first { $0.number == "1022" }!.trips)
+        guard let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips),
+              let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips) else {
+            throw ParserError.noLinesFoundError
+        }
+        self.captainLines = captainLines
+        self.firstOfficerLines = firstOfficerLines
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(

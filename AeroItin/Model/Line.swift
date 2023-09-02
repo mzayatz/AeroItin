@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Line {
+struct Line: CustomStringConvertible {
     let textRows: ArraySlice<String>
     let number: String
     let summary: LineSummary
     let trips: [Trip]
+    private(set) var flag: Flag
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
@@ -57,6 +58,15 @@ struct Line {
             return nil
         }
         self.trips = lineTrips
+        flag = .neutral
+    }
+    
+    mutating func changeFlag(to flag: Flag) {
+        self.flag = flag
+    }
+    
+    mutating func resetFlag() {
+        self.flag = .neutral
     }
     
     static func matchTrip(tripList: [Trip], tripNumber: String, dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date) -> Trip? {
@@ -81,7 +91,11 @@ struct Line {
         return trips.first!
     }
     
-    struct LineSummary: CustomStringConvertible {
+    var description: String {
+        "\(number)"
+    }
+    
+    struct LineSummary {
         let creditHours: TimeInterval
         let timeAwayFromBase: TimeInterval
         let carryOutCreditHours: TimeInterval
@@ -135,13 +149,11 @@ struct Line {
             return (String(firstString), String(secondString))
         }
         
-        
-        var description: String {
-"""
-  Credit: \(creditHours.asHours.formatted(.number.precision(.fractionLength(1))))
-    TAFB: \(timeAwayFromBase.asHours.formatted(.number.precision(.fractionLength(1))))
-Landings: \(landings)
-"""
-        }
+    }
+    
+    enum Flag {
+        case neutral
+        case negative
+        case selected
     }
 }

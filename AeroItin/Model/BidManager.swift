@@ -106,7 +106,9 @@ class BidManager: ObservableObject {
         guard let i = bidpack.lines.firstIndex(where: { $0.number == line.number }) else {
             return
         }
-        bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)    }
+        bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)
+    }
+    
     
     func sortNeturalLines() {
         bidpack.sortNeturalLines()

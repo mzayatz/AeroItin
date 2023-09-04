@@ -117,7 +117,7 @@ struct Bidpack {
     mutating func resetBid() {
         for i in lines.indices {
             lines[i].resetFlag()
-        }
+        } 
         sortLines()
     }
     
@@ -137,7 +137,7 @@ struct Bidpack {
     }
     
     mutating func sortLines() {
-        lines = lines.sorted(using: comparator)
+        lines.sort(using: comparator)
     }
     
     mutating func sortNeturalLines() {

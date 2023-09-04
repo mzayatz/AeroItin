@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
 		C984FFE72AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C984FFDD2AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
 		C984FFDD2AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Sep_B767_IND_LINES.asc; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
+				C97B7FB12AA66F3400AAE37E /* TestLineView.swift */,
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
@@ -378,6 +381,7 @@
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,
+				C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */,
 				C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */,
 				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,

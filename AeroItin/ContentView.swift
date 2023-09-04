@@ -28,31 +28,8 @@ struct ContentView: View {
                     Text("Sort")
                 }
             }
-//            List {
-                List(bidManager.bidpack.lines, id: \.id) { line in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(line.number): CH: \(line.summary.creditHours.asHours, format: .number.precision(.fractionLength(2))) - \(line.flag.rawValue)")
-                            Text("BH: \(line.summary.blockHours.asHours, format: .number.precision(.fractionLength(2))) - LDG: \(line.summary.landings) - Days off \(line.summary.daysOff)")
-                            Text("DPs: \(line.summary.dutyPeriods)")
-                        }
-                        Text("✅").onTapGesture {
-                            bidManager.bidLine(line: line)
-                        }
-                        Text("⛔️").onTapGesture {
-                            bidManager.avoidLine(line: line)
-                        }
-                        Text("↩️").onTapGesture {
-                            bidManager.resetLine(line: line)
-                        }
-                        Text("⬆️").onTapGesture {
-                            bidManager.moveLineUpOne(line: line)
-                        }
-                        Text("⬇️").onTapGesture {
-                            bidManager.moveLineDownOne(line: line)
-                        }
-                    }
-//                }
+            List(bidManager.bidpack.lines, id: \.id) { line in
+               TestLineView(line: line)
             }
         }
         .padding()

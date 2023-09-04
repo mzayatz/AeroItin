@@ -33,15 +33,13 @@ class BidManager: ObservableObject {
         Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
     
     @Published var bidpack: Bidpack
-    @Published var seat: Seat
-    @Published var biddingLines: [Line]
     
-    init(seat: Seat) {
+    init(seat: Bidpack.Seat) {
         do {
-            for url in BidManager.urls {
-                try Bidpack(with: url)
-            }
-            try bidpack = Bidpack(with: BidManager.testingUrl)
+//            for url in BidManager.urls {
+//                try Bidpack(with: url, seat: seat)
+//            }
+            try bidpack = Bidpack(with: BidManager.testingUrl, seat: seat)
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")
@@ -52,25 +50,65 @@ class BidManager: ObservableObject {
         catch {
             fatalError("Other error!\n\(error)")
         }
-        self.seat = seat
+    }
+    
+    var sortLinesBy: Bidpack.SortOptions {
+        get {
+            bidpack.sortLinesBy
+        }
+        
+        set {
+            bidpack.setSort(to: newValue)
+        }
     }
     
     //MARK: User Intents
-    func addLineToBid(line: Line) {
-    
+    func bidLine(line: Line) {
+        bidpack.setFlag(for: line, flag: .bid)
     }
     
-    func removeLineFromBid() {
-        
+    func resetLine(line: Line) {
+        bidpack.setFlag(for: line, flag: .neutral)
     }
     
-    func clearBid() {
-        
+    func avoidLine(line: Line) {
+        bidpack.setFlag(for: line, flag: .avoid)
     }
     
-    enum Seat {
-        case captain
-        case firstOfficer
+    func resetBid() {
+        bidpack.resetBid()
     }
     
+    func resetBidButKeepAvoids() {
+        bidpack.resetBidButKeepAvoids()
+    }
+    
+    func changeSeat(to seat: Bidpack.Seat) {
+        bidpack.setSeat(to: seat)
+    }
+    
+    func moveLine(from source: IndexSet, toOffset destination: Int) {
+        bidpack.moveLine(from: source, toOffset: destination)
+    }
+    
+    func changeSort(to sortOption: Bidpack.SortOptions) {
+        bidpack.setSort(to: sortOption)
+    }
+    
+    func moveLineUpOne(line: Line) {
+        guard let i = bidpack.lines.firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        bidpack.moveLine(from: IndexSet(integer: i), toOffset: i - 1)
+    }
+    
+    func moveLineDownOne(line: Line) {
+        guard let i = bidpack.lines.firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)    }
+    
+    func sortNeturalLines() {
+        bidpack.sortNeturalLines()
+    }
 }

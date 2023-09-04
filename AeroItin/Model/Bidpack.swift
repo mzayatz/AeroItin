@@ -28,14 +28,40 @@ struct Bidpack {
     let startDateLocal: Date
     let endDateLocal: Date
     let trips: [Trip]
-    private(set) var captainLines: [Line]
-    private(set) var firstOfficerLines: [Line]
+    private(set) var sortLinesBy: SortOptions = .number
+    private(set) var seat: Seat
+    private var captainLines: [Line]
+    private var firstOfficerLines: [Line]
     
-    init() throws {
-        try self.init(with: Bidpack.testBidpackUrl)
+    private(set) var lines: [Line] {
+        get {
+            switch seat {
+            case .captain:
+                return captainLines
+            case .firstOfficer:
+                return firstOfficerLines.filter { $0.flag == .bid } + firstOfficerLines.filter { $0.flag == .neutral } + firstOfficerLines.filter { $0.flag == .avoid }
+            }
+        }
+        
+        set {
+            switch seat {
+            case .captain:
+                captainLines = newValue
+            case .firstOfficer:
+                firstOfficerLines = newValue
+            }
+        }
     }
     
-    init(with url: URL) throws {
+    private var comparator: KeyPathComparator<Line> {
+        sortLinesBy.getKeyPath()
+    }
+    
+    init() throws {
+        try self.init(with: Bidpack.testBidpackUrl, seat: .firstOfficer)
+    }
+    
+    init(with url: URL, seat: Seat) throws {
         let text = try String(contentsOf: url)
         textRows = text.components(separatedBy: .newlines)
         
@@ -68,6 +94,54 @@ struct Bidpack {
         }
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
+        self.seat = seat
+    }
+    
+    mutating func setFlag(for line: Line, flag: Line.Flag) {
+        guard let i = lines.firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        lines[i].flag = flag
+    }
+    
+    mutating func setSeat(to seat: Seat)  {
+        self.resetBid()
+        self.seat = seat
+    }
+    
+    mutating func setSort(to sortOption: SortOptions) {
+        sortLinesBy = sortOption
+        sortNeturalLines()
+    }
+    
+    mutating func resetBid() {
+        for i in lines.indices {
+            lines[i].resetFlag()
+        }
+        sortLines()
+    }
+    
+    mutating func resetBidButKeepAvoids() {
+        for i in lines.indices {
+            if lines[i].flag == .bid {
+                lines[i].resetFlag()
+            }
+        }
+    }
+    
+    mutating func moveLine(from source: IndexSet, toOffset destination: Int) {
+        guard destination >= lines.startIndex && destination <= lines.endIndex else {
+            return
+        }
+        lines.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    mutating func sortLines() {
+        lines = lines.sorted(using: comparator)
+    }
+    
+    mutating func sortNeturalLines() {
+        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral }.sorted(using: comparator) + lines.filter{ $0.flag == .avoid }
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
@@ -208,6 +282,11 @@ struct Bidpack {
         let month: String
     }
     
+    enum Seat {
+        case captain
+        case firstOfficer
+    }
+    
     enum Base: String {
         case mem = "MEM"
         case ind = "IND"
@@ -252,6 +331,32 @@ struct Bidpack {
                 return .eur
             default:
                 return .other
+            }
+        }
+    }
+    
+    enum SortOptions: String, CaseIterable {
+        case number = "Number"
+        case creditHours = "Credit hours"
+        case blockHours = "Block hours"
+        case landings = "Landings"
+        case daysOff = "Days off"
+        case dutyPeriods = "Duty periods"
+        
+        func getKeyPath() -> KeyPathComparator<Line> {
+            switch self {
+            case .number:
+                return KeyPathComparator(\Line.number)
+            case .creditHours:
+                return KeyPathComparator(\Line.summary.creditHours)
+            case .blockHours:
+                return KeyPathComparator(\Line.summary.blockHours)
+            case .landings:
+                return KeyPathComparator(\Line.summary.landings)
+            case .daysOff:
+                return KeyPathComparator(\Line.summary.daysOff)
+            case .dutyPeriods:
+                return KeyPathComparator(\Line.summary.dutyPeriods)
             }
         }
     }

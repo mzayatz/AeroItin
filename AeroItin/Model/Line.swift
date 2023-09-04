@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Line: CustomStringConvertible {
+struct Line: CustomStringConvertible, Identifiable {
     let textRows: ArraySlice<String>
     let number: String
-    let summary: LineSummary
     let trips: [Trip]
-    private(set) var flag: Flag
+    var flag: Flag
+    var id: String
+    let summary: Summary
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
@@ -27,11 +28,12 @@ struct Line: CustomStringConvertible {
             return nil
         }
         number = String(lineNumberSplit[1])
-        guard let summary = LineSummary(textRows: textRows) else {
+        guard let summary = Summary(textRows: textRows) else {
             assertionFailure("Problem reading line summary")
             return nil
         }
         self.summary = summary
+        
         let lineTripNumbersArray = textRows[textRows.startIndex + 4].split(separator: "|").dropFirst().flatMap {
             $0.split(separator: ":").map{$0.trimmingCharacters(in: .whitespaces)}
         }
@@ -59,10 +61,7 @@ struct Line: CustomStringConvertible {
         }
         self.trips = lineTrips
         flag = .neutral
-    }
-    
-    mutating func changeFlag(to flag: Flag) {
-        self.flag = flag
+        id = number
     }
     
     mutating func resetFlag() {
@@ -95,7 +94,7 @@ struct Line: CustomStringConvertible {
         "\(number)"
     }
     
-    struct LineSummary {
+    struct Summary {
         let creditHours: TimeInterval
         let timeAwayFromBase: TimeInterval
         let carryOutCreditHours: TimeInterval
@@ -106,10 +105,10 @@ struct Line: CustomStringConvertible {
         let daysOff: Int
         
         init?(textRows: ArraySlice<String>) {
-            guard let creditHoursAndtimeAwayFromBase = LineSummary.findLineSummaryDataIn(textRows[textRows.startIndex + 2]),
-                  let carryOutCreditHoursAndDutyPeriods = LineSummary.findLineSummaryDataIn(textRows[textRows.startIndex + 3]),
-                  let blockHoursAndLandings = LineSummary.findLineSummaryDataIn(textRows[textRows.startIndex + 4]),
-                  let carryOutBlockHoursAndDaysOff = LineSummary.findLineSummaryDataIn(textRows[textRows.startIndex + 5]) else {
+            guard let creditHoursAndtimeAwayFromBase = Summary.findLineSummaryDataIn(textRows[textRows.startIndex + 2]),
+                  let carryOutCreditHoursAndDutyPeriods = Summary.findLineSummaryDataIn(textRows[textRows.startIndex + 3]),
+                  let blockHoursAndLandings = Summary.findLineSummaryDataIn(textRows[textRows.startIndex + 4]),
+                  let carryOutBlockHoursAndDaysOff = Summary.findLineSummaryDataIn(textRows[textRows.startIndex + 5]) else {
                 assertionFailure("Problem reading line summary")
                 return nil
             }
@@ -151,9 +150,21 @@ struct Line: CustomStringConvertible {
         
     }
     
-    enum Flag {
+    enum Flag: CustomStringConvertible {
+        
+        var description: String {
+            switch self {
+            case .avoid:
+                return "avoid"
+            case .neutral:
+                return "neutral"
+            case .bid:
+                return "bid"
+            }
+        }
+        
         case neutral
-        case negative
-        case selected
+        case avoid
+        case bid
     }
 }

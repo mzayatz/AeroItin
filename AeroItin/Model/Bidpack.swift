@@ -39,7 +39,7 @@ struct Bidpack {
             case .captain:
                 return captainLines
             case .firstOfficer:
-                return firstOfficerLines.filter { $0.flag == .bid } + firstOfficerLines.filter { $0.flag == .neutral } + firstOfficerLines.filter { $0.flag == .avoid }
+                return firstOfficerLines
             }
         }
         
@@ -102,6 +102,7 @@ struct Bidpack {
             return
         }
         lines[i].flag = flag
+        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral } + lines.filter{ $0.flag == .avoid }
     }
     
     mutating func setSeat(to seat: Seat)  {
@@ -134,6 +135,7 @@ struct Bidpack {
             return
         }
         lines.move(fromOffsets: source, toOffset: destination)
+        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral } + lines.filter{ $0.flag == .avoid }
     }
     
     mutating func sortLines() {

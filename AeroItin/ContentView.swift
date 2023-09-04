@@ -28,8 +28,10 @@ struct ContentView: View {
                     Text("Sort")
                 }
             }
-            List(bidManager.bidpack.lines, id: \.id) { line in
-               TestLineView(line: line)
+            List {
+                ForEach(bidManager.bidpack.lines) { line in
+                    TestLineView(line: line)
+                }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
             }
         }
         .padding()

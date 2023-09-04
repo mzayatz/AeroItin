@@ -32,8 +32,8 @@ struct ContentView: View {
                 List(bidManager.bidpack.lines, id: \.id) { line in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(line.number): CH: \(line.summary.creditHours.asHours) - \(line.flag.description)")
-                            Text("BH: \(line.summary.blockHours.asHours) - LDG: \(line.summary.landings) - Days off \(line.summary.daysOff)")
+                            Text("\(line.number): CH: \(line.summary.creditHours.asHours, format: .number.precision(.fractionLength(2))) - \(line.flag.rawValue)")
+                            Text("BH: \(line.summary.blockHours.asHours, format: .number.precision(.fractionLength(2))) - LDG: \(line.summary.landings) - Days off \(line.summary.daysOff)")
                             Text("DPs: \(line.summary.dutyPeriods)")
                         }
                         Text("✅").onTapGesture {

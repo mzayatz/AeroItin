@@ -150,21 +150,9 @@ struct Line: CustomStringConvertible, Identifiable {
         
     }
     
-    enum Flag: CustomStringConvertible {
-        
-        var description: String {
-            switch self {
-            case .avoid:
-                return "avoid"
-            case .neutral:
-                return "neutral"
-            case .bid:
-                return "bid"
-            }
-        }
-        
-        case neutral
-        case avoid
-        case bid
+    enum Flag: String {
+        case neutral = "Neutral"
+        case avoid = "Avoid"
+        case bid = "Bid"
     }
 }

@@ -20,11 +20,11 @@ extension Calendar {
         return calendar
     }
     
-    func allDatesBetween(from startingDate: Date, to endingDate: Date) throws -> [Date] {
+    func allDatesBetween(from startingDate: Date, to endingDate: Date, startingOffset: Int = 1) throws -> [Date] {
         guard startingDate < endingDate else {
             throw DateError.endDateOccursBeforeStartDate("starting date: \(startingDate) > \(endingDate)")
         }
-        var offset = 1
+        var offset = startingOffset
         var lastDate = startingDate
         var allDates = [Date]()
         repeat {
@@ -34,4 +34,5 @@ extension Calendar {
         } while(lastDate < endingDate)
         return allDates
     }
+    
 }

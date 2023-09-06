@@ -21,4 +21,16 @@ extension DateFormatter {
         df.timeZone = .gmt
         return df
     }
+    
+    static func localDayOfMonthFormatterIn(_ timeZone: TimeZone) -> DateFormatter {
+        let df = DateFormatter()
+        df.dateFormat = "dd"
+        df.timeZone = timeZone
+        return df
+    }
+    
+    static func dayStringFor(date: Date, in timeZone: TimeZone) -> String {
+        let formatter = localDayOfMonthFormatterIn(timeZone)
+        return formatter.string(from: date)
+    }
 }

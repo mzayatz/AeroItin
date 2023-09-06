@@ -25,5 +25,9 @@ extension TimeInterval {
     var asHours: Double {
         self.asMinutes / 60
     }
+
+    var asDays: Double {
+        self.asHours / 24
+    }
     
 }

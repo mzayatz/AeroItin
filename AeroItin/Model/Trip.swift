@@ -18,6 +18,16 @@ struct Trip: CustomStringConvertible {
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
+    init(trip: Trip, effectiveDate: Date) {
+        textRows = trip.textRows
+        number = trip.number
+        effectiveDates = [effectiveDate]
+        creditHours = trip.creditHours
+        blockHours = trip.blockHours
+        landings = trip.landings
+        timeAwayFromBase = trip.timeAwayFromBase
+    }
+    
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {
         self.textRows = textRows
         guard var firstRowWords = self.textRows.first?.split(separator: " ").map(String.init),

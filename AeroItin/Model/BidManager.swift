@@ -62,6 +62,22 @@ class BidManager: ObservableObject {
         }
     }
     
+    func dayWidth(for size: CGSize) -> CGFloat {
+        size.width / CGFloat(bidpack.dates.count)
+    }
+    
+    func hourWidth(for size: CGSize) -> CGFloat {
+        dayWidth(for: size) / 24.0
+    }
+    
+    func minuteWidth(for size: CGSize) -> CGFloat {
+        hourWidth(for: size) / 60.0
+    }
+    
+    func secondWidth(for size: CGSize) -> CGFloat {
+        minuteWidth(for: size) / 60.0
+    }
+    
     //MARK: User Intents
     func bidLine(line: Line) {
         bidpack.setFlag(for: line, flag: .bid)

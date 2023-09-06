@@ -42,10 +42,10 @@ struct Line: CustomStringConvertible, Identifiable {
         for (i, tripNumber) in lineTripNumbersArray.enumerated() {
             if tripNumber.isInt {
                 let tripList = allTrips.filter { $0.number == tripNumber }
-                var trip = Line.matchTrip(tripList: tripList, tripNumber: tripNumber, dayIndex: i, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
+                var trip = Line.matchTrip(tripList: tripList, dayIndex: i, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
                 
                 if trip == nil {
-                    trip = Line.matchTrip(tripList: tripList, tripNumber: tripNumber, dayIndex: i+1, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
+                    trip = Line.matchTrip(tripList: tripList, dayIndex: i+1, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
                 }
                 
                 guard let trip else {
@@ -68,7 +68,7 @@ struct Line: CustomStringConvertible, Identifiable {
         self.flag = .neutral
     }
     
-    static func matchTrip(tripList: [Trip], tripNumber: String, dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date) -> Trip? {
+    static func matchTrip(tripList: [Trip], dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date) -> Trip? {
         guard let date = calendarLocal.date(byAdding: .day, value: dayIndex, to: startDateLocal) else {
             assertionFailure("Could not calculate date from lineTripsRow...")
             return nil
@@ -86,8 +86,7 @@ struct Line: CustomStringConvertible, Identifiable {
         guard trips.count == 1 else {
             return nil
         }
-        
-        return trips.first!
+        return Trip(trip: trips.first!, effectiveDate: date)
     }
     
     var description: String {

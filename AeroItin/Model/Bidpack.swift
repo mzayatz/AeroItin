@@ -25,13 +25,25 @@ struct Bidpack {
     let equipment: Equipment
     let month: String
     let year: String
-    let startDateLocal: Date
-    let endDateLocal: Date
+    let dates: [Date]
     let trips: [Trip]
     private(set) var sortLinesBy: SortOptions = .number
     private(set) var seat: Seat
     private var captainLines: [Line]
     private var firstOfficerLines: [Line]
+    
+    var startDateLocal: Date {
+        dates.first!
+    }
+    
+    var endDateLocal: Date {
+        dates.last!
+    }
+    
+    var datesAsDayOfMonthStrings: [String] {
+        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
+        return dates.map { formatter.string(from: $0) }
+    }
     
     private(set) var lines: [Line] {
         get {
@@ -85,16 +97,19 @@ struct Bidpack {
         
         let lineSectionHeader = try Bidpack.findFirstLineSectionHeaderIn(textRows[endIndicies.trips..<endIndicies.captainRegularLines], fromOffset: 0, timeZone: base.timeZone)
         
-        startDateLocal = lineSectionHeader.startDate
-        endDateLocal = lineSectionHeader.endDate
+        dates = lineSectionHeader.dates
         
-        guard let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips),
-              let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: startDateLocal, timeZone: base.timeZone, trips: trips) else {
+        guard let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips),
+              let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips) else {
             throw ParserError.noLinesFoundError
         }
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
+    }
+    
+    func timeIntervalFromStart(to date: Date) -> TimeInterval {
+        startDateLocal.distance(to: date)
     }
     
     mutating func setFlag(for line: Line, flag: Line.Flag) {
@@ -164,7 +179,13 @@ struct Bidpack {
                       let endDate = formatter.date(from: String(matchOutput.end_date)) else {
                     throw ParserError.lineSectionHeaderDateParsingError
                 }
-                header = LineSectionHeader(startDate: startDate, endDate: endDate, month: month)
+                let calendar = Calendar.localCalendarFor(timeZone: timeZone)
+                guard let dates = try? calendar.allDatesBetween(from: startDate, to: endDate, startingOffset: 0),
+                      !dates.isEmpty
+                else {
+                    throw ParserError.lineSectionHeaderDateParsingError
+                }
+                header = LineSectionHeader(startDate: startDate, endDate: endDate, month: month, dates: dates)
                 break
             }
         }
@@ -282,6 +303,7 @@ struct Bidpack {
         let startDate: Date
         let endDate: Date
         let month: String
+        let dates: [Date]
     }
     
     enum Seat {

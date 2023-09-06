@@ -28,10 +28,12 @@ struct ContentView: View {
                     Text("Sort")
                 }
             }
-            List {
-                ForEach(bidManager.bidpack.lines) { line in
-                    TestLineView(line: line)
-                }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
+            GeometryReader { geometry in
+                List {
+                    ForEach(bidManager.bidpack.lines) { line in
+                        LineView(line: line, parentGeometry: geometry)
+                    }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
+                }
             }
         }
         .padding()

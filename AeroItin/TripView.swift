@@ -17,13 +17,11 @@ struct TripView: View {
     
     var body: some View {
         ZStack {
-            ForEach(trip.effectiveDates, id: \.self) { date in
-                Rectangle()
-                .frame(
-                    width: widthFor(trip: trip, geometry: parentGeometry),
-                    height: height)
-                .offset(offsetFor(date: date, geometry: parentGeometry))
-            }
+            Rectangle()
+            .frame(
+                width: widthFor(trip: trip, geometry: parentGeometry),
+                height: height)
+            .offset(offsetFor(date: trip.firstEffectiveDate, geometry: parentGeometry))
         }
     }
     

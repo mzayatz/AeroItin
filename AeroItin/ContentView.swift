@@ -31,7 +31,9 @@ struct ContentView: View {
             GeometryReader { geometry in
                 List {
                     ForEach(bidManager.bidpack.lines) { line in
-                        LineView(line: line, parentGeometry: geometry)
+                        VStack(alignment: .leading){
+                            LineView(line: line, parentGeometry: geometry)
+                        }
                     }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
                 }
             }

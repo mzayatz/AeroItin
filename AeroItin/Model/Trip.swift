@@ -18,6 +18,10 @@ struct Trip: CustomStringConvertible {
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
+    var firstEffectiveDate: Date {
+        effectiveDates.first!
+    }
+    
     init(trip: Trip, effectiveDate: Date) {
         textRows = trip.textRows
         number = trip.number

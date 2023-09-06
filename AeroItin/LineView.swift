@@ -13,11 +13,11 @@ struct LineView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Text(line.number).padding(.leading)
+            Text(line.number).fixedSize().padding(.trailing)
             ForEach(line.trips.indices, id: \.self) {
                 TripView(trip: line.trips[$0], height: 25.0, parentGeometry: parentGeometry)
             }
-        }.fixedSize()
+        }
     }
 }
 

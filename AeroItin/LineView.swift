@@ -9,13 +9,16 @@ import SwiftUI
 
 struct LineView: View {
     let line: Line
-    let parentGeometry: GeometryProxy
+    @EnvironmentObject var bidManager: BidManager
     
     var body: some View {
-        HStack(spacing: 0) {
-            Text(line.number).fixedSize().padding(.trailing)
-            ForEach(line.trips.indices, id: \.self) {
-                TripView(trip: line.trips[$0], height: 25.0, parentGeometry: parentGeometry)
+        VStack(alignment: .leading, spacing: 0) {
+            BidpackDatesStripView()
+            HStack(spacing: 0) {
+                Text(line.number).frame(width: bidManager.dayWidth * 2.2, alignment: .leading)
+                ForEach(line.trips.indices, id: \.self) {
+                    TripView(trip: line.trips[$0], height: 25.0)
+                }
             }
         }
     }
@@ -24,8 +27,6 @@ struct LineView: View {
 struct LineView_Previews: PreviewProvider {
     static var bidManager = BidManager(seat: .firstOfficer)
     static var previews: some View {
-        GeometryReader { geometry in
-            LineView(line: bidManager.bidpack.lines[47], parentGeometry: geometry).environmentObject(bidManager)
-        }
+        LineView(line: bidManager.bidpack.lines[47]).environmentObject(bidManager)
     }
 }

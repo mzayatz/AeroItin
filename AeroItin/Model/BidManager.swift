@@ -9,17 +9,17 @@ import Foundation
 
 class BidManager: ObservableObject {
     static let filenames = [
-        "2023_Sep_MD11_MEM_LINES",  // 0
-        "2023_Sep_A300_MEM_LINES",  // 1
-        "2023_Sep_B757_EUR_LINES",  // 2
-        "2023_Sep_B757_MEM_LINES",  // 3
-        "2023_Sep_B767_IND_LINES",  // 4
-        "2023_Sep_B767_MEM_LINES",  // 5
-        "2023_Sep_B767_OAK_LINES",  // 6
-        "2023_Sep_B777_ANC_LINES",  // 7
-        "2023_Sep_B777_MEM_LINES",  // 8
-        "2023_Sep_MD11_ANC_LINES",  // 9
-        "2023_Sep_MD11_LAX_LINES"   // 10
+        "2023_Oct_MD11_MEM_LINES",  // 0
+        "2023_Oct_A300_MEM_LINES",  // 1
+        "2023_Oct_B757_EUR_LINES",  // 2
+        "2023_Oct_B757_MEM_LINES",  // 3
+        "2023_Oct_B767_IND_LINES",  // 4
+        "2023_Oct_B767_MEM_LINES",  // 5
+        "2023_Oct_B767_OAK_LINES",  // 6
+        "2023_Oct_B777_ANC_LINES",  // 7
+        "2023_Oct_B777_MEM_LINES",  // 8
+        "2023_Oct_MD11_ANC_LINES",  // 9
+        "2023_Oct_MD11_LAX_LINES"   // 10
     ]
     
     static let urls = filenames.map {
@@ -40,6 +40,7 @@ class BidManager: ObservableObject {
 //                try Bidpack(with: url, seat: seat)
 //            }
             try bidpack = Bidpack(with: BidManager.testingUrl, seat: seat)
+            print(BidManager.testingUrl)
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")
@@ -62,20 +63,18 @@ class BidManager: ObservableObject {
         }
     }
     
-    func dayWidth(for size: CGSize) -> CGFloat {
-        size.width / CGFloat(bidpack.dates.count)
+    var dayWidth: CGFloat = 25
+    
+    var hourWidth: CGFloat {
+        dayWidth / 24
     }
     
-    func hourWidth(for size: CGSize) -> CGFloat {
-        dayWidth(for: size) / 24.0
+    var minuteWidth: CGFloat {
+        hourWidth / 60.0
     }
     
-    func minuteWidth(for size: CGSize) -> CGFloat {
-        hourWidth(for: size) / 60.0
-    }
-    
-    func secondWidth(for size: CGSize) -> CGFloat {
-        minuteWidth(for: size) / 60.0
+    var secondWidth: CGFloat {
+        minuteWidth / 60.0
     }
     
     //MARK: User Intents

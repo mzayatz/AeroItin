@@ -73,20 +73,21 @@ struct Line: CustomStringConvertible, Identifiable {
             assertionFailure("Could not calculate date from lineTripsRow...")
             return nil
         }
-        
+        var originalTripDate: Date? = nil
         let trips = tripList.filter {
             for effectiveDate in $0.effectiveDates {
                 if(calendarLocal.compare(date, to: effectiveDate, toGranularity: .day) == .orderedSame) {
+                    originalTripDate = effectiveDate
                     return true
                 }
             }
             return false
         }
         
-        guard trips.count == 1 else {
+        guard trips.count == 1 && originalTripDate != nil else {
             return nil
         }
-        return Trip(trip: trips.first!, effectiveDate: date)
+        return Trip(trip: trips.first!, effectiveDate: originalTripDate!)
     }
     
     var description: String {

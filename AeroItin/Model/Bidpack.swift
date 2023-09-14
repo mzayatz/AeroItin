@@ -106,6 +106,8 @@ struct Bidpack {
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
+        
+        print(lines.first!.trips.first!.firstEffectiveDate)
     }
     
     func timeIntervalFromStart(to date: Date) -> TimeInterval {
@@ -179,6 +181,7 @@ struct Bidpack {
                       let endDate = formatter.date(from: String(matchOutput.end_date)) else {
                     throw ParserError.lineSectionHeaderDateParsingError
                 }
+                
                 let calendar = Calendar.localCalendarFor(timeZone: timeZone)
                 guard let dates = try? calendar.allDatesBetween(from: startDate, to: endDate, startingOffset: 0),
                       !dates.isEmpty

@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
+		C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */; };
+		C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */; };
+		C916F7DA2AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D42AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc */; };
+		C916F7DB2AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D52AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc */; };
+		C916F7DC2AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D62AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc */; };
+		C916F7DD2AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D72AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc */; };
+		C916F7E32AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7DE2AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc */; };
+		C916F7E42AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7DF2AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc */; };
+		C916F7E52AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E02AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc */; };
+		C916F7E62AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */; };
+		C916F7E72AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */; };
 		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -63,6 +74,17 @@
 
 /* Begin PBXFileReference section */
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
+		C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_IND_LINES.asc; sourceTree = "<group>"; };
+		C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B757_EUR_LINES.asc; sourceTree = "<group>"; };
+		C916F7D42AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_MEM_LINES.asc; sourceTree = "<group>"; };
+		C916F7D52AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_OAK_LINES.asc; sourceTree = "<group>"; };
+		C916F7D62AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_A300_MEM_LINES.asc; sourceTree = "<group>"; };
+		C916F7D72AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B757_MEM_LINES.asc; sourceTree = "<group>"; };
+		C916F7DE2AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_MEM_LINES.asc; sourceTree = "<group>"; };
+		C916F7DF2AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B777_ANC_LINES.asc; sourceTree = "<group>"; };
+		C916F7E02AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B777_MEM_LINES.asc; sourceTree = "<group>"; };
+		C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_ANC_LINES.asc; sourceTree = "<group>"; };
+		C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -208,6 +230,17 @@
 		C9ACFC342A9E4B1B009ACF28 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				C916F7D62AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc */,
+				C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */,
+				C916F7D72AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc */,
+				C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */,
+				C916F7D42AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc */,
+				C916F7D52AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc */,
+				C916F7DF2AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc */,
+				C916F7E02AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc */,
+				C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */,
+				C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */,
+				C916F7DE2AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc */,
 				C984FFE12AA22E1800DFB924 /* 2023_Sep_A300_MEM_LINES.asc */,
 				C984FFE62AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc */,
 				C984FFE52AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc */,
@@ -350,17 +383,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				C984FFEE2AA22E1800DFB924 /* 2023_Sep_B767_OAK_LINES.asc in Resources */,
+				C916F7DC2AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc in Resources */,
 				C984FFE82AA22E1800DFB924 /* 2023_Sep_B777_ANC_LINES.asc in Resources */,
 				C984FFEF2AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc in Resources */,
+				C916F7E62AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc in Resources */,
 				C984FFEC2AA22E1800DFB924 /* 2023_Sep_MD11_LAX_LINES.asc in Resources */,
 				C984FFEB2AA22E1800DFB924 /* 2023_Sep_A300_MEM_LINES.asc in Resources */,
+				C916F7E32AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc in Resources */,
+				C916F7DB2AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc in Resources */,
+				C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */,
 				C984FFEA2AA22E1800DFB924 /* 2023_Sep_B767_MEM_LINES.asc in Resources */,
 				C984FFF02AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc in Resources */,
+				C916F7DD2AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc in Resources */,
+				C916F7E42AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc in Resources */,
+				C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */,
+				C916F7DA2AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc in Resources */,
 				C9ACFC0F2A9E4AAB009ACF28 /* Preview Assets.xcassets in Resources */,
 				C984FFED2AA22E1800DFB924 /* 2023_Sep_MD11_ANC_LINES.asc in Resources */,
 				C9ACFC0B2A9E4AAB009ACF28 /* Assets.xcassets in Resources */,
 				C9ACFC3C2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc in Resources */,
+				C916F7E72AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc in Resources */,
 				C984FFE92AA22E1800DFB924 /* 2023_Sep_B777_MEM_LINES.asc in Resources */,
+				C916F7E52AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc in Resources */,
 				C984FFE72AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

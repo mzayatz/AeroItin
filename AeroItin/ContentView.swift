@@ -28,15 +28,13 @@ struct ContentView: View {
                     Text("Sort")
                 }
             }
-            GeometryReader { geometry in
                 List {
                     ForEach(bidManager.bidpack.lines) { line in
                         VStack(alignment: .leading){
-                            LineView(line: line, parentGeometry: geometry)
+                            LineView(line: line)
                         }
                     }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
                 }
-            }
         }
         .padding()
     }

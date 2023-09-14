@@ -19,7 +19,8 @@ struct Trip: CustomStringConvertible {
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
     var firstEffectiveDate: Date {
-        effectiveDates.first!
+//        print(effectiveDates.first!)
+        return effectiveDates.first!
     }
     
     init(trip: Trip, effectiveDate: Date) {
@@ -113,7 +114,6 @@ struct Trip: CustomStringConvertible {
             assertionFailure("Problem creating date from starting effective date components")
             return nil
         }
-        
         validDates.append(startingDate)
         
         if zuluEndingMonthString != nil {

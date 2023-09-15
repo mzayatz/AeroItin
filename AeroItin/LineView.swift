@@ -10,14 +10,21 @@ import SwiftUI
 struct LineView: View {
     let line: Line
     @EnvironmentObject var bidManager: BidManager
+    //@Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            BidpackDatesStripView()
-            HStack(spacing: 0) {
-                Text(line.number).frame(width: bidManager.dayWidth * 2.2, alignment: .leading)
-                ForEach(line.trips.indices, id: \.self) {
-                    TripView(trip: line.trips[$0], height: 25.0)
+        GeometryReader { geometry in
+            HStack(alignment: .center) {
+                Text(line.number).frame(width: bidManager.lineLabelWidth, alignment: .leading)
+                VStack(alignment: .leading, spacing: 0) {
+                    BidpackDatesStripView(height: bidManager.lineHeight, dayWidth: bidManager.dayWidth(geometry), lineLabelWidth: bidManager.lineLabelWidth)
+                    HStack(spacing: 0) {
+                        ZStack {
+                            ForEach(line.trips.indices, id: \.self) {
+                                TripView(trip: line.trips[$0], height: bidManager.lineHeight, secondsWidth: bidManager.secondWidth(geometry))
+                            }
+                        }
+                    }
                 }
             }
         }

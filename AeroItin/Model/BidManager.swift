@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class BidManager: ObservableObject {
     static let filenames = [
@@ -63,19 +64,32 @@ class BidManager: ObservableObject {
         }
     }
     
-    var dayWidth: CGFloat = 25
+    let lineHeight: CGFloat = 50
+    let lineLabelWidth: CGFloat = 50
     
-    var hourWidth: CGFloat {
-        dayWidth / 24
+    func dayWidth(_ geometry: GeometryProxy) -> CGFloat {
+        (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count))
+    }
+        
+    func hourWidth(_ geometry: GeometryProxy) -> CGFloat {
+        dayWidth(geometry) / 24
     }
     
-    var minuteWidth: CGFloat {
-        hourWidth / 60.0
+    func minuteWidth(_ geometry: GeometryProxy) -> CGFloat {
+        hourWidth(geometry) / 60
     }
     
-    var secondWidth: CGFloat {
-        minuteWidth / 60.0
+    func secondWidth(_ geometry: GeometryProxy) -> CGFloat {
+        minuteWidth(geometry) / 60
     }
+    
+    func daySize(_ geometry: GeometryProxy) -> CGSize {
+        CGSize(width: dayWidth(geometry), height: lineHeight)
+    }
+    
+//    func lineLabelWidth(_ geometry: GeometryProxy) -> CGFloat {
+//        dayWidth(geometry) * lineLabelWidthThingy
+//    }
     
     //MARK: User Intents
     func bidLine(line: Line) {

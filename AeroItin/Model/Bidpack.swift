@@ -183,7 +183,7 @@ struct Bidpack {
                 }
                 
                 let calendar = Calendar.localCalendarFor(timeZone: timeZone)
-                guard let dates = try? calendar.allDatesBetween(from: startDate, to: endDate, startingOffset: 0),
+                guard let dates = try? calendar.allDatesBetween(from: startDate, to: endDate, startingOffset: 0, additionalDays: 7),
                       !dates.isEmpty
                 else {
                     throw ParserError.lineSectionHeaderDateParsingError

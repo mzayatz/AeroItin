@@ -36,7 +36,7 @@ struct ContentView: View {
                     }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
                 }
         }
-        .padding()
+//        .padding()
     }
 }
 

@@ -68,7 +68,8 @@ class BidManager: ObservableObject {
     let lineLabelWidth: CGFloat = 50
     
     func dayWidth(_ geometry: GeometryProxy) -> CGFloat {
-        (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count))
+        geometry.size.width > 1000 ? (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7)) :
+        (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 10))
     }
         
     func hourWidth(_ geometry: GeometryProxy) -> CGFloat {

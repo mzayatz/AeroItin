@@ -10,7 +10,6 @@ import SwiftUI
 struct BidpackDatesStripView: View {
     @EnvironmentObject var bidManager: BidManager
     
-    let height: CGFloat
     let dayWidth: CGFloat
     let lineLabelWidth: CGFloat
     
@@ -24,7 +23,7 @@ struct BidpackDatesStripView: View {
                         Text(DateFormatter.dayStringFor(date: date, in: bidManager.bidpack.base.timeZone))
                     }
                 }.frame(width: dayWidth)
-            }.frame(height: height, alignment: .leading)
+            }.frame(alignment: .leading)
     }
     
 }

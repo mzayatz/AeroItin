@@ -106,8 +106,7 @@ struct Bidpack {
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
-        
-        print(lines.first!.trips.first!.firstEffectiveDate)
+        print(startDateLocal)
     }
     
     func timeIntervalFromStart(to date: Date) -> TimeInterval {

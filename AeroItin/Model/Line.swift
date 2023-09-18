@@ -39,6 +39,7 @@ struct Line: CustomStringConvertible, Identifiable {
         }
         let calendarLocal = Calendar.localCalendarFor(timeZone: timeZone)
         var lineTrips = [Trip]()
+
         for (i, tripNumber) in lineTripNumbersArray.enumerated() {
             if tripNumber.isInt {
                 let tripList = allTrips.filter { $0.number == tripNumber }

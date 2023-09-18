@@ -50,7 +50,6 @@
 		C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */; };
 		C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC492AA0B592009ACF28 /* Line.swift */; };
 		C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */; };
-		C9AFBC222AA75F8F00F6EF65 /* Tripify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC212AA75F8F00F6EF65 /* Tripify.swift */; };
 		C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC232AA768A100F6EF65 /* TripView.swift */; };
 		C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC252AA7A47700F6EF65 /* LineView.swift */; };
 /* End PBXBuildFile section */
@@ -120,7 +119,6 @@
 		C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeZone+Bases.swift"; sourceTree = "<group>"; };
 		C9ACFC492AA0B592009ACF28 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601DateFormatter+localTimeFormatter.swift"; sourceTree = "<group>"; };
-		C9AFBC212AA75F8F00F6EF65 /* Tripify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tripify.swift; sourceTree = "<group>"; };
 		C9AFBC232AA768A100F6EF65 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		C9AFBC252AA7A47700F6EF65 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,7 +180,6 @@
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
 				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
 				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
-				C9AFBC212AA75F8F00F6EF65 /* Tripify.swift */,
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
@@ -434,7 +431,6 @@
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
 				C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */,
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
-				C9AFBC222AA75F8F00F6EF65 /* Tripify.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,

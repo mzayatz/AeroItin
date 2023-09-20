@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */; };
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
 		C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */; };
 		C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */; };
@@ -72,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isWeekend.swift"; sourceTree = "<group>"; };
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
 		C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_IND_LINES.asc; sourceTree = "<group>"; };
 		C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B757_EUR_LINES.asc; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
 				C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */,
 				C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */,
+				C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */,
 				C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */,
 				C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */,
 			);
@@ -444,6 +447,7 @@
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
+				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,12 +15,18 @@ struct Trip: CustomStringConvertible {
     let blockHours: TimeInterval
     let landings: Int
     let timeAwayFromBase: TimeInterval
+    let layovers: [String]
+    let deadheads: Deadheads
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
     var firstEffectiveDate: Date {
-//        print(effectiveDates.first!)
+        //        print(effectiveDates.first!)
         return effectiveDates.first!
+    }
+    
+    var shortDescription: String {
+        layovers.joined(separator: "-")
     }
     
     init(trip: Trip, effectiveDate: Date) {
@@ -31,6 +37,8 @@ struct Trip: CustomStringConvertible {
         blockHours = trip.blockHours
         landings = trip.landings
         timeAwayFromBase = trip.timeAwayFromBase
+        layovers = trip.layovers
+        deadheads = trip.deadheads
     }
     
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {
@@ -88,6 +96,36 @@ struct Trip: CustomStringConvertible {
         self.blockHours = blockHours
         self.landings = landings
         self.timeAwayFromBase = timeAwayFromBase
+        
+        self.layovers = Trip.findLayovers(in: textRows)
+        self.deadheads = Trip.findDeadheads(in: textRows)
+    }
+    
+    static private func findDeadheads(in rows: ArraySlice<String>) -> Deadheads {
+        let isFrontDeadhead = rows[rows.startIndex + 3].split(separator: " ")[1].isDeadheadFlightCode
+        let isBackDeadhead = rows[rows.endIndex - 3].split(separator: " ")[1].isDeadheadFlightCode
+//        if number == "78" {
+//            print("\(rows[3].split(separator: " ")[1]): \(isFrontDeadhead)")
+//            print("\(rows[rows.count - 3].split(separator: " ")[1]): \(isBackDeadhead)")
+//        }
+        if isFrontDeadhead && isBackDeadhead {
+            return .double
+        } else if isFrontDeadhead {
+            return .front
+        } else if isBackDeadhead {
+            return .back
+        } else {
+            return .none
+        }
+    }
+    
+    static private func findLayovers(in rows: ArraySlice<String>) -> [String] {
+        var layovers = [String]()
+        let regex = /(?P<iata>[A-Z]{3}) (?P<duration>\d\d:\d\d)/
+        for layover in rows.joined().matches(of: regex) {
+            layovers.append(String(layover.output.iata).lowercased())
+        }
+        return layovers
     }
     
     static private func computeValidDatesFrom(_ firstRowWords: [String], bidMonth: String, bidYear: String) -> [Date]? {
@@ -162,5 +200,12 @@ struct Trip: CustomStringConvertible {
     }
     var description: String {
         "\(number)"
+    }
+    
+    enum Deadheads {
+        case double
+        case front
+        case back
+        case none
     }
 }

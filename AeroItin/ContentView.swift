@@ -29,14 +29,13 @@ struct ContentView: View {
             .navigationTitle("AeroItin")
             .toolbar {
                 HStack {
-                    Button("sort neutrals") {
+                    Button("Sort unbid") {
                         bidManager.sortNeturalLines()
                     }
-                    Button("Reset") {
+                    Button("Clear all") {
                         bidManager.resetBid()
                     }
-                    
-                    Button("Reset but keep avoids") {
+                    Button("Clear bid") {
                         bidManager.resetBidButKeepAvoids()
                     }
                     Picker(selection: $bidManager.sortLinesBy) {

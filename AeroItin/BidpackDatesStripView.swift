@@ -19,8 +19,12 @@ struct BidpackDatesStripView: View {
             HStack(spacing: 0) {
                 ForEach(bidManager.bidpack.dates, id: \.self) { date in
                     ZStack {
-                        Rectangle().stroke()
+                        Rectangle()
+                            .foregroundColor(date.isWeekend ? .secondary.opacity(0.25) : .clear)
+                            .border(.secondary.opacity(0.6))
                         Text(DateFormatter.dayStringFor(date: date, in: bidManager.bidpack.base.timeZone))
+                            .font(.callout)
+                            .foregroundColor(.secondary.opacity(0.6))
                     }
                 }.frame(width: dayWidth)
             }.frame(alignment: .leading)
@@ -28,11 +32,14 @@ struct BidpackDatesStripView: View {
     
 }
 
-//struct BidpackDatesStrip_Previews: PreviewProvider {
-//    static var bidManager = BidManager(seat: .firstOfficer)
-//    static var previews: some View {
-//        VStack(alignment: .leading) {
-//            BidpackDatesStripView().environmentObject(bidManager)
-//        }
-//    }
-//}
+struct BidpackDatesStrip_Previews: PreviewProvider {
+    static var bidManager = BidManager(seat: .firstOfficer)
+    static var previews: some View {
+        GeometryReader { geometry in
+            VStack(alignment: .leading) {
+                BidpackDatesStripView(dayWidth: bidManager.dayWidth(geometry), lineLabelWidth: bidManager.lineLabelWidth)
+                
+            }.fixedSize()
+        }.environmentObject(bidManager)
+    }
+}

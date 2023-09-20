@@ -16,8 +16,17 @@ struct TripView: View {
     
     var body: some View {
         ZStack {
+            //            Rectangle().foregroundColor(Color(.systemBackground)).opacity(0.5)
             Rectangle()
-            Text(trip.number).foregroundColor(.white)
+                .foregroundStyle(tripColor.gradient).opacity(0.55)
+            if !trip.shortDescription.isEmpty {
+                ZStack {
+                    Text(trip.shortDescription).foregroundColor(Color.primary)
+                        .padding(1.5)
+                        .background(.regularMaterial)
+                        .font(.footnote)
+                }.fixedSize()
+            }
         }
         .frame(width: secondsWidth * trip.timeAwayFromBase)
         .offset(offset)
@@ -28,6 +37,19 @@ struct TripView: View {
     
     var offset: CGSize {
         CGSize(width: secondsWidth * trip.firstEffectiveDate.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
+    }
+    
+    var tripColor: Color {
+        switch trip.deadheads {
+        case .double:
+            return .orange
+        case .front:
+            return .blue
+        case .back:
+            return .green
+        case .none:
+            return .yellow
+        }
     }
     
 }

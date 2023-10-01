@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Trip: CustomStringConvertible {
+struct Trip: CustomStringConvertible, Equatable {
     let textRows: ArraySlice<String>
     let number: String
     let effectiveDates: [Date]

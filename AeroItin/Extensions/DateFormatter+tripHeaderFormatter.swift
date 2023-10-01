@@ -8,19 +8,19 @@
 import Foundation
 
 extension DateFormatter {
-    static var tripHeaderFormatter: DateFormatter {
+    static let tripHeaderFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyy MMM dd HH:mm"
         df.timeZone = .gmt
         return df
-    }
+    }()
     
-    static var tripDayFormatter: DateFormatter {
+    static var tripDayFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "EEEEEE"
         df.timeZone = .gmt
         return df
-    }
+    }()
     
     static func localDayOfMonthFormatterIn(_ timeZone: TimeZone) -> DateFormatter {
         let df = DateFormatter()

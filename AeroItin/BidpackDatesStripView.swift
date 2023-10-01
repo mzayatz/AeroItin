@@ -7,27 +7,24 @@
 
 import SwiftUI
 
-struct BidpackDatesStripView: View {
-    @EnvironmentObject var bidManager: BidManager
+struct BidpackDatesStripView: View, Equatable {
+    //    @EnvironmentObject var bidManager: BidManager
     
+    let bidpackDates: [Date]
+    let bidpackTimeZone: TimeZone
     let dayWidth: CGFloat
     let lineLabelWidth: CGFloat
     
     let strokeWidth = 2.0
     
     var body: some View {
-            HStack(spacing: 0) {
-                ForEach(bidManager.bidpack.dates, id: \.self) { date in
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(date.isWeekend ? .secondary.opacity(0.25) : .clear)
-                            .border(.secondary.opacity(0.6))
-                        Text(DateFormatter.dayStringFor(date: date, in: bidManager.bidpack.base.timeZone))
-                            .font(.callout)
-                            .foregroundColor(.secondary.opacity(0.6))
-                    }
-                }.frame(width: dayWidth)
-            }.frame(alignment: .leading)
+
+        LazyHStack(spacing: 0) {
+            ForEach(bidpackDates, id: \.self) { date in
+                BidpackDateView(date: date, timeZone: bidpackTimeZone).frame(width: dayWidth)
+                    .frame(width: dayWidth)
+            }
+        }.frame(alignment: .leading)
     }
     
 }
@@ -37,7 +34,8 @@ struct BidpackDatesStrip_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading) {
-                BidpackDatesStripView(dayWidth: bidManager.dayWidth(geometry), lineLabelWidth: bidManager.lineLabelWidth)
+                BidpackDatesStripView(bidpackDates: bidManager.bidpack.dates, bidpackTimeZone: bidManager.bidpack.base
+                    .timeZone, dayWidth: bidManager.dayWidth(geometry), lineLabelWidth: bidManager.lineLabelWidth)
                 
             }.fixedSize()
         }.environmentObject(bidManager)

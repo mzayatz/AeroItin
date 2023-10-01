@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */; };
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
+		C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91093A92ABF45C5002C7474 /* BidpackDateView.swift */; };
+		C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */; };
 		C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */; };
 		C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */; };
 		C916F7DA2AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D42AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc */; };
@@ -20,6 +22,7 @@
 		C916F7E52AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E02AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc */; };
 		C916F7E62AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */; };
 		C916F7E72AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */; };
+		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
 		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -75,6 +78,8 @@
 /* Begin PBXFileReference section */
 		C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isWeekend.swift"; sourceTree = "<group>"; };
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
+		C91093A92ABF45C5002C7474 /* BidpackDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDateView.swift; sourceTree = "<group>"; };
+		C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date.FormatStyle.DateStyle+inTimeZone.swift"; sourceTree = "<group>"; };
 		C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_IND_LINES.asc; sourceTree = "<group>"; };
 		C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B757_EUR_LINES.asc; sourceTree = "<group>"; };
 		C916F7D42AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_MEM_LINES.asc; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 		C916F7E02AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B777_MEM_LINES.asc; sourceTree = "<group>"; };
 		C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_ANC_LINES.asc; sourceTree = "<group>"; };
 		C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
+		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
 		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -180,8 +186,10 @@
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
 				C97B7FB12AA66F3400AAE37E /* TestLineView.swift */,
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
+				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
 				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
 				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
+				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
@@ -269,6 +277,7 @@
 			children = (
 				C9ACFC432AA02353009ACF28 /* TimeInterval+InitWithString.swift */,
 				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
+				C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */,
 				C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */,
 				C9ACFC412AA0008A009ACF28 /* Calendar+zulu.swift */,
 				C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */,
@@ -434,6 +443,7 @@
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
 				C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */,
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
+				C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
@@ -444,11 +454,13 @@
 				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
 				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
+				C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */,
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
+				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

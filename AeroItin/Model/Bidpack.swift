@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct Bidpack {
+struct Bidpack: Equatable {
+    static func == (lhs: Bidpack, rhs: Bidpack) -> Bool {
+        lhs.bes == rhs.bes
+    }
+    
     static let sectionDivider = "#####"
     static let tripDivider = "--------------------------------------------------------------------------------------------"
     static let lineDividerPrefix = "___________________________"
@@ -32,6 +36,10 @@ struct Bidpack {
     private var captainLines: [Line]
     private var firstOfficerLines: [Line]
     
+    var bes: String {
+        base.rawValue + equipment.rawValue + seat.rawValue + month + year
+    }
+    
     var startDateLocal: Date {
         dates.first!
     }
@@ -40,10 +48,10 @@ struct Bidpack {
         dates.last!
     }
     
-    var datesAsDayOfMonthStrings: [String] {
-        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
-        return dates.map { formatter.string(from: $0) }
-    }
+//    var datesAsDayOfMonthStrings: [String] {
+//        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
+//        return dates.map { formatter.string(from: $0) }
+//    }
     
     private(set) var lines: [Line] {
         get {
@@ -308,9 +316,9 @@ struct Bidpack {
         let dates: [Date]
     }
     
-    enum Seat {
-        case captain
-        case firstOfficer
+    enum Seat: String {
+        case captain = "Captain"
+        case firstOfficer = "First Officer"
     }
     
     enum Base: String {

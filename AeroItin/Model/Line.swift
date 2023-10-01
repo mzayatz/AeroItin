@@ -7,13 +7,17 @@
 
 import Foundation
 
-struct Line: CustomStringConvertible, Identifiable {
+struct Line: CustomStringConvertible, Identifiable, Equatable {
     let textRows: ArraySlice<String>
     let number: String
     let trips: [Trip]
     var flag: Flag
     var id: String
     let summary: Summary
+    
+    static func == (lhs: Line, rhs: Line) -> Bool {
+        lhs.number == rhs.number
+    }
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {

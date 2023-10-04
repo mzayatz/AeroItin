@@ -56,6 +56,7 @@
 		C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */; };
 		C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC232AA768A100F6EF65 /* TripView.swift */; };
 		C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC252AA7A47700F6EF65 /* LineView.swift */; };
+		C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D487712ACCD8BC001BC17C /* Color+background.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601DateFormatter+localTimeFormatter.swift"; sourceTree = "<group>"; };
 		C9AFBC232AA768A100F6EF65 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		C9AFBC252AA7A47700F6EF65 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
+		C9D487712ACCD8BC001BC17C /* Color+background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+background.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
 				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
+				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
 				C9ACFC0D2A9E4AAB009ACF28 /* Preview Content */,
@@ -445,6 +448,7 @@
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
 				C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
+				C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,

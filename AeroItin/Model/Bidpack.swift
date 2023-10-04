@@ -36,6 +36,8 @@ struct Bidpack: Equatable {
     private var captainLines: [Line]
     private var firstOfficerLines: [Line]
     
+    var searchFilter = ""
+    
     var bes: String {
         base.rawValue + equipment.rawValue + seat.rawValue + month + year
     }
@@ -114,7 +116,6 @@ struct Bidpack: Equatable {
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
-        print(startDateLocal)
     }
     
     func timeIntervalFromStart(to date: Date) -> TimeInterval {

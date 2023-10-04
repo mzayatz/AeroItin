@@ -9,18 +9,30 @@ import SwiftUI
 
 struct TripTextView: View {
     
-    let text: String
+    @Binding var selectedTripText: String?
     
     var body: some View {
-        ScrollView {
-            Text(text).font(.caption2).monospaced()
-                .padding()
-        }
+        ZStack {
+            RoundedRectangle(cornerRadius: 5.0).foregroundStyle(.regularMaterial)
+            RoundedRectangle(cornerRadius: 5.0).stroke(lineWidth: 1.0)
+            VStack {
+                Text(selectedTripText ?? "")
+                    .font(.system(size: 12, weight: .regular, design: .monospaced))
+                    .padding()
+                Button("dismiss") {
+                    withAnimation {
+                        selectedTripText = nil
+                    }
+                }.padding()
+            }
+        }.frame(width: 800)
+            .fixedSize(horizontal: false, vertical: true)
+            .zIndex(2)
     }
 }
 
 struct TripTextView_Previews: PreviewProvider {
     static var previews: some View {
-        TripTextView(text: "Test")
+        TripTextView(selectedTripText: Binding.constant("test"))
     }
 }

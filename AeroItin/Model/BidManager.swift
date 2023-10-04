@@ -35,6 +35,8 @@ class BidManager: ObservableObject {
     
     @Published var bidpack: Bidpack
     
+    @Published var selectedTripText: String? = nil
+    
     init(seat: Bidpack.Seat) {
         do {
 //            for url in BidManager.urls {

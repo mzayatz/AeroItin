@@ -21,7 +21,6 @@ struct Trip: CustomStringConvertible, Equatable {
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
     var firstEffectiveDate: Date {
-        //        print(effectiveDates.first!)
         return effectiveDates.first!
     }
     
@@ -104,10 +103,7 @@ struct Trip: CustomStringConvertible, Equatable {
     static private func findDeadheads(in rows: ArraySlice<String>) -> Deadheads {
         let isFrontDeadhead = rows[rows.startIndex + 3].split(separator: " ")[1].isDeadheadFlightCode
         let isBackDeadhead = rows[rows.endIndex - 3].split(separator: " ")[1].isDeadheadFlightCode
-//        if number == "78" {
-//            print("\(rows[3].split(separator: " ")[1]): \(isFrontDeadhead)")
-//            print("\(rows[rows.count - 3].split(separator: " ")[1]): \(isBackDeadhead)")
-//        }
+        
         if isFrontDeadhead && isBackDeadhead {
             return .double
         } else if isFrontDeadhead {

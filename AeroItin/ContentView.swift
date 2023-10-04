@@ -9,56 +9,70 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var bidManager: BidManager
+    
     var body: some View {
         
         GeometryReader { geometry in
             NavigationStack {
-                List {
-                    ForEach(bidManager.bidpack.lines) { line in
+                ZStack(alignment: .bottom) {
+                    List {
+                        ForEach(bidManager.bidpack.lines) { line in
+                            HStack {
+                                Image(systemName: "plus.circle").foregroundColor(line.flag == .bid ? .gray : .green).onTapGesture {
+                                    withAnimation {
+                                        line.flag == .bid ? bidManager.resetLine(line: line) :
+                                        bidManager.bidLine(line: line)
+                                    }
+                                }
+                                LineView(
+                                    line: line,
+                                    bidpackDates: bidManager.bidpack.dates,
+                                    bidpackStartDate: bidManager.bidpack.startDateLocal,
+                                    bidpackTimeZone: bidManager.bidpack.base.timeZone,
+                                    dayWidth: bidManager.dayWidth(geometry),
+                                    secondWidth: bidManager.secondWidth(geometry),
+                                    lineLabelWidth: bidManager.lineLabelWidth,
+                                    selectedTripText: $bidManager.selectedTripText
+                                )
+                                Image(systemName: "minus.circle").foregroundColor(line.flag == .avoid ? .gray : .red).onTapGesture {
+                                    withAnimation {
+
+                                        line.flag == .avoid ? bidManager.resetLine(line: line) :
+                                        bidManager.avoidLine(line: line)
+                                    }
+                                }
+                            }
+                        }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
+                    }
+                    .moveDisabled(!bidManager.bidpack.searchFilter.isEmpty)
+                    .searchable(text: $bidManager.bidpack.searchFilter)
+                    .navigationTitle("AeroItin")
+                    .toolbar {
                         HStack {
-                            Image(systemName: "plus.circle").foregroundColor(line.flag == .bid ? .gray : .green).onTapGesture {
-                                line.flag == .bid ? bidManager.resetLine(line: line) :
-                                bidManager.bidLine(line: line)
+                            Button("Sort unbid") {
+                                bidManager.sortNeturalLines()
                             }
-                            LineView(
-                                line: line,
-                                bidpackDates: bidManager.bidpack.dates,
-                                bidpackStartDate: bidManager.bidpack.startDateLocal,
-                                bidpackTimeZone: bidManager.bidpack.base.timeZone,
-                                dayWidth: bidManager.dayWidth(geometry),
-                                secondWidth: bidManager.secondWidth(geometry),
-                                lineLabelWidth: bidManager.lineLabelWidth
-                            )
-                            Image(systemName: "minus.circle").foregroundColor(line.flag == .avoid ? .gray : .red).onTapGesture {
-                                line.flag == .avoid ? bidManager.resetLine(line: line) :
-                                bidManager.avoidLine(line: line)
+                            Button("Clear all") {
+                                bidManager.resetBid()
+                            }
+                            Button("Clear bid") {
+                                bidManager.resetBidButKeepAvoids()
+                            }
+                            Picker(selection: $bidManager.sortLinesBy) {
+                                ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
+                            } label: {
+                                Text("Sort")
                             }
                         }
-                    }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
-                }
-                .navigationTitle("AeroItin")
-                .toolbar {
-                    HStack {
-                        Button("Sort unbid") {
-                            bidManager.sortNeturalLines()
-                        }
-                        Button("Clear all") {
-                            bidManager.resetBid()
-                        }
-                        Button("Clear bid") {
-                            bidManager.resetBidButKeepAvoids()
-                        }
-                        Picker(selection: $bidManager.sortLinesBy) {
-                            ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
-                        } label: {
-                            Text("Sort")
-                        }
+                    }
+                    if bidManager.selectedTripText != nil {
+                        TripTextView(selectedTripText: $bidManager.selectedTripText)
+                            .transition(AnyTransition.move(edge: .bottom))
                     }
                 }
             }
         }
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

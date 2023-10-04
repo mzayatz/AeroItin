@@ -10,40 +10,32 @@ import SwiftUI
 
 
 struct TripView: View {
-//    @EnvironmentObject var bidManager: BidManager
     let bidpackStartDate: Date
     let trip: Trip
-    let secondsWidth: CGFloat
+    let secondWidth: CGFloat
     @State private var showSheet = false
+    @Binding var selectedTripText: String?
     
     var body: some View {
-//        NavigationLink {
-//            TripTextView(text: trip.textRows.joined(separator: "\n"))
-//        } label: {
-             ZStack {
-                //            Rectangle().foregroundColor(Color(.systemBackground)).opacity(0.5)
-                Rectangle()
-                    .foregroundStyle(tripColor).opacity(0.55)
-//                if !trip.shortDescription.isEmpty {
-                        Text(trip.shortDescription).foregroundColor(Color.primary)
-                            .padding(1.5)
-                            .background(.background.opacity(0.5))
-                            .font(.footnote)
-//                    .fixedSize()
-//                }
-//             }
-             }.onTapGesture {
-                 showSheet = true
-             }
-        .frame(width: secondsWidth * trip.timeAwayFromBase)
-        .offset(offset)
-        .sheet(isPresented: $showSheet) {
-            TripTextView(text: trip.textRows.joined(separator: "\n"))
+        ZStack {
+            Rectangle()
+                .foregroundStyle(tripColor).opacity(0.55)
+            Text(trip.shortDescription).foregroundColor(Color.primary)
+                .padding(1.5)
+                .background(.background.opacity(0.5))
+                .font(.footnote)
+
+        }.onTapGesture {
+            withAnimation {
+                selectedTripText = trip.textRows.joined(separator: "\n")
+            }
         }
+        .frame(width: secondWidth * trip.timeAwayFromBase)
+        .offset(offset)
     }
     
     var offset: CGSize {
-        CGSize(width: secondsWidth * trip.firstEffectiveDate.timeIntervalSince(bidpackStartDate), height: 0)
+        CGSize(width: secondWidth * trip.firstEffectiveDate.timeIntervalSince(bidpackStartDate), height: 0)
     }
     
     var tripColor: Color {
@@ -66,11 +58,12 @@ struct TripView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[0], secondsWidth: bidManager.secondWidth(geometry)).environmentObject(bidManager)
-                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[1], secondsWidth: bidManager.secondWidth(geometry)).environmentObject(bidManager)
-                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[2], secondsWidth: bidManager.secondWidth(geometry)).environmentObject(bidManager)
-                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[3], secondsWidth: bidManager.secondWidth(geometry)).environmentObject(bidManager)
-                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[4], secondsWidth: bidManager.secondWidth(geometry)).environmentObject(bidManager)            }
+                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[0], secondWidth: bidManager.secondWidth(geometry), selectedTripText: Binding.constant(nil)).environmentObject(bidManager)
+                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[1], secondWidth: bidManager.secondWidth(geometry), selectedTripText: Binding.constant(nil)).environmentObject(bidManager)
+                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[2], secondWidth: bidManager.secondWidth(geometry), selectedTripText: Binding.constant(nil)).environmentObject(bidManager)
+                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[3], secondWidth: bidManager.secondWidth(geometry), selectedTripText: Binding.constant(nil)).environmentObject(bidManager)
+                TripView(bidpackStartDate: bidManager.bidpack.startDateLocal, trip: bidManager.bidpack.lines[85].trips[4], secondWidth: bidManager.secondWidth(geometry), selectedTripText: Binding.constant(nil)).environmentObject(bidManager)
+            }
         }.frame(height: 25.0)
     }
 }

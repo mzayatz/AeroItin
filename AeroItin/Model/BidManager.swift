@@ -37,6 +37,8 @@ class BidManager: ObservableObject {
     
     @Published var selectedTripText: String? = nil
     
+    @Published var geometry: GeometryProxy?
+    
     init(seat: Bidpack.Seat) {
         do {
 //            for url in BidManager.urls {
@@ -59,25 +61,28 @@ class BidManager: ObservableObject {
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     
-    func dayWidth(_ geometry: GeometryProxy) -> CGFloat {
-        geometry.size.width > 1000 ? (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7)) :
+    var dayWidth: CGFloat {
+        guard let geometry else {
+            return 0
+        }
+        return geometry.size.width > 1000 ? (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7)) :
         (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 10))
     }
         
-    func hourWidth(_ geometry: GeometryProxy) -> CGFloat {
-        dayWidth(geometry) / 24
+    var hourWidth:  CGFloat {
+        dayWidth / 24
     }
     
-    func minuteWidth(_ geometry: GeometryProxy) -> CGFloat {
-        hourWidth(geometry) / 60
+    var minuteWidth: CGFloat {
+        hourWidth / 60
     }
     
-    func secondWidth(_ geometry: GeometryProxy) -> CGFloat {
-        minuteWidth(geometry) / 60
+    var secondWidth: CGFloat {
+        minuteWidth / 60
     }
     
-    func daySize(_ geometry: GeometryProxy) -> CGSize {
-        CGSize(width: dayWidth(geometry), height: lineHeight)
+    var daySize: CGSize {
+        CGSize(width: dayWidth, height: lineHeight)
     }
     
 //    func lineLabelWidth(_ geometry: GeometryProxy) -> CGFloat {

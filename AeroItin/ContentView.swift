@@ -25,16 +25,7 @@ struct ContentView: View {
                                                 bidManager.bidpack.transferLine(line: line, action: .fromBidsToLines, byAppending: false)
                                             }
                                         }
-                                        LineView(
-                                            line: line,
-                                            bidpackDates: bidManager.bidpack.dates,
-                                            bidpackStartDate: bidManager.bidpack.startDateLocal,
-                                            bidpackTimeZone: bidManager.bidpack.base.timeZone,
-                                            dayWidth: bidManager.dayWidth(geometry),
-                                            secondWidth: bidManager.secondWidth(geometry),
-                                            lineLabelWidth: bidManager.lineLabelWidth,
-                                            selectedTripText: $bidManager.selectedTripText
-                                        )
+                                        LineView(line: line)
                                         Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
                                             withAnimation {
                                                 bidManager.bidpack.transferLine(line: line, action: .fromBidsToAvoids)
@@ -53,16 +44,7 @@ struct ContentView: View {
                                             bidManager.bidpack.transferLine(line: line, action: .fromLinesToBids)
                                         }
                                     }
-                                    LineView(
-                                        line: line,
-                                        bidpackDates: bidManager.bidpack.dates,
-                                        bidpackStartDate: bidManager.bidpack.startDateLocal,
-                                        bidpackTimeZone: bidManager.bidpack.base.timeZone,
-                                        dayWidth: bidManager.dayWidth(geometry),
-                                        secondWidth: bidManager.secondWidth(geometry),
-                                        lineLabelWidth: bidManager.lineLabelWidth,
-                                        selectedTripText: $bidManager.selectedTripText
-                                    )
+                                    LineView(line: line)
                                     Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
                                         withAnimation {
                                             bidManager.bidpack.transferLine(line: line, action: .fromLinesToAvoids)
@@ -80,16 +62,7 @@ struct ContentView: View {
                                                 bidManager.bidpack.transferLine(line: line, action: .fromAvoidsToBids)
                                             }
                                         }
-                                        LineView(
-                                            line: line,
-                                            bidpackDates: bidManager.bidpack.dates,
-                                            bidpackStartDate: bidManager.bidpack.startDateLocal,
-                                            bidpackTimeZone: bidManager.bidpack.base.timeZone,
-                                            dayWidth: bidManager.dayWidth(geometry),
-                                            secondWidth: bidManager.secondWidth(geometry),
-                                            lineLabelWidth: bidManager.lineLabelWidth,
-                                            selectedTripText: $bidManager.selectedTripText
-                                        )
+                                        LineView(line: line)
                                         Image(systemName: "minus.circle").foregroundColor(.gray).onTapGesture {
                                             withAnimation {
                                                 bidManager.bidpack.transferLine(line: line, action: .fromAvoidsToLines)
@@ -129,6 +102,8 @@ struct ContentView: View {
                             .transition(AnyTransition.move(edge: .bottom))
                     }
                 }
+            }.onAppear {
+                bidManager.geometry = geometry
             }
         }
     }

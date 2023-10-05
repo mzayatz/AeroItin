@@ -56,16 +56,6 @@ class BidManager: ObservableObject {
         }
     }
     
-    var sortLinesBy: Bidpack.SortOptions {
-        get {
-            bidpack.sortLinesBy
-        }
-        
-        set {
-            bidpack.setSort(to: newValue)
-        }
-    }
-    
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     
@@ -95,36 +85,24 @@ class BidManager: ObservableObject {
 //    }
     
     //MARK: User Intents
-    func bidLine(line: Line) {
-        bidpack.setFlag(for: line, flag: .bid)
-    }
-    
-    func resetLine(line: Line) {
-        bidpack.setFlag(for: line, flag: .neutral)
-    }
-    
-    func avoidLine(line: Line) {
-        bidpack.setFlag(for: line, flag: .avoid)
-    }
+//    func bidLine(line: Line) {
+//        bidpack.setFlag(for: line, flag: .bid)
+//    }
+//    
+//    func resetLine(line: Line) {
+//        bidpack.setFlag(for: line, flag: .neutral)
+//    }
+//    
+//    func avoidLine(line: Line) {
+//        bidpack.setFlag(for: line, flag: .avoid)
+//    }
     
     func resetBid() {
         bidpack.resetBid()
     }
     
-    func resetBidButKeepAvoids() {
-        bidpack.resetBidButKeepAvoids()
-    }
-    
-    func changeSeat(to seat: Bidpack.Seat) {
-        bidpack.setSeat(to: seat)
-    }
-    
     func moveLine(from source: IndexSet, toOffset destination: Int) {
         bidpack.moveLine(from: source, toOffset: destination)
-    }
-    
-    func changeSort(to sortOption: Bidpack.SortOptions) {
-        bidpack.setSort(to: sortOption)
     }
     
     func moveLineUpOne(line: Line) {
@@ -141,8 +119,4 @@ class BidManager: ObservableObject {
         bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)
     }
     
-    
-    func sortNeturalLines() {
-        bidpack.sortNeturalLines()
-    }
 }

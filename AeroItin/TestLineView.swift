@@ -18,15 +18,15 @@ struct TestLineView: View {
                 Text("BH: \(line.summary.blockHours.asHours, format: .number.precision(.fractionLength(2))) - LDG: \(line.summary.landings) - Days off \(line.summary.daysOff)")
                 Text("DPs: \(line.summary.dutyPeriods)")
             }
-            Text("✅").onTapGesture {
-                bidManager.bidLine(line: line)
-            }
-            Text("⛔️").onTapGesture {
-                bidManager.avoidLine(line: line)
-            }
-            Text("↩️").onTapGesture {
-                bidManager.resetLine(line: line)
-            }
+//            Text("✅").onTapGesture {
+//                bidManager.bidLine(line: line)
+//            }
+//            Text("⛔️").onTapGesture {
+//                bidManager.avoidLine(line: line)
+//            }
+//            Text("↩️").onTapGesture {
+//                bidManager.resetLine(line: line)
+//            }
             Text("⬆️").onTapGesture {
                 bidManager.moveLineUpOne(line: line)
             }

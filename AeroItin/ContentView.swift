@@ -16,52 +16,101 @@ struct ContentView: View {
             NavigationStack {
                 ZStack(alignment: .bottom) {
                     List {
-                        ForEach(bidManager.bidpack.lines) { line in
-                            HStack {
-                                Image(systemName: "plus.circle").foregroundColor(line.flag == .bid ? .gray : .green).onTapGesture {
-                                    withAnimation {
-                                        line.flag == .bid ? bidManager.resetLine(line: line) :
-                                        bidManager.bidLine(line: line)
+                        Section(header: Text("Bid")) {
+                            ForEach(bidManager.bidpack.bids) { line in
+                                HStack {
+                                    Image(systemName: "plus.circle").foregroundColor(.gray).onTapGesture {
+                                        withAnimation {
+                                            bidManager.bidpack.setFlag(for: line, action: .fromBidsToLines)
+                                            bidManager.bidpack.transferLine(line: line, action: .fromBidsToLines, byAppending: false)
+                                        }
+                                    }
+                                    LineView(
+                                        line: line,
+                                        bidpackDates: bidManager.bidpack.dates,
+                                        bidpackStartDate: bidManager.bidpack.startDateLocal,
+                                        bidpackTimeZone: bidManager.bidpack.base.timeZone,
+                                        dayWidth: bidManager.dayWidth(geometry),
+                                        secondWidth: bidManager.secondWidth(geometry),
+                                        lineLabelWidth: bidManager.lineLabelWidth,
+                                        selectedTripText: $bidManager.selectedTripText
+                                    )
+                                }
+                            }.onMove { bidManager.bidpack.bids.move(fromOffsets: $0, toOffset: $1) }
+                        }
+                        Section(header: Text("Lines")) {
+                            
+                            ForEach(bidManager.bidpack.lines) { line in
+                                HStack {
+                                    Image(systemName: "plus.circle").foregroundColor(.green).onTapGesture {
+                                        withAnimation {
+                                            bidManager.bidpack.setFlag(for: line, action: .fromLinesToBids)
+                                            bidManager.bidpack.transferLine(line: line, action: .fromLinesToBids, byAppending: false)
+                                        }
+                                    }
+                                    LineView(
+                                        line: line,
+                                        bidpackDates: bidManager.bidpack.dates,
+                                        bidpackStartDate: bidManager.bidpack.startDateLocal,
+                                        bidpackTimeZone: bidManager.bidpack.base.timeZone,
+                                        dayWidth: bidManager.dayWidth(geometry),
+                                        secondWidth: bidManager.secondWidth(geometry),
+                                        lineLabelWidth: bidManager.lineLabelWidth,
+                                        selectedTripText: $bidManager.selectedTripText
+                                    )
+                                    Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
+                                        withAnimation {
+                                            bidManager.bidpack.setFlag(for: line, action: .fromLinesToAvoids)
+                                            bidManager.bidpack.transferLine(line: line, action: .fromLinesToAvoids)
+                                        }
                                     }
                                 }
-                                LineView(
-                                    line: line,
-                                    bidpackDates: bidManager.bidpack.dates,
-                                    bidpackStartDate: bidManager.bidpack.startDateLocal,
-                                    bidpackTimeZone: bidManager.bidpack.base.timeZone,
-                                    dayWidth: bidManager.dayWidth(geometry),
-                                    secondWidth: bidManager.secondWidth(geometry),
-                                    lineLabelWidth: bidManager.lineLabelWidth,
-                                    selectedTripText: $bidManager.selectedTripText
-                                )
-                                Image(systemName: "minus.circle").foregroundColor(line.flag == .avoid ? .gray : .red).onTapGesture {
-                                    withAnimation {
-
-                                        line.flag == .avoid ? bidManager.resetLine(line: line) :
-                                        bidManager.avoidLine(line: line)
+                            }.onMove { bidManager.bidpack.lines.move(fromOffsets: $0, toOffset: $1) }
+                        }
+                        Section(header: Text("Avoids")) {
+                            ForEach(bidManager.bidpack.avoids) { line in
+                                HStack {
+                                    LineView(
+                                        line: line,
+                                        bidpackDates: bidManager.bidpack.dates,
+                                        bidpackStartDate: bidManager.bidpack.startDateLocal,
+                                        bidpackTimeZone: bidManager.bidpack.base.timeZone,
+                                        dayWidth: bidManager.dayWidth(geometry),
+                                        secondWidth: bidManager.secondWidth(geometry),
+                                        lineLabelWidth: bidManager.lineLabelWidth,
+                                        selectedTripText: $bidManager.selectedTripText
+                                    )
+                                    Image(systemName: "minus.circle").foregroundColor(.gray).onTapGesture {
+                                        withAnimation {
+                                            bidManager.bidpack.setFlag(for: line, action: .fromAvoidsToLines)
+                                            bidManager.bidpack.transferLine(line: line, action: .fromAvoidsToLines)
+                                        }
                                     }
                                 }
-                            }
-                        }.onMove { bidManager.moveLine(from: $0, toOffset: $1)}
+                            }.onMove { bidManager.bidpack.avoids.move(fromOffsets: $0, toOffset: $1) }
+                        }
                     }
                     .moveDisabled(!bidManager.bidpack.searchFilter.isEmpty)
                     .searchable(text: $bidManager.bidpack.searchFilter)
                     .navigationTitle("AeroItin")
                     .toolbar {
-                        HStack {
-                            Button("Sort unbid") {
-                                bidManager.sortNeturalLines()
-                            }
-                            Button("Clear all") {
-                                bidManager.resetBid()
-                            }
-                            Button("Clear bid") {
-                                bidManager.resetBidButKeepAvoids()
-                            }
-                            Picker(selection: $bidManager.sortLinesBy) {
-                                ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
-                            } label: {
-                                Text("Sort")
+                        Menu("settings") {
+                            HStack {
+                                Picker(selection:
+                                        $bidManager.bidpack.seat) {
+                                    Text(Bidpack.Seat.captain.abbreviatedSeat).tag(Bidpack.Seat.captain)
+                                    Text(Bidpack.Seat.firstOfficer.abbreviatedSeat).tag(Bidpack.Seat.firstOfficer)
+                                } label: {
+                                    Text("Seat")
+                                }
+                                Button("Clear all") {
+                                    bidManager.resetBid()
+                                }
+                                Picker(selection: $bidManager.bidpack.sortLinesBy) {
+                                    ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
+                                } label: {
+                                    Text("Sort")
+                                }
                             }
                         }
                     }

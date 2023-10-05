@@ -31,10 +31,30 @@ struct Bidpack: Equatable {
     let year: String
     let dates: [Date]
     let trips: [Trip]
-    private(set) var sortLinesBy: SortOptions = .number
-    private(set) var seat: Seat
-    private var captainLines: [Line]
-    private var firstOfficerLines: [Line]
+    
+    var sortLinesBy: SortOptions = .number {
+        didSet {
+            sortLines()
+        }
+    }
+    
+    var seat: Seat {
+        didSet {
+            resetBid()
+            lines = linesForCurrentSeat
+        }
+    }
+    
+    var linesForCurrentSeat: [Line] {
+        seat == .firstOfficer ? firstOfficerLines : captainLines
+    }
+    
+    private let captainLines: [Line]
+    private let firstOfficerLines: [Line]
+    
+    var lines: [Line]
+    var bids = [Line]()
+    var avoids = [Line]()
     
     var searchFilter = ""
     
@@ -54,26 +74,6 @@ struct Bidpack: Equatable {
 //        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
 //        return dates.map { formatter.string(from: $0) }
 //    }
-    
-    private(set) var lines: [Line] {
-        get {
-            switch seat {
-            case .captain:
-                return captainLines
-            case .firstOfficer:
-                return firstOfficerLines
-            }
-        }
-        
-        set {
-            switch seat {
-            case .captain:
-                captainLines = newValue
-            case .firstOfficer:
-                firstOfficerLines = newValue
-            }
-        }
-    }
     
     private var comparator: KeyPathComparator<Line> {
         sortLinesBy.getKeyPath()
@@ -116,43 +116,35 @@ struct Bidpack: Equatable {
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
+        lines = seat == .firstOfficer ? firstOfficerLines : captainLines
     }
     
     func timeIntervalFromStart(to date: Date) -> TimeInterval {
         startDateLocal.distance(to: date)
     }
     
-    mutating func setFlag(for line: Line, flag: Line.Flag) {
-        guard let i = lines.firstIndex(where: { $0.number == line.number }) else {
+    mutating func setFlag(for line: Line, action: TransferActions) {
+        let keyPaths = action.getKeyPaths()
+        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
             return
         }
-        lines[i].flag = flag
-        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral } + lines.filter{ $0.flag == .avoid }
+        self[keyPath: keyPaths.source][i].flag = action.flag
     }
     
-    mutating func setSeat(to seat: Seat)  {
-        self.resetBid()
-        self.seat = seat
-    }
-    
-    mutating func setSort(to sortOption: SortOptions) {
-        sortLinesBy = sortOption
-        sortNeturalLines()
+    mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool = true) {
+        let keyPaths = action.getKeyPaths()
+        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        byAppending ? self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i)) :
+            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
     }
     
     mutating func resetBid() {
-        for i in lines.indices {
-            lines[i].resetFlag()
-        } 
+        bids.removeAll()
+        avoids.removeAll()
+        lines = linesForCurrentSeat
         sortLines()
-    }
-    
-    mutating func resetBidButKeepAvoids() {
-        for i in lines.indices {
-            if lines[i].flag == .bid {
-                lines[i].resetFlag()
-            }
-        }
     }
     
     mutating func moveLine(from source: IndexSet, toOffset destination: Int) {
@@ -160,15 +152,10 @@ struct Bidpack: Equatable {
             return
         }
         lines.move(fromOffsets: source, toOffset: destination)
-        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral } + lines.filter{ $0.flag == .avoid }
     }
     
     mutating func sortLines() {
         lines.sort(using: comparator)
-    }
-    
-    mutating func sortNeturalLines() {
-        lines = lines.filter { $0.flag == .bid } + lines.filter { $0.flag == .neutral }.sorted(using: comparator) + lines.filter{ $0.flag == .avoid }
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
@@ -317,9 +304,18 @@ struct Bidpack: Equatable {
         let dates: [Date]
     }
     
-    enum Seat: String {
+    enum Seat: String  {
         case captain = "Captain"
         case firstOfficer = "First Officer"
+        
+        var abbreviatedSeat: String {
+            switch self {
+            case .captain:
+                return "CAP"
+            case .firstOfficer:
+                return "F/O"
+            }
+        }
     }
     
     enum Base: String {
@@ -366,6 +362,43 @@ struct Bidpack: Equatable {
                 return .eur
             default:
                 return .other
+            }
+        }
+    }
+    
+    enum TransferActions {
+        case fromLinesToBids
+        case fromLinesToAvoids
+        case fromBidsToLines
+        case fromBidsToAvoids
+        case fromAvoidsToLines
+        case fromAvoidsToBids
+        
+        var flag: Line.Flag {
+            switch self {
+            case .fromAvoidsToBids, .fromLinesToBids:
+                return .bid
+            case .fromAvoidsToLines, .fromBidsToLines:
+                return .neutral
+            case .fromLinesToAvoids, .fromBidsToAvoids:
+                return .avoid
+            }
+        }
+        
+        func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
+            switch self {
+            case .fromLinesToBids:
+                return (\.lines, \.bids)
+            case .fromLinesToAvoids:
+                return (\.lines, \.avoids)
+            case .fromBidsToLines:
+                return (\.bids, \.lines)
+            case .fromBidsToAvoids:
+                return (\.bids, \.avoids)
+            case .fromAvoidsToLines:
+                return (\.avoids, \.lines)
+            case .fromAvoidsToBids:
+                return (\.avoids, \.bids)
             }
         }
     }

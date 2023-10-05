@@ -10,14 +10,6 @@ import SwiftUI
 struct LineView: View {
     let line: Line
     @EnvironmentObject var bidManager: BidManager
-//    let bidpackDates: [Date]
-//    let bidpackStartDate: Date
-//    let bidpackTimeZone: TimeZone
-//    let dayWidth: CGFloat
-//    let secondWidth: CGFloat
-//    let lineLabelWidth: CGFloat
-//    @Binding var selectedTripText: String?
-    
     
     var body: some View {
         HStack {

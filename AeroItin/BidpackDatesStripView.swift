@@ -9,12 +9,6 @@ import SwiftUI
 
 struct BidpackDatesStripView: View {
     @EnvironmentObject var bidManager: BidManager
-    
-//    let bidpackDates: [Date]
-//    let bidpackTimeZone: TimeZone
-//    let dayWidth: CGFloat
-//    let lineLabelWidth: CGFloat
-    
     let strokeWidth = 2.0
     
     var body: some View {

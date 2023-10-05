@@ -73,11 +73,12 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .animation(.default, value: bidManager.bidpack.sortLinesBy)
                     .moveDisabled(!bidManager.bidpack.searchFilter.isEmpty)
                     .searchable(text: $bidManager.bidpack.searchFilter)
                     .navigationTitle("AeroItin")
                     .toolbar {
-                        Menu("settings") {
+                        Menu {
                             HStack {
                                 Picker(selection:
                                         $bidManager.bidpack.seat) {
@@ -95,6 +96,8 @@ struct ContentView: View {
                                     Text("Sort")
                                 }
                             }
+                        } label: {
+                            Image(systemName: "gear")
                         }
                     }
                     if bidManager.selectedTripText != nil {

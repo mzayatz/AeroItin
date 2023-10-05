@@ -7,15 +7,9 @@
 
 import SwiftUI
 
-
-
 struct TripView: View {
-//    let bidpackStartDate: Date
     let trip: Trip
     @EnvironmentObject var bidManager: BidManager
-//    let secondWidth: CGFloat
-//    @State private var showSheet = false
-//    @Binding var selectedTripText: String?
     
     var body: some View {
         ZStack {

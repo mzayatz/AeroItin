@@ -10,17 +10,17 @@ import SwiftUI
 
 class BidManager: ObservableObject {
     static let filenames = [
-        "2023_Oct_MD11_MEM_LINES",  // 0
-        "2023_Oct_A300_MEM_LINES",  // 1
-        "2023_Oct_B757_EUR_LINES",  // 2
-        "2023_Oct_B757_MEM_LINES",  // 3
-        "2023_Oct_B767_IND_LINES",  // 4
-        "2023_Oct_B767_MEM_LINES",  // 5
-        "2023_Oct_B767_OAK_LINES",  // 6
-        "2023_Oct_B777_ANC_LINES",  // 7
-        "2023_Oct_B777_MEM_LINES",  // 8
-        "2023_Oct_MD11_ANC_LINES",  // 9
-        "2023_Oct_MD11_LAX_LINES"   // 10
+        "2023_Nov_MD11_MEM_LINES",  // 0
+        "2023_Nov_A300_MEM_LINES",  // 1
+        "2023_Nov_B757_EUR_LINES",  // 2
+        "2023_Nov_B757_MEM_LINES",  // 3
+        "2023_Nov_B767_IND_LINES",  // 4
+        "2023_Nov_B767_MEM_LINES",  // 5
+        "2023_Nov_B767_OAK_LINES",  // 6
+        "2023_Nov_B777_ANC_LINES",  // 7
+        "2023_Nov_B777_MEM_LINES",  // 8
+        "2023_Nov_MD11_ANC_LINES",  // 9
+        "2023_Nov_MD11_LAX_LINES"   // 10
     ]
     
     static let urls = filenames.map {
@@ -34,10 +34,13 @@ class BidManager: ObservableObject {
         Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
     
     @Published var bidpack: Bidpack
-    
     @Published var selectedTripText: String? = nil
-    
     @Published var geometry: GeometryProxy?
+    @Published var searchFilter = ""
+    
+    var lines: [Line] {
+        searchFilter.isEmpty ? bidpack.lines : bidpack.lines.filter { $0.layovers.contains(searchFilter.lowercased()) }
+    }
     
     init(seat: Bidpack.Seat) {
         do {

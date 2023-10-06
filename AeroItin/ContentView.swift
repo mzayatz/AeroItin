@@ -37,7 +37,7 @@ struct ContentView: View {
                         }
                         Section(header: Text("Lines")) {
                             
-                            ForEach(bidManager.bidpack.lines) { line in
+                            ForEach(bidManager.lines) { line in
                                 HStack {
                                     Image(systemName: "plus.circle").foregroundColor(.green).onTapGesture {
                                         withAnimation {
@@ -73,9 +73,9 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .moveDisabled(!bidManager.searchFilter.isEmpty)
                     .animation(.default, value: bidManager.bidpack.sortLinesBy)
-                    .moveDisabled(!bidManager.bidpack.searchFilter.isEmpty)
-                    .searchable(text: $bidManager.bidpack.searchFilter)
+                    .searchable(text: $bidManager.searchFilter).textInputAutocapitalization(.never).autocorrectionDisabled()
                     .navigationTitle("AeroItin")
                     .toolbar {
                         Menu {

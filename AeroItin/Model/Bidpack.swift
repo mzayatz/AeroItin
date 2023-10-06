@@ -56,8 +56,6 @@ struct Bidpack: Equatable {
     var bids = [Line]()
     var avoids = [Line]()
     
-    var searchFilter = ""
-    
     var bes: String {
         base.rawValue + equipment.rawValue + seat.rawValue + month + year
     }

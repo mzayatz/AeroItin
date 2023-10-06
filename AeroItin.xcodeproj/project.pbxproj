@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */; };
+		C906BBB32AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBA82AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc */; };
+		C906BBB42AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBA92AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc */; };
+		C906BBB52AD0A2F7004D331E /* 2023_Nov_B767_OAK_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAA2AD0A2F7004D331E /* 2023_Nov_B767_OAK_LINES.asc */; };
+		C906BBB62AD0A2F7004D331E /* 2023_Nov_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAB2AD0A2F7004D331E /* 2023_Nov_B767_IND_LINES.asc */; };
+		C906BBB72AD0A2F7004D331E /* 2023_Nov_B777_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAC2AD0A2F7004D331E /* 2023_Nov_B777_ANC_LINES.asc */; };
+		C906BBB82AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAD2AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc */; };
+		C906BBB92AD0A2F7004D331E /* 2023_Nov_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAE2AD0A2F7004D331E /* 2023_Nov_B757_EUR_LINES.asc */; };
+		C906BBBA2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBAF2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc */; };
+		C906BBBB2AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB02AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc */; };
+		C906BBBC2AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB12AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc */; };
+		C906BBBD2AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */; };
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
 		C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91093A92ABF45C5002C7474 /* BidpackDateView.swift */; };
 		C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */; };
@@ -78,6 +89,17 @@
 
 /* Begin PBXFileReference section */
 		C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isWeekend.swift"; sourceTree = "<group>"; };
+		C906BBA82AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B757_MEM_LINES.asc; sourceTree = "<group>"; };
+		C906BBA92AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B777_MEM_LINES.asc; sourceTree = "<group>"; };
+		C906BBAA2AD0A2F7004D331E /* 2023_Nov_B767_OAK_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B767_OAK_LINES.asc; sourceTree = "<group>"; };
+		C906BBAB2AD0A2F7004D331E /* 2023_Nov_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B767_IND_LINES.asc; sourceTree = "<group>"; };
+		C906BBAC2AD0A2F7004D331E /* 2023_Nov_B777_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B777_ANC_LINES.asc; sourceTree = "<group>"; };
+		C906BBAD2AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_MD11_ANC_LINES.asc; sourceTree = "<group>"; };
+		C906BBAE2AD0A2F7004D331E /* 2023_Nov_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B757_EUR_LINES.asc; sourceTree = "<group>"; };
+		C906BBAF2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_MD11_MEM_LINES.asc; sourceTree = "<group>"; };
+		C906BBB02AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_A300_MEM_LINES.asc; sourceTree = "<group>"; };
+		C906BBB12AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B767_MEM_LINES.asc; sourceTree = "<group>"; };
+		C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
 		C91093A92ABF45C5002C7474 /* BidpackDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDateView.swift; sourceTree = "<group>"; };
 		C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date.FormatStyle.DateStyle+inTimeZone.swift"; sourceTree = "<group>"; };
@@ -240,6 +262,17 @@
 		C9ACFC342A9E4B1B009ACF28 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				C906BBB02AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc */,
+				C906BBAE2AD0A2F7004D331E /* 2023_Nov_B757_EUR_LINES.asc */,
+				C906BBA82AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc */,
+				C906BBAB2AD0A2F7004D331E /* 2023_Nov_B767_IND_LINES.asc */,
+				C906BBB12AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc */,
+				C906BBAA2AD0A2F7004D331E /* 2023_Nov_B767_OAK_LINES.asc */,
+				C906BBAC2AD0A2F7004D331E /* 2023_Nov_B777_ANC_LINES.asc */,
+				C906BBA92AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc */,
+				C906BBAD2AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc */,
+				C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */,
+				C906BBAF2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc */,
 				C916F7D62AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc */,
 				C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */,
 				C916F7D72AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc */,
@@ -354,7 +387,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					C9ACFC022A9E4AAA009ACF28 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -394,17 +427,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C906BBB32AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc in Resources */,
 				C984FFEE2AA22E1800DFB924 /* 2023_Sep_B767_OAK_LINES.asc in Resources */,
 				C916F7DC2AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc in Resources */,
+				C906BBBA2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc in Resources */,
 				C984FFE82AA22E1800DFB924 /* 2023_Sep_B777_ANC_LINES.asc in Resources */,
 				C984FFEF2AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc in Resources */,
 				C916F7E62AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc in Resources */,
 				C984FFEC2AA22E1800DFB924 /* 2023_Sep_MD11_LAX_LINES.asc in Resources */,
+				C906BBBC2AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc in Resources */,
 				C984FFEB2AA22E1800DFB924 /* 2023_Sep_A300_MEM_LINES.asc in Resources */,
 				C916F7E32AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc in Resources */,
 				C916F7DB2AABCD340080EFE6 /* 2023_Oct_B767_OAK_LINES.asc in Resources */,
 				C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */,
 				C984FFEA2AA22E1800DFB924 /* 2023_Sep_B767_MEM_LINES.asc in Resources */,
+				C906BBB92AD0A2F7004D331E /* 2023_Nov_B757_EUR_LINES.asc in Resources */,
 				C984FFF02AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc in Resources */,
 				C916F7DD2AABCD340080EFE6 /* 2023_Oct_B757_MEM_LINES.asc in Resources */,
 				C916F7E42AABCD3B0080EFE6 /* 2023_Oct_B777_ANC_LINES.asc in Resources */,
@@ -415,9 +452,16 @@
 				C9ACFC0B2A9E4AAB009ACF28 /* Assets.xcassets in Resources */,
 				C9ACFC3C2A9E549B009ACF28 /* 2023_Sep_MD11_MEM_LINES.asc in Resources */,
 				C916F7E72AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc in Resources */,
+				C906BBB62AD0A2F7004D331E /* 2023_Nov_B767_IND_LINES.asc in Resources */,
 				C984FFE92AA22E1800DFB924 /* 2023_Sep_B777_MEM_LINES.asc in Resources */,
+				C906BBB42AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc in Resources */,
 				C916F7E52AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc in Resources */,
+				C906BBB82AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc in Resources */,
+				C906BBBB2AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc in Resources */,
 				C984FFE72AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc in Resources */,
+				C906BBBD2AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc in Resources */,
+				C906BBB72AD0A2F7004D331E /* 2023_Nov_B777_ANC_LINES.asc in Resources */,
+				C906BBB52AD0A2F7004D331E /* 2023_Nov_B767_OAK_LINES.asc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,9 +578,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -592,9 +638,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -618,6 +666,7 @@
 				CODE_SIGN_ENTITLEMENTS = AeroItin/AeroItin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"AeroItin/Preview Content\"";
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -656,6 +705,7 @@
 				CODE_SIGN_ENTITLEMENTS = AeroItin/AeroItin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"AeroItin/Preview Content\"";
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -693,6 +743,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -716,6 +767,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -738,6 +790,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -760,6 +813,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ33476CK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;

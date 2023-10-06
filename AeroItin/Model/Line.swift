@@ -14,6 +14,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable {
     var flag: Flag
     let id: String
     let summary: Summary
+    let layovers: Set<String>
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
@@ -63,6 +64,11 @@ struct Line: CustomStringConvertible, Identifiable, Equatable {
         self.trips = lineTrips
         flag = .neutral
         id = number
+        var layoversBuffer = Set<String>()
+        for trip in trips {
+            layoversBuffer.formUnion(trip.layovers)
+        }
+        layovers = layoversBuffer
     }
     
     mutating func resetFlag() {

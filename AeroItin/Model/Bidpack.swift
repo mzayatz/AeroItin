@@ -120,13 +120,13 @@ struct Bidpack: Equatable {
         startDateLocal.distance(to: date)
     }
     
-    mutating func setFlag(for line: Line, action: TransferActions) {
-        let keyPaths = action.getKeyPaths()
-        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
-            return
-        }
-        self[keyPath: keyPaths.source][i].flag = action.flag
-    }
+//    mutating func setFlag(for line: Line, action: TransferActions) {
+//        let keyPaths = action.getKeyPaths()
+//        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
+//            return
+//        }
+//        self[keyPath: keyPaths.source][i].flag = action.flag
+//    }
     
     mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool) {
         let keyPaths = action.getKeyPaths()
@@ -382,16 +382,16 @@ struct Bidpack: Equatable {
         case fromAvoidsToLines
         case fromAvoidsToBids
         
-        var flag: Line.Flag {
-            switch self {
-            case .fromAvoidsToBids, .fromLinesToBids:
-                return .bid
-            case .fromAvoidsToLines, .fromBidsToLines:
-                return .neutral
-            case .fromLinesToAvoids, .fromBidsToAvoids:
-                return .avoid
-            }
-        }
+//        var flag: Line.Flag {
+//            switch self {
+//            case .fromAvoidsToBids, .fromLinesToBids:
+//                return .bid
+//            case .fromAvoidsToLines, .fromBidsToLines:
+//                return .neutral
+//            case .fromLinesToAvoids, .fromBidsToAvoids:
+//                return .avoid
+//            }
+//        }
         
         func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
             switch self {
@@ -460,6 +460,41 @@ struct Bidpack: Equatable {
             default:
                 return .other
             }
+        }
+    }
+}
+
+extension Line.Flag {
+    var associatedArrayKeypath: WritableKeyPath<Bidpack, [Line]> {
+        switch self {
+        case .avoid:
+            return \Bidpack.avoids
+        case .bid:
+            return \Bidpack.bids
+        case .neutral:
+            return \Bidpack.lines
+        }
+    }
+    
+    var plusTransferAction: Bidpack.TransferActions {
+        switch self {
+        case .avoid:
+            return .fromAvoidsToBids
+        case .bid:
+            return .fromBidsToLines
+        case .neutral:
+            return .fromLinesToBids
+        }
+    }
+    
+    var minusTransferAction: Bidpack.TransferActions {
+        switch self {
+        case .avoid:
+            return .fromAvoidsToLines
+        case .bid:
+            return .fromBidsToAvoids
+        case .neutral:
+            return .fromLinesToAvoids
         }
     }
 }

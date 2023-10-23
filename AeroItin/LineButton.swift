@@ -41,6 +41,6 @@ struct LineButton: View {
 }
 
 #Preview {
-    var bidManager = BidManager(seat: .firstOfficer)
+    let bidManager = BidManager(seat: .firstOfficer)
     return LineButton(line: bidManager.bidpack.lines.randomElement()!, action: .fromLinesToBids)
 }

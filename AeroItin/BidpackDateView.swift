@@ -23,6 +23,7 @@ struct BidpackDateView: View, Equatable {
     }
 }
 
+
 struct BidpackDateView_Previews: PreviewProvider {
     static var previews: some View {
         BidpackDateView(date: Date(), timeZone: .mem)

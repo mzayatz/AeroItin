@@ -41,7 +41,6 @@ struct Bidpack: Equatable {
     var seat: Seat {
         didSet {
             resetBid()
-            lines = linesForCurrentSeat
         }
     }
     
@@ -129,7 +128,7 @@ struct Bidpack: Equatable {
         self[keyPath: keyPaths.source][i].flag = action.flag
     }
     
-    mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool = true) {
+    mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool) {
         let keyPaths = action.getKeyPaths()
         guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
             return
@@ -138,11 +137,20 @@ struct Bidpack: Equatable {
             self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
     }
     
+    mutating func transferLine(line: Line, action: TransferActions) {
+        let keyPaths = action.getKeyPaths()
+        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        action != .fromBidsToLines ? self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i)) :
+            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
+    }
+        
     mutating func resetBid() {
         bids.removeAll()
         avoids.removeAll()
         lines = linesForCurrentSeat
-        sortLines()
+        sortLinesBy = .number
     }
     
     mutating func moveLine(from source: IndexSet, toOffset destination: Int) {
@@ -315,6 +323,8 @@ struct Bidpack: Equatable {
             }
         }
     }
+   
+    
     
     enum Base: String {
         case mem = "MEM"

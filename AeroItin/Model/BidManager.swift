@@ -35,11 +35,20 @@ class BidManager: ObservableObject {
     
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
-    @Published var geometry: GeometryProxy?
     @Published var searchFilter = ""
     
     var lines: [Line] {
-        searchFilter.isEmpty ? bidpack.lines : bidpack.lines.filter { $0.layovers.contains(searchFilter.lowercased()) }
+        searchFilter.isEmpty ?  bidpack.lines : filterLines()
+    }
+    
+    func filterLines() -> [Line] {
+        let iatas = searchFilter.components(separatedBy: .whitespaces).filter { $0.count == 3 }.map { $0.lowercased() }
+        
+        guard !iatas.isEmpty else {
+            return bidpack.lines
+        }
+        print(iatas)
+        return bidpack.lines.filter { $0.layovers.contains { iatas.contains($0) } }
     }
     
     init(seat: Bidpack.Seat) {
@@ -47,7 +56,13 @@ class BidManager: ObservableObject {
 //            for url in BidManager.urls {
 //                try Bidpack(with: url, seat: seat)
 //            }
-            try bidpack = Bidpack(with: BidManager.testingUrl, seat: seat)
+            let loadedBidpack = try Bidpack(with: BidManager.testingUrl, seat: seat)
+            bidpack = loadedBidpack
+            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 10))
+            hourWidth = dayWidth / 24
+            minuteWidth = hourWidth / 60
+            secondWidth = minuteWidth / 60
+            
             print(BidManager.testingUrl)
         }
         catch ParserError.sectionDividerNotFoundError {
@@ -59,52 +74,28 @@ class BidManager: ObservableObject {
         catch {
             fatalError("Other error!\n\(error)")
         }
+        
     }
     
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     
-    var dayWidth: CGFloat {
-        guard let geometry else {
-            return 0
-        }
-        return geometry.size.width > 1000 ? (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7)) :
-        (geometry.size.width - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 10))
-    }
-        
-    var hourWidth:  CGFloat {
-        dayWidth / 24
-    }
+    let sensibleScreenWidth: CGFloat = 1000
     
-    var minuteWidth: CGFloat {
-        hourWidth / 60
-    }
+    let dayWidth: CGFloat
+    let hourWidth:  CGFloat
+    let minuteWidth: CGFloat
+    let secondWidth: CGFloat
     
-    var secondWidth: CGFloat {
-        minuteWidth / 60
-    }
-    
-    var daySize: CGSize {
-        CGSize(width: dayWidth, height: lineHeight)
-    }
+//    let daySize: CGSize {
+//        CGSize(width: dayWidth, height: lineHeight)
+//    }
     
 //    func lineLabelWidth(_ geometry: GeometryProxy) -> CGFloat {
 //        dayWidth(geometry) * lineLabelWidthThingy
 //    }
     
     //MARK: User Intents
-//    func bidLine(line: Line) {
-//        bidpack.setFlag(for: line, flag: .bid)
-//    }
-//    
-//    func resetLine(line: Line) {
-//        bidpack.setFlag(for: line, flag: .neutral)
-//    }
-//    
-//    func avoidLine(line: Line) {
-//        bidpack.setFlag(for: line, flag: .avoid)
-//    }
-    
     func resetBid() {
         bidpack.resetBid()
     }

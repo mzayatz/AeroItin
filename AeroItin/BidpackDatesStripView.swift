@@ -13,9 +13,14 @@ struct BidpackDatesStripView: View {
     
     var body: some View {
         LazyHStack(spacing: 0) {
-            ForEach(bidManager.bidpack.dates, id: \.self) { date in
-                BidpackDateView(date: date, timeZone: bidManager.bidpack.base.timeZone).frame(width: bidManager.dayWidth)
-                    .frame(width: bidManager.dayWidth)
+            ForEach(bidManager.bidpack.dates.indices, id: \.self) { i in
+                ZStack {
+                    BidpackDateView(date: bidManager.bidpack.dates[i], timeZone: bidManager.bidpack.base.timeZone).frame(width: bidManager.dayWidth)
+                        .frame(width: bidManager.dayWidth)
+                    if(i > bidManager.bidpack.dates.count - 8) {
+                        Color.yellow.opacity(0.2)
+                    }
+                }
             }
         }.frame(alignment: .leading)
     }

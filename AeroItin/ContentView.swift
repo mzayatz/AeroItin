@@ -20,17 +20,9 @@ struct ContentView: View {
                             Section(header: Text("Bid")) {
                                 ForEach(bidManager.bidpack.bids) { line in
                                     HStack {
-                                        Image(systemName: "plus.circle").foregroundColor(.gray).onTapGesture {
-                                            withAnimation {
-                                                bidManager.bidpack.transferLine(line: line, action: .fromBidsToLines, byAppending: false)
-                                            }
-                                        }
+                                        LineButton(line: line, action: .fromBidsToLines)
                                         LineView(line: line)
-                                        Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
-                                            withAnimation {
-                                                bidManager.bidpack.transferLine(line: line, action: .fromBidsToAvoids)
-                                            }
-                                        }
+                                        LineButton(line: line, action: .fromBidsToAvoids)
                                     }
                                 }.onMove { bidManager.bidpack.bids.move(fromOffsets: $0, toOffset: $1) }
                             }
@@ -39,57 +31,42 @@ struct ContentView: View {
                             
                             ForEach(bidManager.lines) { line in
                                 HStack {
-                                    Image(systemName: "plus.circle").foregroundColor(.green).onTapGesture {
-                                        withAnimation {
-                                            bidManager.bidpack.transferLine(line: line, action: .fromLinesToBids)
-                                        }
-                                    }
+                                    LineButton(line: line, action: .fromLinesToBids)
                                     LineView(line: line)
-                                    Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
-                                        withAnimation {
-                                            bidManager.bidpack.transferLine(line: line, action: .fromLinesToAvoids)
-                                        }
-                                    }
+                                    LineButton(line: line, action: .fromLinesToAvoids)
                                 }
+                                .moveDisabled(!bidManager.searchFilter.isEmpty)
+                                
                             }.onMove { bidManager.bidpack.lines.move(fromOffsets: $0, toOffset: $1) }
                         }
                         if(!bidManager.bidpack.avoids.isEmpty) {
                             Section(header: Text("Avoids")) {
                                 ForEach(bidManager.bidpack.avoids) { line in
                                     HStack {
-                                        Image(systemName: "plus.circle").foregroundColor(.green).onTapGesture {
-                                            withAnimation {
-                                                bidManager.bidpack.transferLine(line: line, action: .fromAvoidsToBids)
-                                            }
-                                        }
+                                        LineButton(line: line, action: .fromAvoidsToBids)
                                         LineView(line: line)
-                                        Image(systemName: "minus.circle").foregroundColor(.gray).onTapGesture {
-                                            withAnimation {
-                                                bidManager.bidpack.transferLine(line: line, action: .fromAvoidsToLines)
-                                            }
-                                        }
+                                        LineButton(line: line, action: .fromAvoidsToLines)
                                     }
                                 }.onMove { bidManager.bidpack.avoids.move(fromOffsets: $0, toOffset: $1) }
                             }
                         }
                     }
-                    .moveDisabled(!bidManager.searchFilter.isEmpty)
                     .animation(.default, value: bidManager.bidpack.sortLinesBy)
+                    .animation(.default, value: bidManager.searchFilter)
                     .searchable(text: $bidManager.searchFilter).textInputAutocapitalization(.never).autocorrectionDisabled()
                     .navigationTitle("AeroItin")
                     .toolbar {
                         Menu {
-                            HStack {
+                            Menu("Seat:  \(bidManager.bidpack.seat.rawValue)") {
                                 Picker(selection:
                                         $bidManager.bidpack.seat) {
-                                    Text(Bidpack.Seat.captain.abbreviatedSeat).tag(Bidpack.Seat.captain)
-                                    Text(Bidpack.Seat.firstOfficer.abbreviatedSeat).tag(Bidpack.Seat.firstOfficer)
+                                    Text(Bidpack.Seat.captain.rawValue).tag(Bidpack.Seat.captain)
+                                    Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
                                 } label: {
                                     Text("Seat")
                                 }
-                                Button("Clear all") {
-                                    bidManager.resetBid()
-                                }
+                            }
+                            Menu("Sort:  \(bidManager.bidpack.sortLinesBy.rawValue)") {
                                 Picker(selection: $bidManager.bidpack.sortLinesBy) {
                                     ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
                                 } label: {
@@ -105,8 +82,6 @@ struct ContentView: View {
                             .transition(AnyTransition.move(edge: .bottom))
                     }
                 }
-            }.onAppear {
-                bidManager.geometry = geometry
             }
         }
     }
@@ -117,3 +92,60 @@ struct ContentView_Previews: PreviewProvider {
         ContentView().environmentObject(BidManager(seat: .firstOfficer))
     }
 }
+//
+//struct BiddingListSection: View {
+//    @EnvironmentObject var bidManager: BidManager
+//    let listType: Line.Flag
+//    
+//    var lines: [Line] {
+//        switch listType {
+//        case .neutral:
+//            return bidManager.lines
+//        case .bid:
+//            return bidManager.bidpack.bids
+//        case .avoid:
+//            return bidManager.bidpack.avoids
+//        }
+//    }
+//    
+//    var plusActionWith: (Line) -> Void {
+//        switch listType {
+//        case .neutral:
+//            return bidManager.bidLine
+//        case .bid:
+//            return bidManager.unbidLine
+//        case .avoid:
+//            return bidManager.bidAlreadyAvoidedLine
+//        }
+//    }
+//    
+//    var minusActionWith: (Line) -> Void {
+//        switch listType {
+//        case .neutral:
+//            return bidManager.avoidLine
+//        case .bid:
+//            return bidManager.avoidAlreadyBidLine
+//        case .avoid:
+//            return bidManager.unavoidLine
+//        }
+//    }
+//    
+//    var body: some View {
+//        ForEach(lines) { line in
+//            HStack {
+//                Image(systemName: "plus.circle").foregroundColor(.gray).onTapGesture {
+//                    withAnimation {
+//                        plusActionWith(line)
+//                    }
+//                }
+//                LineView(line: line)
+//                Image(systemName: "minus.circle").foregroundColor(.red).onTapGesture {
+//                    withAnimation {
+//                        minusActionWith(line)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    
+//}

@@ -29,10 +29,11 @@ struct LineListSectionView: View {
         }
     }
     
+    
     var body: some View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
-            Section(header: Text(sectionTitle)){
-                ForEach(section != .neutral || bidManager.searchFilter.isEmpty ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : filteredLines) { line in
+            Section(header: Text("\(sectionTitle) \(bidManager.bidpack[keyPath: section.associatedArrayKeypath].count)")) {
+                ForEach(section != .neutral || filteredLines.isEmpty ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : filteredLines) { line in
                     HStack {
                         LineButton(line: line, action: section.plusTransferAction)
                         LineView(line: line)

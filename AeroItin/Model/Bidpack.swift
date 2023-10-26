@@ -67,6 +67,37 @@ struct Bidpack: Equatable {
         dates.last!
     }
     
+    var shortMonth: String {
+        switch month {
+        case "JANUARY":
+            return "Jan"
+        case "FEBRUARY":
+            return "Feb"
+        case "MARCH":
+            return "Mar"
+        case "APRIL":
+            return "Apr"
+        case "MAY":
+            return "May"
+        case "JUNE":
+            return "Jun"
+        case "JULY":
+            return "Jul"
+        case "AUGUST":
+            return "Aug"
+        case "SEPTEMBER":
+            return "Sep"
+        case "OCTOBER":
+            return "Oct"
+        case "NOVEMBER":
+            return "Nov"
+        case "DECEMBER":
+            return "Dec"
+        default:
+            return ""
+        }
+    }
+    
 //    var datesAsDayOfMonthStrings: [String] {
 //        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
 //        return dates.map { formatter.string(from: $0) }

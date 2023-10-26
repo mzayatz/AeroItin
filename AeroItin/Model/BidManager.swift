@@ -41,6 +41,10 @@ class BidManager: ObservableObject {
         searchFilter.isEmpty ?  bidpack.lines : filterLines()
     }
     
+    var bidpackDescription: String {
+        "\(bidpack.shortMonth) \(bidpack.year) (\(bidpack.equipment.rawValue) \(bidpack.seat.abbreviatedSeat))"
+    }
+    
     func filterLines() -> [Line] {
         let iatas = searchFilter.components(separatedBy: .whitespaces).filter { $0.count == 3 }.map { $0.lowercased() }
         
@@ -50,13 +54,13 @@ class BidManager: ObservableObject {
         print(iatas)
         return bidpack.lines.filter { $0.layovers.contains { iatas.contains($0) } }
     }
-    
-    init(seat: Bidpack.Seat) {
+   
+    init(url: URL, seat: Bidpack.Seat) {
         do {
-//            for url in BidManager.urls {
-//                try Bidpack(with: url, seat: seat)
-//            }
-            let loadedBidpack = try Bidpack(with: BidManager.testingUrl, seat: seat)
+            //            for url in BidManager.urls {
+            //                try Bidpack(with: url, seat: seat)
+            //            }
+            let loadedBidpack = try Bidpack(with: url, seat: seat)
             bidpack = loadedBidpack
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 10))
             hourWidth = dayWidth / 24
@@ -74,8 +78,13 @@ class BidManager: ObservableObject {
         catch {
             fatalError("Other error!\n\(error)")
         }
-        
     }
+    
+    convenience init(seat: Bidpack.Seat) {
+        self.init(url: BidManager.testingUrl, seat: seat)
+    }
+    
+    
     
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
@@ -96,6 +105,20 @@ class BidManager: ObservableObject {
 //    }
     
     //MARK: User Intents
+    func loadBidpackFromUrl(_ url: URL) {
+        do {
+            try bidpack = Bidpack(with: url, seat: .firstOfficer)
+        }
+        catch ParserError.sectionDividerNotFoundError {
+            fatalError("SectionDividerNotFound Error... quitting.")
+        }
+        catch ParserError.tokenNotFoundError {
+            fatalError("Token not found... quitting.")
+        }
+        catch {
+            fatalError("Other error!\n\(error)")
+        }
+    }
     func resetBid() {
         bidpack.resetBid()
     }

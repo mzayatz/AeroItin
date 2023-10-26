@@ -10,6 +10,7 @@ import SwiftUI
 struct TripTextView: View {
     
     @Binding var selectedTripText: String?
+//    @GestureState var offset = CGSize()
     
     let font: Font = .system(size: 12, weight: .regular, design: .monospaced)
     var body: some View {
@@ -29,6 +30,18 @@ struct TripTextView: View {
         }.frame(width: 800)
             .fixedSize(horizontal: false, vertical: true)
             .zIndex(2)
+//            .offset(offset)
+            .onTapGesture(count: 2) {
+                withAnimation {
+                    selectedTripText = nil
+                }
+            }
+//            .gesture(
+//                DragGesture()
+//                    .updating($offset) { value, state, transaction in
+//                        state = value.translation
+//                    }
+//            )
     }
     
     var attText: AttributedString? {

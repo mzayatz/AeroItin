@@ -22,7 +22,7 @@ struct TripView: View {
 
         }.onTapGesture {
             withAnimation {
-                bidManager.selectedTripText = trip.textRows.joined(separator: "\n")
+                bidManager.selectedTripText = trip.text.joined(separator: "\n")
             }
         }
         .frame(width: bidManager.secondWidth * trip.timeAwayFromBase)

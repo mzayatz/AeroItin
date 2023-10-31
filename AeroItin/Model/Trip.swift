@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Trip: CustomStringConvertible, Equatable {
-    let textRows: ArraySlice<String>
+struct Trip: CustomStringConvertible, Equatable, Codable {
+    let text: [String]
     let number: String
     let effectiveDates: [Date]
     let creditHours: TimeInterval
@@ -29,7 +29,7 @@ struct Trip: CustomStringConvertible, Equatable {
     }
     
     init(trip: Trip, effectiveDate: Date) {
-        textRows = trip.textRows
+        text = trip.text
         number = trip.number
         effectiveDates = [effectiveDate]
         creditHours = trip.creditHours
@@ -41,8 +41,8 @@ struct Trip: CustomStringConvertible, Equatable {
     }
     
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {
-        self.textRows = textRows
-        guard var firstRowWords = self.textRows.first?.split(separator: " ").map(String.init),
+        self.text = Array(textRows)
+        guard var firstRowWords = self.text.first?.split(separator: " ").map(String.init),
               !firstRowWords.isEmpty
         else {
             assertionFailure("Problem reading first row of trip (Trip.swift)")
@@ -198,7 +198,7 @@ struct Trip: CustomStringConvertible, Equatable {
         "\(number)"
     }
     
-    enum Deadheads {
+    enum Deadheads: Codable {
         case double
         case front
         case back

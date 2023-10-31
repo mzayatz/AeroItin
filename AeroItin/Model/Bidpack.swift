@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Bidpack: Equatable {
+struct Bidpack: Equatable, Codable {
     static func == (lhs: Bidpack, rhs: Bidpack) -> Bool {
         lhs.bes == rhs.bes
     }
@@ -24,7 +24,7 @@ struct Bidpack: Equatable {
     
     static let testOutputFilenameWithExtension = "testOutput.txt"
     static let testOutputUrl = URL.documentsDirectory.appending(path: testOutputFilenameWithExtension)
-    let textRows: [String]
+//    let text: [String]
     let base: Base
     let equipment: Equipment
     let month: String
@@ -113,7 +113,7 @@ struct Bidpack: Equatable {
     
     init(with url: URL, seat: Seat) throws {
         let text = try String(contentsOf: url)
-        textRows = text.components(separatedBy: .newlines)
+        let textRows = text.components(separatedBy: .newlines)
         
         guard let tripsSectionHeader = textRows.first?.split(separator: " ").map(String.init),
               tripsSectionHeader.count >= 8
@@ -341,7 +341,7 @@ struct Bidpack: Equatable {
         let dates: [Date]
     }
     
-    enum Seat: String  {
+    enum Seat: String, Codable  {
         case captain = "Captain"
         case firstOfficer = "First Officer"
         
@@ -357,7 +357,7 @@ struct Bidpack: Equatable {
    
     
     
-    enum Base: String {
+    enum Base: String, Codable {
         case mem = "MEM"
         case ind = "IND"
         case lax = "LAX"
@@ -405,7 +405,7 @@ struct Bidpack: Equatable {
         }
     }
     
-    enum TransferActions {
+    enum TransferActions: Codable {
         case fromLinesToBids
         case fromLinesToAvoids
         case fromBidsToLines
@@ -442,7 +442,7 @@ struct Bidpack: Equatable {
         }
     }
     
-    enum SortOptions: String, CaseIterable {
+    enum SortOptions: String, CaseIterable, Codable {
         case number = "Number"
         case creditHours = "Credit hours"
         case blockHours = "Block hours"
@@ -468,7 +468,7 @@ struct Bidpack: Equatable {
         }
     }
     
-    enum Equipment: String {
+    enum Equipment: String, Codable {
         case md11 = "MD11"
         case a300 = "A300"
         case b757 = "B757"

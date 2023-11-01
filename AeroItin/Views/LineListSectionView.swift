@@ -32,7 +32,7 @@ struct LineListSectionView: View {
     
     var body: some View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
-            Section(header: Text("\(sectionTitle) \(bidManager.bidpack[keyPath: section.associatedArrayKeypath].count)")) {
+            Section {
                 ForEach(section != .neutral || filteredLines.isEmpty ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : filteredLines) { line in
                     HStack {
                         LineButton(line: line, action: section.plusTransferAction)
@@ -42,6 +42,30 @@ struct LineListSectionView: View {
                 }.onMove { 
                     bidManager.bidpack[keyPath: section.associatedArrayKeypath].move(fromOffsets: $0, toOffset: $1)
                 }.moveDisabled(!bidManager.searchFilter.isEmpty)
+            } header: {
+                HStack {
+                    Text("\(sectionTitle) \(bidManager.bidpack[keyPath: section.associatedArrayKeypath].count)")
+                    Spacer()
+                    Text("Bids").foregroundStyle(Color.accentColor)
+                        .onTapGesture {
+                            withAnimation {
+                                bidManager.scrollSnap = .bid
+                            }
+                        }
+                    Text("Lines").foregroundStyle(Color.accentColor)
+                        .onTapGesture {
+                            withAnimation {
+                                bidManager.scrollSnap = .neutral
+                            }
+                        }
+                    Text("Avoids").foregroundStyle(Color.accentColor)
+                        .onTapGesture {
+                            withAnimation {
+                                bidManager.scrollSnap = .avoid
+                            }
+                        }
+                }
+                
             }
         }
     }

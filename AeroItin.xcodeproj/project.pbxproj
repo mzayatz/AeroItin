@@ -34,6 +34,8 @@
 		C916F7E62AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */; };
 		C916F7E72AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */; };
 		C91F6C1D2AE6D9EF008D0717 /* LineButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F6C1C2AE6D9EF008D0717 /* LineButton.swift */; };
+		C920AC602AF29094001344BC /* LineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C920AC5F2AF29094001344BC /* LineListView.swift */; };
+		C920AC622AF291D4001344BC /* BidToolbarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C920AC612AF291D4001344BC /* BidToolbarContent.swift */; };
 		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
 		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
@@ -118,6 +120,8 @@
 		C916F7E12AABCD3B0080EFE6 /* 2023_Oct_MD11_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_ANC_LINES.asc; sourceTree = "<group>"; };
 		C916F7E22AABCD3B0080EFE6 /* 2023_Oct_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C91F6C1C2AE6D9EF008D0717 /* LineButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineButton.swift; sourceTree = "<group>"; };
+		C920AC5F2AF29094001344BC /* LineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineListView.swift; sourceTree = "<group>"; };
+		C920AC612AF291D4001344BC /* BidToolbarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidToolbarContent.swift; sourceTree = "<group>"; };
 		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
 		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
@@ -187,6 +191,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C920AC5E2AF29014001344BC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
+				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
+				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
+				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
+				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
+				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
+				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
+				C920AC5F2AF29094001344BC /* LineListView.swift */,
+				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
+				C91F6C1C2AE6D9EF008D0717 /* LineButton.swift */,
+				C97B7FB12AA66F3400AAE37E /* TestLineView.swift */,
+				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C9ACFBFA2A9E4AAA009ACF28 = {
 			isa = PBXGroup;
 			children = (
@@ -215,18 +238,8 @@
 				C9ACFC382A9E4FCE009ACF28 /* Errors */,
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
+				C920AC5E2AF29014001344BC /* Views */,
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
-				C97B7FB12AA66F3400AAE37E /* TestLineView.swift */,
-				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
-				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
-				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
-				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
-				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
-				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
-				C9A615C82AE87F8E00822B26 /* UTType+asc.swift */,
-				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
-				C91F6C1C2AE6D9EF008D0717 /* LineButton.swift */,
-				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
 				C9ACFC0D2A9E4AAB009ACF28 /* Preview Content */,
@@ -322,6 +335,7 @@
 		C9ACFC482AA02FFA009ACF28 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C9A615C82AE87F8E00822B26 /* UTType+asc.swift */,
 				C9ACFC432AA02353009ACF28 /* TimeInterval+InitWithString.swift */,
 				C9ACFC3F2A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift */,
 				C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */,
@@ -505,6 +519,7 @@
 				C9A615C52AE6F0DC00822B26 /* LineListSectionView.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
 				C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */,
+				C920AC602AF29094001344BC /* LineListView.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,
@@ -516,6 +531,7 @@
 				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
 				C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */,
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
+				C920AC622AF291D4001344BC /* BidToolbarContent.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,

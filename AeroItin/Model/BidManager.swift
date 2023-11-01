@@ -36,13 +36,14 @@ class BidManager: ObservableObject {
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
+    @Published var scrollSnap: Line.Flag = .neutral
     
     var lines: [Line] {
         searchFilter.isEmpty ?  bidpack.lines : filterLines()
     }
     
     var bidpackDescription: String {
-        "\(bidpack.shortMonth) \(bidpack.year) (\(bidpack.equipment.rawValue) \(bidpack.seat.abbreviatedSeat))"
+        "\(bidpack.base.rawValue) \(bidpack.equipment.rawValue) \(bidpack.seat.abbreviatedSeat) - \(bidpack.shortMonth) \(bidpack.year.suffix(2))"
     }
     
     func filterLines() -> [Line] {

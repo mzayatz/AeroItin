@@ -15,6 +15,18 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let id: String
     let summary: Summary
     let layovers: Set<String>
+    let category: Line.Category
+    
+    init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone) {
+        text = [String]()
+        number = ""
+        trips = [Trip]()
+        flag = .neutral
+        id = ""
+        summary = Summary()
+        layovers = Set<String>()
+        category = .reserve
+    }
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
@@ -47,7 +59,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
                 var trip = Line.matchTrip(tripList: tripList, dayIndex: i, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
                 
                 if trip == nil {
-                    trip = Line.matchTrip(tripList: tripList, dayIndex: i+1, calendarLocal: calendarLocal, startDateLocal: startDateLocal)
+                    trip = Line.matchTrip(tripList: tripList, dayIndex: i, calendarLocal: calendarLocal, startDateLocal: startDateLocal, subtractDayFromEffectiveDates: true)
                 }
                 
                 guard let trip else {
@@ -69,13 +81,14 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
             layoversBuffer.formUnion(trip.layovers)
         }
         layovers = layoversBuffer
+        category = .regular
     }
     
     mutating func resetFlag() {
         self.flag = .neutral
     }
     
-    static func matchTrip(tripList: [Trip], dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date) -> Trip? {
+    static func matchTrip(tripList: [Trip], dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date, subtractDayFromEffectiveDates: Bool = false) -> Trip? {
         guard let date = calendarLocal.date(byAdding: .day, value: dayIndex, to: startDateLocal) else {
             assertionFailure("Could not calculate date from lineTripsRow...")
             return nil
@@ -83,8 +96,10 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         var originalTripDate: Date? = nil
         let trips = tripList.filter {
             for effectiveDate in $0.effectiveDates {
-                if(calendarLocal.compare(date, to: effectiveDate, toGranularity: .day) == .orderedSame) {
-                    originalTripDate = effectiveDate
+                let modifiedEffectiveDate = subtractDayFromEffectiveDates ? effectiveDate.addingTimeInterval(-(.day)) : effectiveDate
+                let dateComparison = calendarLocal.compare(date, to: modifiedEffectiveDate, toGranularity: .day)
+                if(dateComparison == .orderedSame) {
+                    originalTripDate = modifiedEffectiveDate
                     return true
                 }
             }
@@ -110,6 +125,17 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         let landings: Int
         let carryOutBlockHours: TimeInterval
         let daysOff: Int
+        
+        init() {
+            creditHours = 0
+            timeAwayFromBase = 0
+            carryOutCreditHours = 0
+            dutyPeriods = 0
+            blockHours = 0
+            landings = 0
+            carryOutBlockHours = 0
+            daysOff = 0
+        }
         
         init?(text: [String]) {
             guard let creditHoursAndtimeAwayFromBase = Summary.findLineSummaryDataIn(text[text.startIndex + 2]),
@@ -161,5 +187,11 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         case neutral = "Neutral"
         case avoid = "Avoid"
         case bid = "Bid"
+    }
+    
+    enum Category: Codable {
+        case regular
+        case reserve
+        case secondary
     }
 }

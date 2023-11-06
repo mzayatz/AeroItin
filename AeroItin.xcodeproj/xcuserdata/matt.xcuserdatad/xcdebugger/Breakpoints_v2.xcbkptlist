@@ -3,4 +3,23 @@
    uuid = "E3E1300D-00D6-4DC9-9388-FBE5EAC9770A"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D9640A7-E71F-43BA-9418-3834ABCAF45C"
+            shouldBeEnabled = "No"
+            condition = "trip.number == &quot;319&quot;"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AeroItin/Model/Trip.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "init(trip:effectiveDate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

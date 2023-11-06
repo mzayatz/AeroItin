@@ -27,6 +27,18 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     var shortDescription: String {
         layovers.joined(separator: "-")
     }
+   
+    init() {
+        text = [String]()
+        number = ""
+        effectiveDates = [Date]()
+        creditHours = 0
+        blockHours = 0
+        landings = 0
+        timeAwayFromBase = 0
+        layovers = [String]()
+        deadheads = .none
+    }
     
     init(trip: Trip, effectiveDate: Date) {
         text = trip.text
@@ -191,8 +203,8 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         if bidMonth == "JANUARY" && tripMonth == "DEC" {
             return String(intYear - 1)
         }
-        assertionFailure("computeYear function could not compute the trip start/end year")
-        return nil
+        
+        return bidYear
     }
     var description: String {
         "\(number)"

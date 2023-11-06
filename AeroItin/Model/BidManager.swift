@@ -10,24 +10,46 @@ import SwiftUI
 
 class BidManager: ObservableObject {
     static let filenames = [
-        "2023_Nov_MD11_MEM_LINES",  // 0
-        "2023_Nov_A300_MEM_LINES",  // 1
-        "2023_Nov_B757_EUR_LINES",  // 2
-        "2023_Nov_B757_MEM_LINES",  // 3
-        "2023_Nov_B767_IND_LINES",  // 4
-        "2023_Nov_B767_MEM_LINES",  // 5
-        "2023_Nov_B767_OAK_LINES",  // 6
-        "2023_Nov_B777_ANC_LINES",  // 7
-        "2023_Nov_B777_MEM_LINES",  // 8
-        "2023_Nov_MD11_ANC_LINES",  // 9
-        "2023_Nov_MD11_LAX_LINES"   // 10
+        "2023_Dec_MD11_MEM_LINES",  // 0
+        "2023_Dec_A300_MEM_LINES",  // 1
+        "2023_Dec_B757_EUR_LINES",  // 2
+        "2023_Dec_B757_MEM_LINES",  // 3
+        "2023_Dec_B767_IND_LINES",  // 4
+        "2023_Dec_B767_MEM_LINES",  // 5
+        "2023_Dec_B767_OAK_LINES",  // 6
+        "2023_Dec_B777_ANC_LINES",  // 7
+        "2023_Dec_B777_MEM_LINES",  // 8
+        "2023_Dec_MD11_ANC_LINES",  // 9
+        "2023_Dec_MD11_LAX_LINES",  // 10
+        "2023_Nov_MD11_MEM_LINES",  // 11
+        "2023_Nov_A300_MEM_LINES",  // 12
+        "2023_Nov_B757_EUR_LINES",  // 13
+        "2023_Nov_B757_MEM_LINES",  // 14
+        "2023_Nov_B767_IND_LINES",  // 15
+        "2023_Nov_B767_MEM_LINES",  // 16
+        "2023_Nov_B767_OAK_LINES",  // 17
+        "2023_Nov_B777_ANC_LINES",  // 18
+        "2023_Nov_B777_MEM_LINES",  // 19
+        "2023_Nov_MD11_ANC_LINES",  // 20
+        "2023_Nov_MD11_LAX_LINES",  // 21
+        "2023_Oct_MD11_MEM_LINES",  // 22
+        "2023_Oct_A300_MEM_LINES",  // 23
+        "2023_Oct_B757_EUR_LINES",  // 24
+        "2023_Oct_B757_MEM_LINES",  // 25
+        "2023_Oct_B767_IND_LINES",  // 26
+        "2023_Oct_B767_MEM_LINES",  // 27
+        "2023_Oct_B767_OAK_LINES",  // 28
+        "2023_Oct_B777_ANC_LINES",  // 29
+        "2023_Oct_B777_MEM_LINES",  // 30
+        "2023_Oct_MD11_ANC_LINES",  // 31
+        "2023_Oct_MD11_LAX_LINES"   // 32
     ]
     
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
     }
     
-    static let testingUrl = urls[0]
+    static let testingUrl = urls[3]
     
     static let testBidpackExtension = "asc"
     static let testBidpackUrl =
@@ -58,9 +80,9 @@ class BidManager: ObservableObject {
    
     init(url: URL, seat: Bidpack.Seat) {
         do {
-            //            for url in BidManager.urls {
-            //                try Bidpack(with: url, seat: seat)
-            //            }
+//                        for url in BidManager.urls {
+//                            try Bidpack(with: url, seat: seat)
+//                        }
             let loadedBidpack = try Bidpack(with: url, seat: seat)
             bidpack = loadedBidpack
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 10))

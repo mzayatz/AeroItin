@@ -29,5 +29,8 @@ extension TimeInterval {
     var asDays: Double {
         self.asHours / 24
     }
-    
+   
+    static var day: TimeInterval {
+        return 86400
+    }
 }

@@ -64,8 +64,10 @@ struct ContentView: View {
                     }
             } else {
                 content()
-                    .onChange(of: bidManager.scrollSnap, perform: { newValue in
-                        proxy.scrollTo(bidManager.bidpack[keyPath: newValue.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
+                    .onChange(of: bidManager.scrollSnap, perform: { _ in
+                        withAnimation {
+                            proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
+                        }
                     })
             }
         }

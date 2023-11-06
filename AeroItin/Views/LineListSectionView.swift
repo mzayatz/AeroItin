@@ -39,7 +39,7 @@ struct LineListSectionView: View {
                         LineView(line: line)
                         LineButton(line: line, action: section.minusTransferAction)
                     }
-                }.onMove { 
+                }.onMove {
                     bidManager.bidpack[keyPath: section.associatedArrayKeypath].move(fromOffsets: $0, toOffset: $1)
                 }.moveDisabled(!bidManager.searchFilter.isEmpty)
             } header: {
@@ -48,21 +48,15 @@ struct LineListSectionView: View {
                     Spacer()
                     Text("Bids").foregroundStyle(Color.accentColor)
                         .onTapGesture {
-                            withAnimation {
-                                bidManager.scrollSnap = .bid
-                            }
+                            bidManager.scrollSnap = .bid
                         }
                     Text("Lines").foregroundStyle(Color.accentColor)
                         .onTapGesture {
-                            withAnimation {
-                                bidManager.scrollSnap = .neutral
-                            }
+                            bidManager.scrollSnap = .neutral
                         }
                     Text("Avoids").foregroundStyle(Color.accentColor)
                         .onTapGesture {
-                            withAnimation {
-                                bidManager.scrollSnap = .avoid
-                            }
+                            bidManager.scrollSnap = .avoid
                         }
                 }
                 

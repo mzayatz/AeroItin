@@ -137,14 +137,42 @@ struct Bidpack: Equatable, Codable {
         
         dates = lineSectionHeader.dates
         
-        guard let captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips),
-              let firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips) else {
+        guard var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips),
+              var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips) else {
             throw ParserError.noLinesFoundError
         }
+        let secondaryLines = Bidpack.computeAllSecondaryLinesIn(textRows, startIndex: endIndicies.firstOfficerReserveLines, endIndex: endIndicies.captainAndFirstOfficerVtoLines)
+        captainLines.append(contentsOf: secondaryLines.captain)
+        firstOfficerLines.append(contentsOf: secondaryLines.firstOfficer)
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
         self.seat = seat
         lines = seat == .firstOfficer ? firstOfficerLines : captainLines
+   
+    }
+    
+    static func computeAllSecondaryLinesIn(_ textRows: [String], 
+                                           startIndex: Int,
+                                           endIndex: Int) -> (captain: [Line], firstOfficer: [Line])
+    {
+        var captainLines = [Line]()
+        var firstOfficerLines = [Line]()
+        
+        let captainCount = textRows[startIndex + 2].split(separator: " ").last
+        if let captainCount {
+            for i in 1...(Int(captainCount) ?? 0) {
+                captainLines.append(Line(number: "S\(i)"))
+            }
+        }
+        
+        let firstOfficerCount = textRows[endIndex - 2].split(separator: " ").last
+        if let firstOfficerCount {
+            for i in 1...(Int(firstOfficerCount) ?? 0) {
+                firstOfficerLines.append(Line(number: "S\(i)"))
+            }
+        }
+        
+        return (captainLines, firstOfficerLines)
     }
     
     func timeIntervalFromStart(to date: Date) -> TimeInterval {

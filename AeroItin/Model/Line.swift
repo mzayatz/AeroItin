@@ -12,20 +12,22 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let number: String
     let trips: [Trip]
     var flag: Flag
-    let id: String
     let summary: Summary
     let layovers: Set<String>
     let category: Line.Category
     
-    init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone) {
+    var id: String {
+        number
+    }
+    
+    init(number: String) {
+        self.number = number
         text = [String]()
-        number = ""
         trips = [Trip]()
         flag = .neutral
-        id = ""
         summary = Summary()
         layovers = Set<String>()
-        category = .reserve
+        category = .secondary
     }
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
@@ -75,7 +77,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         }
         self.trips = lineTrips
         flag = .neutral
-        id = number
         var layoversBuffer = Set<String>()
         for trip in trips {
             layoversBuffer.formUnion(trip.layovers)

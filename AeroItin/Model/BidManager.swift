@@ -49,7 +49,7 @@ class BidManager: ObservableObject {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
     }
     
-    static let testingUrl = urls[22]
+    static let testingUrl = urls[0]
     
     static let testBidpackExtension = "asc"
     static let testBidpackUrl =
@@ -60,24 +60,10 @@ class BidManager: ObservableObject {
     @Published var searchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     
-    var lines: [Line] {
-        searchFilter.isEmpty ?  bidpack.lines : filterLines()
-    }
-    
     var bidpackDescription: String {
         "\(bidpack.base.rawValue) \(bidpack.equipment.rawValue) \(bidpack.seat.abbreviatedSeat) - \(bidpack.shortMonth) \(bidpack.year.suffix(2))"
     }
     
-    func filterLines() -> [Line] {
-        let iatas = searchFilter.components(separatedBy: .whitespaces).filter { $0.count == 3 }.map { $0.lowercased() }
-        
-        guard !iatas.isEmpty else {
-            return bidpack.lines
-        }
-        print(iatas)
-        return bidpack.lines.filter { $0.layovers.contains { iatas.contains($0) } }
-    }
-   
     init(url: URL, seat: Bidpack.Seat) {
         do {
 //                        for url in BidManager.urls {

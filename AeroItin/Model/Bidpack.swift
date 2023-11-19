@@ -38,6 +38,12 @@ struct Bidpack: Equatable, Codable {
         }
     }
     
+    var sortDescending = false {
+        didSet {
+            sortLines()
+        }
+    }
+    
     var seat: Seat {
         didSet {
             resetBid()
@@ -65,6 +71,25 @@ struct Bidpack: Equatable, Codable {
     
     var endDateLocal: Date {
         dates.last!
+    }
+    
+    private(set) var categoryFilter: Set<Line.Category> = []
+    
+    var showReserveLines = true {
+        didSet {
+            _ = showReserveLines ? categoryFilter.remove(.reserve) : categoryFilter.update(with: .reserve)
+        }
+    }
+    var showSecondaryLines = true {
+        didSet {
+            _ = showSecondaryLines ? categoryFilter.remove(.secondary) : categoryFilter.update(with: .secondary)
+        }
+    }
+    
+    var showRegularLines = true {
+        didSet {
+            _ = showRegularLines ? categoryFilter.remove(.regular) : categoryFilter.update(with: .regular)
+        }
     }
     
     var shortMonth: String {
@@ -289,6 +314,9 @@ struct Bidpack: Equatable, Codable {
     
     mutating func sortLines() {
         lines.sort(using: comparator)
+        if sortDescending {
+            lines.reverse()
+        }
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(

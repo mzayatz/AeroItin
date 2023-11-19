@@ -35,6 +35,32 @@ struct BidToolbarContent: ToolbarContent {
         }
         ToolbarItem {
             Menu {
+                Button(bidManager.bidpack.showRegularLines ? "Hide regular" : "Show regular") {
+                    bidManager.bidpack.showRegularLines.toggle()
+                }
+                Button(bidManager.bidpack.showSecondaryLines ? "Hide secondaries" : "Show secondaries") {
+                    bidManager.bidpack.showSecondaryLines.toggle()
+                }
+                Button(bidManager.bidpack.showReserveLines ? "Hide reserve" : "Show reserve") {
+                    bidManager.bidpack.showReserveLines.toggle()
+                }
+            } label: {
+                Image(systemName: "eye")
+            }
+        }
+        ToolbarItem {
+            Menu {
+                Picker(selection: $bidManager.bidpack.sortLinesBy) {
+                    ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
+                } label: {
+                    Text("Sort")
+                }
+            } label: {
+                Image(systemName: "arrow.up.arrow.down.square")
+            }
+        }
+        ToolbarItem {
+            Menu {
                 Menu("Seat:  \(bidManager.bidpack.seat.rawValue)") {
                     Picker(selection:
                             $bidManager.bidpack.seat) {
@@ -42,13 +68,6 @@ struct BidToolbarContent: ToolbarContent {
                         Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
                     } label: {
                         Text("Seat")
-                    }
-                }
-                Menu("Sort:  \(bidManager.bidpack.sortLinesBy.rawValue)") {
-                    Picker(selection: $bidManager.bidpack.sortLinesBy) {
-                        ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
-                    } label: {
-                        Text("Sort")
                     }
                 }
             } label: {

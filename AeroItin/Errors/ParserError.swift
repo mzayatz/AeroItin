@@ -19,5 +19,7 @@ enum ParserError: Error {
     case lineSectionHeaderNotFoundWithinFiveLinesOfSectionStart
     case lineSectionHeaderDateParsingError
     case lineCouldNotBeCreatedError(String)
-    case noLinesFoundError
+    case reserveLineCouldNotBeCreatedError(String)
+    case reserveLineNumberNotFoundError(String)
+    case noLinesFoundError // Still used?
 }

@@ -48,6 +48,7 @@
 		C920AC772AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */; };
 		C920AC782AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */; };
 		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
+		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
 		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -145,6 +146,7 @@
 		C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_B757_EUR_LINES.asc; sourceTree = "<group>"; };
 		C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
+		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
 		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */,
 				C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */,
 				C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */,
+				C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */,
 				C920AC602AF29094001344BC /* LineListView.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
+				C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,
 				C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */,

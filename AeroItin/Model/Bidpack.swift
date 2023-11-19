@@ -24,7 +24,7 @@ struct Bidpack: Equatable, Codable {
     
     static let testOutputFilenameWithExtension = "testOutput.txt"
     static let testOutputUrl = URL.documentsDirectory.appending(path: testOutputFilenameWithExtension)
-//    let text: [String]
+    //    let text: [String]
     let base: Base
     let equipment: Equipment
     let month: String
@@ -98,10 +98,10 @@ struct Bidpack: Equatable, Codable {
         }
     }
     
-//    var datesAsDayOfMonthStrings: [String] {
-//        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
-//        return dates.map { formatter.string(from: $0) }
-//    }
+    //    var datesAsDayOfMonthStrings: [String] {
+    //        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
+    //        return dates.map { formatter.string(from: $0) }
+    //    }
     
     private var comparator: KeyPathComparator<Line> {
         sortLinesBy.getKeyPath()
@@ -137,21 +137,92 @@ struct Bidpack: Equatable, Codable {
         
         dates = lineSectionHeader.dates
         
-        guard var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips),
-              var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips) else {
-            throw ParserError.noLinesFoundError
-        }
+        var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips)
+        
+        var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips)
+        
         let secondaryLines = Bidpack.computeAllSecondaryLinesIn(textRows, startIndex: endIndicies.firstOfficerReserveLines, endIndex: endIndicies.captainAndFirstOfficerVtoLines)
+        
+        let captainReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.firstOfficerRegularLines + 7, endIndex: endIndicies.captainReserveLines - 2, startDateLocal: dates.first!, timeZone: base.timeZone)
+        
+        let firstOfficerReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.captainReserveLines + 7, endIndex: endIndicies.firstOfficerReserveLines - 2, startDateLocal: dates.first!, timeZone: base.timeZone)
+        captainLines.append(contentsOf: captainReserveLines)
+        firstOfficerLines.append(contentsOf: firstOfficerReserveLines)
         captainLines.append(contentsOf: secondaryLines.captain)
         firstOfficerLines.append(contentsOf: secondaryLines.firstOfficer)
+        
         self.captainLines = captainLines
         self.firstOfficerLines = firstOfficerLines
+        
         self.seat = seat
         lines = seat == .firstOfficer ? firstOfficerLines : captainLines
-   
     }
     
-    static func computeAllSecondaryLinesIn(_ textRows: [String], 
+    static private func stringToThreeCharacterChunks(_ string: String) -> [String] {
+        var chunks = [String]()
+        var chunk = ""
+        for character in string {
+            chunk.append(character)
+            if chunk.count == 3 {
+                chunks.append(chunk)
+                chunk = ""
+            }
+        }
+        if chunk.count > 0 {
+            chunks.append(chunk)
+        }
+        return chunks
+    }
+    
+    static private func findAllReserveLinesIn(_ textRows: [String], startIndex: Int, endIndex: Int, startDateLocal: Date, timeZone: TimeZone) throws -> [Line] {
+        let rows = textRows[startIndex...endIndex]
+        var lines = [Line]()
+        let calendarLocal = Calendar.localCalendarFor(timeZone: timeZone)
+        for row in rows {
+            guard let lineNumber = row.split(separator: "|").first?.trimmingCharacters(in: .whitespaces) else {
+                throw ParserError.reserveLineNumberNotFoundError("Near lines \(startIndex) - \(endIndex)")
+            }
+            
+            if lineNumber.isInt {
+                let days = Bidpack.stringToThreeCharacterChunks(row.split(separator: "|").dropFirst().joined(separator: "|"))
+                let trips = days.enumerated().compactMap { i, text in
+                    var trip: Trip? = nil
+                    if lineNumber == "8001" {
+                        print("i: \(i) c: \(text)")
+                    }
+                    if text.contains("R") || text.contains("A") || text.contains("B") {
+                        if let effectiveDate = calendarLocal.date(byAdding: .day, value: i, to: startDateLocal)  {
+                            trip = Trip(number: text.trimmingCharacters(in: .whitespaces.union(.symbols)), effectiveDate: effectiveDate)
+                        }
+                    }
+                    return trip
+                }
+                lines.append(Line(number: String(lineNumber), trips: trips))
+            } else {
+                let lineNumbers = lineNumber.split(separator: "-")
+                if lineNumbers.count == 2 {
+                    let days = Bidpack.stringToThreeCharacterChunks(row)
+                    let trips = days.enumerated().compactMap { i, text in
+                        var trip: Trip? = nil
+                        if text.contains("R") || text.contains("A") || text.contains("B") {
+                            if let effectiveDate = calendarLocal.date(byAdding: .day, value: i, to: startDateLocal)  {
+                                trip = Trip(number: text.trimmingCharacters(in: .whitespaces.union(.symbols).union(.decimalDigits)), effectiveDate: effectiveDate)
+                            }
+                        }
+                        return trip
+                    }
+                    let startNumber = Int(lineNumbers.first!) ?? 0
+                    let endNumber = Int(lineNumbers.last!) ?? 0
+                    for number in startNumber...endNumber {
+                        lines.append(Line(number: String(number), trips: trips))
+                    }
+                }
+            }
+        }
+        return lines
+    }
+    
+    static func computeAllSecondaryLinesIn(_ textRows: [String],
                                            startIndex: Int,
                                            endIndex: Int) -> (captain: [Line], firstOfficer: [Line])
     {
@@ -179,13 +250,13 @@ struct Bidpack: Equatable, Codable {
         startDateLocal.distance(to: date)
     }
     
-//    mutating func setFlag(for line: Line, action: TransferActions) {
-//        let keyPaths = action.getKeyPaths()
-//        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
-//            return
-//        }
-//        self[keyPath: keyPaths.source][i].flag = action.flag
-//    }
+    //    mutating func setFlag(for line: Line, action: TransferActions) {
+    //        let keyPaths = action.getKeyPaths()
+    //        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
+    //            return
+    //        }
+    //        self[keyPath: keyPaths.source][i].flag = action.flag
+    //    }
     
     mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool) {
         let keyPaths = action.getKeyPaths()
@@ -193,7 +264,7 @@ struct Bidpack: Equatable, Codable {
             return
         }
         byAppending ? self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i)) :
-            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
+        self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
     }
     
     mutating func transferLine(line: Line, action: TransferActions) {
@@ -202,9 +273,9 @@ struct Bidpack: Equatable, Codable {
             return
         }
         action != .fromBidsToLines ? self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i)) :
-            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
+        self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
     }
-        
+    
     mutating func resetBid() {
         bids.removeAll()
         avoids.removeAll()
@@ -258,7 +329,7 @@ struct Bidpack: Equatable, Codable {
         return header!
     }
     
-    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date, timeZone: TimeZone, trips: [Trip]) throws -> [Line]? {
+    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date, timeZone: TimeZone, trips: [Trip]) throws -> [Line] {
         var lines = [Line]()
         
         var searchStartIndex = try findFirstLineStartIndexIn(textRows[linesStartIndex..<linesEndIndex])
@@ -281,7 +352,7 @@ struct Bidpack: Equatable, Codable {
             }
             maxLoopIterations -= 1
         }
-        return lines.isEmpty ? nil : lines
+        return lines
     }
     
     
@@ -326,13 +397,13 @@ struct Bidpack: Equatable, Codable {
     
     static private func findIndexOf<T: RandomAccessCollection>(
         _ string: String, in textRows: T, fromOffset: Int) throws -> Int where T.Element == String, T.Index == Int {
-        guard let index = textRows[(textRows.startIndex + fromOffset)...].firstIndex(where: {
-            $0.starts(with: string)
-        }) else {
-            throw ParserError.tokenNotFoundError("Near line \(textRows.startIndex)")
+            guard let index = textRows[(textRows.startIndex + fromOffset)...].firstIndex(where: {
+                $0.starts(with: string)
+            }) else {
+                throw ParserError.tokenNotFoundError("Near line \(textRows.startIndex)")
+            }
+            return index
         }
-        return index
-    }
     
     static private func findSectionEndIndicies(_ textRows: [String], sectionCount: Int) throws -> EndIndicies {
         var indicies = [Int]()
@@ -361,7 +432,7 @@ struct Bidpack: Equatable, Codable {
         let firstOfficerReserveLines: Int
         let captainAndFirstOfficerVtoLines: Int
     }
-
+    
     struct LineSectionHeader {
         let startDate: Date
         let endDate: Date
@@ -382,7 +453,7 @@ struct Bidpack: Equatable, Codable {
             }
         }
     }
-   
+    
     
     
     enum Base: String, Codable {
@@ -441,16 +512,16 @@ struct Bidpack: Equatable, Codable {
         case fromAvoidsToLines
         case fromAvoidsToBids
         
-//        var flag: Line.Flag {
-//            switch self {
-//            case .fromAvoidsToBids, .fromLinesToBids:
-//                return .bid
-//            case .fromAvoidsToLines, .fromBidsToLines:
-//                return .neutral
-//            case .fromLinesToAvoids, .fromBidsToAvoids:
-//                return .avoid
-//            }
-//        }
+        //        var flag: Line.Flag {
+        //            switch self {
+        //            case .fromAvoidsToBids, .fromLinesToBids:
+        //                return .bid
+        //            case .fromAvoidsToLines, .fromBidsToLines:
+        //                return .neutral
+        //            case .fromLinesToAvoids, .fromBidsToAvoids:
+        //                return .avoid
+        //            }
+        //        }
         
         func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
             switch self {

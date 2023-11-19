@@ -30,6 +30,16 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         category = .secondary
     }
     
+    init(number: String, trips: [Trip]) {
+        self.number = number
+        text = [String]()
+        self.trips = trips
+        flag = .neutral
+        summary = Summary()
+        layovers = Set<String>()
+        category = .reserve
+    }
+    
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
         guard textRows.count == 6 else {
             assertionFailure("Line text != 6. Should be 6.")

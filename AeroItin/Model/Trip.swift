@@ -25,7 +25,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     }
     
     var shortDescription: String {
-        layovers.joined(separator: "-")
+        layovers.isEmpty ? number : layovers.joined(separator: "-")
     }
    
     init() {
@@ -36,6 +36,18 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         blockHours = 0
         landings = 0
         timeAwayFromBase = 0
+        layovers = [String]()
+        deadheads = .none
+    }
+    
+    init(number: String, effectiveDate: Date) {
+        text = ["\(number) Reserve"]
+        self.number = number
+        self.effectiveDates = [effectiveDate]
+        creditHours = 0
+        blockHours = 0
+        landings = 0
+        timeAwayFromBase = .day
         layovers = [String]()
         deadheads = .none
     }

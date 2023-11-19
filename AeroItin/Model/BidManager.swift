@@ -49,7 +49,7 @@ class BidManager: ObservableObject {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
     }
     
-    static let testingUrl = urls[3]
+    static let testingUrl = urls[22]
     
     static let testBidpackExtension = "asc"
     static let testBidpackUrl =

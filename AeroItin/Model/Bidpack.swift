@@ -187,9 +187,6 @@ struct Bidpack: Equatable, Codable {
                 let days = Bidpack.stringToThreeCharacterChunks(row.split(separator: "|").dropFirst().joined(separator: "|"))
                 let trips = days.enumerated().compactMap { i, text in
                     var trip: Trip? = nil
-                    if lineNumber == "8001" {
-                        print("i: \(i) c: \(text)")
-                    }
                     if text.contains("R") || text.contains("A") || text.contains("B") {
                         if let effectiveDate = calendarLocal.date(byAdding: .day, value: i, to: startDateLocal)  {
                             trip = Trip(number: text.trimmingCharacters(in: .whitespaces.union(.symbols)), effectiveDate: effectiveDate)

@@ -33,7 +33,7 @@ struct LineListSectionView: View {
     var body: some View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
             Section {
-                ForEach(section != .neutral || filteredLines.isEmpty ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : filteredLines) { line in
+                ForEach(section != .neutral || bidManager.searchFilter.isEmpty ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : filteredLines) { line in
                     HStack {
                         LineButton(line: line, action: section.plusTransferAction)
                         LineView(line: line)

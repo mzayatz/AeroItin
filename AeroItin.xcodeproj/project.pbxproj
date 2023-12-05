@@ -48,7 +48,11 @@
 		C920AC772AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */; };
 		C920AC782AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */; };
 		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
+		C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C930F05D2B17B3D000D635C0 /* WebError.swift */; };
+		C930F0602B17C71C00D635C0 /* WebViewStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C930F05F2B17C71C00D635C0 /* WebViewStack.swift */; };
+		C942D7A72B1FDAAB00FCE4A7 /* LinesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C942D7A62B1FDAAB00FCE4A7 /* LinesTabView.swift */; };
 		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
+		C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B5872B0D2C9D009EBAAA /* WebView.swift */; };
 		C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97B7FB12AA66F3400AAE37E /* TestLineView.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -63,6 +67,7 @@
 		C984FFEF2AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C984FFE52AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc */; };
 		C984FFF02AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C984FFE62AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc */; };
 		C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFF12AA29AC100DFB924 /* BidManager.swift */; };
+		C9A4A4F02B1ABD6D00744A3E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A4A4EF2B1ABD6D00744A3E /* WebViewModel.swift */; };
 		C9A615C52AE6F0DC00822B26 /* LineListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */; };
 		C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A615C82AE87F8E00822B26 /* UTType+asc.swift */; };
 		C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */; };
@@ -146,7 +151,11 @@
 		C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_B757_EUR_LINES.asc; sourceTree = "<group>"; };
 		C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
+		C930F05D2B17B3D000D635C0 /* WebError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebError.swift; sourceTree = "<group>"; };
+		C930F05F2B17C71C00D635C0 /* WebViewStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewStack.swift; sourceTree = "<group>"; };
+		C942D7A62B1FDAAB00FCE4A7 /* LinesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinesTabView.swift; sourceTree = "<group>"; };
 		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
+		C973B5872B0D2C9D009EBAAA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C97B7FB12AA66F3400AAE37E /* TestLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLineView.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -161,6 +170,7 @@
 		C984FFE52AA22E1800DFB924 /* 2023_Sep_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Sep_B757_MEM_LINES.asc; sourceTree = "<group>"; };
 		C984FFE62AA22E1800DFB924 /* 2023_Sep_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Sep_B757_EUR_LINES.asc; sourceTree = "<group>"; };
 		C984FFF12AA29AC100DFB924 /* BidManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidManager.swift; sourceTree = "<group>"; };
+		C9A4A4EF2B1ABD6D00744A3E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineListSectionView.swift; sourceTree = "<group>"; };
 		C9A615C82AE87F8E00822B26 /* UTType+asc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+asc.swift"; sourceTree = "<group>"; };
 		C9A615CA2AE880CA00822B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -220,10 +230,12 @@
 			children = (
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
+				C930F05F2B17C71C00D635C0 /* WebViewStack.swift */,
 				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
 				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
 				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
+				C942D7A62B1FDAAB00FCE4A7 /* LinesTabView.swift */,
 				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
 				C920AC5F2AF29094001344BC /* LineListView.swift */,
 				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
@@ -232,6 +244,15 @@
 				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C973B5822B0D24C2009EBAAA /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				C973B5872B0D2C9D009EBAAA /* WebView.swift */,
+				C9A4A4EF2B1ABD6D00744A3E /* WebViewModel.swift */,
+			);
+			path = WebView;
 			sourceTree = "<group>";
 		};
 		C9ACFBFA2A9E4AAA009ACF28 = {
@@ -263,6 +284,7 @@
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
 				C920AC5E2AF29014001344BC /* Views */,
+				C973B5822B0D24C2009EBAAA /* WebView */,
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
@@ -363,6 +385,7 @@
 			children = (
 				C9ACFC392A9E4FDE009ACF28 /* ParserError.swift */,
 				C984FFD92AA13A7E00DFB924 /* DateError.swift */,
+				C930F05D2B17B3D000D635C0 /* WebError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -564,7 +587,9 @@
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
 				C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */,
 				C9A615C52AE6F0DC00822B26 /* LineListSectionView.swift in Sources */,
+				C942D7A72B1FDAAB00FCE4A7 /* LinesTabView.swift in Sources */,
 				C9ACFC402A9FD76D009ACF28 /* DateFormatter+tripHeaderFormatter.swift in Sources */,
+				C9A4A4F02B1ABD6D00744A3E /* WebViewModel.swift in Sources */,
 				C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */,
 				C920AC602AF29094001344BC /* LineListView.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
@@ -575,15 +600,18 @@
 				C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */,
 				C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */,
 				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
+				C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
 				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
 				C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */,
+				C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */,
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
 				C920AC622AF291D4001344BC /* BidToolbarContent.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
+				C930F0602B17C71C00D635C0 /* WebViewStack.swift in Sources */,
 				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,
 				C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */,
 				C91F6C1D2AE6D9EF008D0717 /* LineButton.swift in Sources */,

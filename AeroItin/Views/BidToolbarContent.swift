@@ -11,6 +11,7 @@ struct BidToolbarContent: ToolbarContent {
     @Binding var showFileImporter: Bool
     @Binding var showResetAlert: Bool
     @EnvironmentObject var bidManager: BidManager
+    @State var showSheet = false
     
     var body: some ToolbarContent {
         ToolbarItem {
@@ -72,6 +73,11 @@ struct BidToolbarContent: ToolbarContent {
                 }
             } label: {
                 Image(systemName: "gear")
+            }
+        }
+        ToolbarItem {
+            NavigationLink(destination: WebViewStack()) {
+                Image(systemName: "globe")
             }
         }
     }

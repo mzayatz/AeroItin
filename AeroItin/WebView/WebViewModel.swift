@@ -10,7 +10,8 @@ import WebKit
 
 class WebViewModel: ObservableObject {
     weak var webView: WKWebView?
-
+    let initialUrlString = "https://pilot.fedex.com"
+    
     var title: String? {
         webView?.title
     }
@@ -21,5 +22,8 @@ class WebViewModel: ObservableObject {
         }
         webView?.load(URLRequest(url: url))
     }
-    
+   
+    func loadDefaultUrl() {
+        loadUrlString(initialUrlString)
+    }
 }

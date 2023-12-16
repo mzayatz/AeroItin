@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct TabSettingsView: View {
+    @State var employeeNumber = ""
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            Form {
+                Section("Settings") {
+                    TextField("Employee #:", text: $employeeNumber)
+                }
+            }.navigationTitle("Settings")
+        }
     }
 }
 

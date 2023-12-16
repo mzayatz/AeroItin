@@ -10,16 +10,27 @@ import SwiftUI
 
 class BidManager: ObservableObject {
     static let filenames = [
-        "2023_Dec_MD11_MEM_LINES",  // 0
-        "2023_Dec_A300_MEM_LINES",  // 1
-        "2023_Dec_B757_EUR_LINES",  // 2
-        "2023_Dec_B757_MEM_LINES",  // 3
-        "2023_Dec_B767_IND_LINES",  // 4
-        "2023_Dec_B767_MEM_LINES",  // 5
-        "2023_Dec_B767_OAK_LINES",  // 6
-        "2023_Dec_B777_ANC_LINES",  // 7
-        "2023_Dec_B777_MEM_LINES",  // 8
-        "2023_Dec_MD11_ANC_LINES",  // 9
+        "2024_Jan_MD11_MEM_LINES",  // 0
+        "2024_Jan_A300_MEM_LINES",  // 1
+        "2024_Jan_B757_EUR_LINES",  // 2
+        "2024_Jan_B757_MEM_LINES",  // 3
+        "2024_Jan_B767_IND_LINES",  // 4
+        "2024_Jan_B767_MEM_LINES",  // 5
+        "2024_Jan_B767_OAK_LINES",  // 6
+        "2024_Jan_B777_ANC_LINES",  // 7
+        "2024_Jan_B777_MEM_LINES",  // 8
+        "2024_Jan_MD11_ANC_LINES",  // 9
+        "2024_Jan_MD11_LAX_LINES",  // 10
+        "2023_Dec_MD11_MEM_LINES",  // 11
+        "2023_Dec_A300_MEM_LINES",  // 12
+        "2023_Dec_B757_EUR_LINES",  // 13
+        "2023_Dec_B757_MEM_LINES",  // 14
+        "2023_Dec_B767_IND_LINES",  // 15
+        "2023_Dec_B767_MEM_LINES",  // 16
+        "2023_Dec_B767_OAK_LINES",  // 17
+        "2023_Dec_B777_ANC_LINES",  // 18
+        "2023_Dec_B777_MEM_LINES",  // 19
+        "2023_Dec_MD11_ANC_LINES",  // 20
         "2023_Dec_MD11_LAX_LINES",  // 10
         "2023_Nov_MD11_MEM_LINES",  // 11
         "2023_Nov_A300_MEM_LINES",  // 12
@@ -61,7 +72,7 @@ class BidManager: ObservableObject {
     @Published var scrollSnap: Line.Flag = .neutral
     
     var bidpackDescription: String {
-        "\(bidpack.base.rawValue) \(bidpack.equipment.rawValue) \(bidpack.seat.abbreviatedSeat) - \(bidpack.shortMonth) \(bidpack.year.suffix(2))"
+        "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
     }
     
     init(url: URL, seat: Bidpack.Seat) {

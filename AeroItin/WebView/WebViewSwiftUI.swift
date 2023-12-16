@@ -10,13 +10,14 @@ import SwiftUI
 struct WebViewSwiftUI: View {
     @EnvironmentObject var bidManager: BidManager
     @StateObject var webViewModel = WebViewModel()
-    
-    let startUrl = URL(string: "https://pilot.fedex.com")!
-    
+        
     var body: some View {
         NavigationStack {
-            WebView(url: startUrl, viewModel: webViewModel)
-                .navigationTitle(bidManager.bidpackDescription)
+            WebView(viewModel: webViewModel)
+                .navigationTitle(webViewModel.title ?? "loading...")
+                .onAppear {
+                    webViewModel.loadDefaultUrl()
+                }
         }
     }
 }

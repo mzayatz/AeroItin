@@ -60,6 +60,10 @@ struct Bidpack: Equatable, Codable {
     var lines: [Line]
     var bids = [Line]()
     var avoids = [Line]()
+   
+    var lineNumbersOfBids: [String] {
+        bids.map { $0.number }
+    }
     
     var bes: String {
         base.rawValue + equipment.rawValue + seat.rawValue + month + year
@@ -73,14 +77,14 @@ struct Bidpack: Equatable, Codable {
         dates.last!
     }
     
-    private(set) var categoryFilter: Set<Line.Category> = []
+    private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
     
-    var showReserveLines = true {
+    var showReserveLines = false {
         didSet {
             _ = showReserveLines ? categoryFilter.remove(.reserve) : categoryFilter.update(with: .reserve)
         }
     }
-    var showSecondaryLines = true {
+    var showSecondaryLines = false {
         didSet {
             _ = showSecondaryLines ? categoryFilter.remove(.secondary) : categoryFilter.update(with: .secondary)
         }
@@ -472,9 +476,9 @@ struct Bidpack: Equatable, Codable {
         var abbreviatedSeat: String {
             switch self {
             case .captain:
-                return "CAP"
+                return "C"
             case .firstOfficer:
-                return "F/O"
+                return "F"
             }
         }
     }
@@ -590,14 +594,31 @@ struct Bidpack: Equatable, Codable {
                 return KeyPathComparator(\Line.summary.dutyPeriods)
             }
         }
+        
+        var symbol: String {
+            switch self {
+            case .number:
+                return "number"
+            case .creditHours:
+                return "creditcard"
+            case .blockHours:
+                return "clock"
+            case .landings:
+                return "airplane.arrival"
+            case .daysOff:
+                return "sunglasses.fill"
+            case .dutyPeriods:
+                return "mappin.and.ellipse"
+            }
+        }
     }
     
     enum Equipment: String, Codable {
-        case md11 = "MD11"
-        case a300 = "A300"
-        case b757 = "B757"
-        case b767 = "B767"
-        case b777 = "B777"
+        case md11 = "11"
+        case a300 = "30"
+        case b757 = "57"
+        case b767 = "67"
+        case b777 = "77"
         case other
         
         static func from(_ string: String) -> Equipment {

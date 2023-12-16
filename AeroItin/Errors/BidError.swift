@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum BidError: Error {
+    case numberOfLinesBidError(Int)
+}

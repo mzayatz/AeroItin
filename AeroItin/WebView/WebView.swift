@@ -16,13 +16,11 @@ import WebKit
 
 struct WebView: WebViewRepresentable {
    
-    let url: URL
     @ObservedObject var viewModel: WebViewModel
     
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
         viewModel.webView = webView
-        webView.load(URLRequest(url: url))
         return webView
     }
     

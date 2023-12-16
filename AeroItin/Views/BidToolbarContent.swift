@@ -15,70 +15,72 @@ struct BidToolbarContent: ToolbarContent {
     
     var body: some ToolbarContent {
         ToolbarItem {
-            Button {
-                showFileImporter = true
+            Menu {
+                Picker(selection:
+                        $bidManager.bidpack.seat) {
+                    Text(Bidpack.Seat.captain.rawValue).tag(Bidpack.Seat.captain)
+                    Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
+                } label: {
+                    Text("Seat")
+                }
             } label: {
-                Image(systemName: "doc")
+                Image(systemName: "chair.lounge")
             }
         }
-        ToolbarItem {
-            Button {
-                showResetAlert = true
-            } label: {
-                Image(systemName: "clear").symbolRenderingMode(.monochrome).foregroundColor(.red)
-            }.alert(isPresented: $showResetAlert) {
-                Alert(
-                    title: Text("Clear bids and avoids?"),
-                    primaryButton: .cancel(),
-                    secondaryButton: .destructive(Text("Clear all"), action: bidManager.resetBid)
-                )
-            }
-        }
+        
         ToolbarItem {
             Menu {
-                Button(bidManager.bidpack.showRegularLines ? "Hide regular" : "Show regular") {
-                    bidManager.bidpack.showRegularLines.toggle()
-                }
-                Button(bidManager.bidpack.showSecondaryLines ? "Hide secondaries" : "Show secondaries") {
-                    bidManager.bidpack.showSecondaryLines.toggle()
-                }
-                Button(bidManager.bidpack.showReserveLines ? "Hide reserve" : "Show reserve") {
-                    bidManager.bidpack.showReserveLines.toggle()
-                }
+                Toggle("Show Regular Lines", isOn: $bidManager.bidpack.showRegularLines)
+                Toggle("Show Secondary Lines", isOn: $bidManager.bidpack.showSecondaryLines)
+                Toggle("Show Reserve Lines", isOn: $bidManager.bidpack.showReserveLines)
             } label: {
-                Image(systemName: "eye")
+                Image(systemName: "line.3.horizontal.decrease")
             }
         }
         ToolbarItem {
             Menu {
                 Picker(selection: $bidManager.bidpack.sortLinesBy) {
-                    ForEach(Bidpack.SortOptions.allCases, id: \.self) { Text($0.rawValue) }
+                    ForEach(Bidpack.SortOptions.allCases, id: \.self) { sortItem in
+                        Button { } label: {
+                            HStack {
+                                Text(sortItem.rawValue)
+                                Image(systemName: sortItem.symbol)
+                            }
+                        }
+                    }
                 } label: {
                     Text("Sort")
                 }
             } label: {
-                Image(systemName: "arrow.up.arrow.down.square")
+                Image(systemName: "arrow.up.arrow.down")
             }
         }
         ToolbarItem {
             Menu {
-                Menu("Seat:  \(bidManager.bidpack.seat.rawValue)") {
-                    Picker(selection:
-                            $bidManager.bidpack.seat) {
-                        Text(Bidpack.Seat.captain.rawValue).tag(Bidpack.Seat.captain)
-                        Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
-                    } label: {
-                        Text("Seat")
+                Button {
+                    showFileImporter = true
+                } label: {
+                    HStack {
+                        Text("Open New Bidpack")
+                        Image(systemName: "doc")
+                    }
+                }
+                
+                Button(role: .destructive) {
+                    showResetAlert = true
+                } label: {
+                    HStack {
+                        Text("Clear Bids & Avoids")
+                        Image(systemName: "clear")
                     }
                 }
             } label: {
-                Image(systemName: "gear")
+                Image(systemName: "folder")
             }
         }
+        
         ToolbarItem {
-            NavigationLink(destination: WebViewStack()) {
-                Image(systemName: "globe")
-            }
+            Spacer()
         }
     }
 }

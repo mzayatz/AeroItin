@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-struct WebViewStack: View {
-    
+struct WebViewSwiftUI: View {
+    @EnvironmentObject var bidManager: BidManager
     @StateObject var webViewModel = WebViewModel()
     
     let startUrl = URL(string: "https://pilot.fedex.com")!
     
     var body: some View {
-        VStack {
-            Button("fedex") {
-                webViewModel.loadUrlString("https://pilot.fedex.com")
-            }
+        NavigationStack {
             WebView(url: startUrl, viewModel: webViewModel)
+                .navigationTitle(bidManager.bidpackDescription)
         }
     }
 }
 
-#Preview {
-    WebViewStack()
-}
+//#Preview {
+//    WebViewStack()
+//}

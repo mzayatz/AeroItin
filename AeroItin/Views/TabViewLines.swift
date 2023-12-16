@@ -8,7 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct LinesTabView: View {
+struct TabViewLines: View {
     @EnvironmentObject var bidManager: BidManager
     @State var searchText = ""
     @State var showResetAlert = false
@@ -49,8 +49,12 @@ struct LinesTabView: View {
                         .transition(AnyTransition.move(edge: .bottom))
                 }
             }
-        }.tabItem {
-            Label("Lines", systemImage: "list.dash.header.rectangle")
+        }.alert(isPresented: $showResetAlert) {
+            Alert(
+                title: Text("Clear bids and avoids?"),
+                primaryButton: .cancel(),
+                secondaryButton: .destructive(Text("Clear all"), action: bidManager.resetBid)
+            )
         }
     }
     

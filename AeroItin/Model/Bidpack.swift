@@ -60,7 +60,7 @@ struct Bidpack: Equatable, Codable {
     var lines: [Line]
     var bids = [Line]()
     var avoids = [Line]()
-   
+  
     var lineNumbersOfBids: [String] {
         bids.map { $0.number }
     }

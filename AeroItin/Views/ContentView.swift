@@ -10,6 +10,11 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @EnvironmentObject var bidManager: BidManager
+    
+    @Environment(\.scenePhase) private var scenePhase
+    
+    let saveAction: () -> Void
+    
     var body: some View {
         TabView {
             TabViewLines().tabItem {
@@ -22,9 +27,15 @@ struct ContentView: View {
                 Label("Settings", systemImage: "gear")
             }
         }
+        .onChange(of: scenePhase) { phase in
+            if phase == .inactive {
+                saveAction()
+            }
+        }
     }
 }
 
 #Preview {
-    return ContentView().environmentObject(BidManager(seat: .firstOfficer))
+    return ContentView(saveAction: {})
+        .environmentObject(BidManager(seat: .firstOfficer))
 }

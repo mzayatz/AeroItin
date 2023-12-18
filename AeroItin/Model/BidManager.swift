@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class BidManager: ObservableObject {
     static let filenames = [
         "2024_Jan_MD11_MEM_LINES",  // 0
@@ -56,6 +57,28 @@ class BidManager: ObservableObject {
         "2023_Oct_MD11_LAX_LINES"   // 32
     ]
     
+    let settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
+    
+    func loadSettings() async throws {
+        let task = Task<Settings, Error> {
+            guard let data = try? Data(contentsOf: settingsUrl) else {
+                return Settings()
+            }
+            let settings = try JSONDecoder().decode(Settings.self, from: data)
+            return settings
+        }
+        settings = try await task.value
+    }
+    
+    func saveSettings() async throws {
+        let task = Task {
+            let data = try JSONEncoder().encode(settings)
+            try data.write(to: settingsUrl)
+        }
+        _ = try await task.value
+        
+    }
+    
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
     }
@@ -70,6 +93,7 @@ class BidManager: ObservableObject {
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
+    @Published var settings = Settings()
     
     var bidpackDescription: String {
         "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"

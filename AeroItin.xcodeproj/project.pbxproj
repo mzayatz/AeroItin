@@ -21,6 +21,7 @@
 		C906BBBD2AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */; };
 		C907095B2B2B414A003A58E9 /* TabSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907095A2B2B414A003A58E9 /* TabSettingsView.swift */; };
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
+		C90CE9152B2FE44600C6BBFF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90CE9142B2FE44600C6BBFF /* Settings.swift */; };
 		C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91093A92ABF45C5002C7474 /* BidpackDateView.swift */; };
 		C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */; };
 		C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */; };
@@ -139,6 +140,7 @@
 		C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C907095A2B2B414A003A58E9 /* TabSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSettingsView.swift; sourceTree = "<group>"; };
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
+		C90CE9142B2FE44600C6BBFF /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		C91093A92ABF45C5002C7474 /* BidpackDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDateView.swift; sourceTree = "<group>"; };
 		C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date.FormatStyle.DateStyle+inTimeZone.swift"; sourceTree = "<group>"; };
 		C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_IND_LINES.asc; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				C9ACFC492AA0B592009ACF28 /* Line.swift */,
 				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
 				C9A8ACF02B24A25400078057 /* Bid.swift */,
+				C90CE9142B2FE44600C6BBFF /* Settings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */,
 				C984FFF22AA29AC100DFB924 /* BidManager.swift in Sources */,
+				C90CE9152B2FE44600C6BBFF /* Settings.swift in Sources */,
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,
 				C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */,
 				C97B7FB22AA66F3400AAE37E /* TestLineView.swift in Sources */,

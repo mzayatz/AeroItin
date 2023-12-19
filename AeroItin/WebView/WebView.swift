@@ -25,6 +25,14 @@ struct WebView: WebViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) { }
+    
+    func makeNSView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        viewModel.webView = webView
+        return webView
+    }
+    
+    func updateNSView(_ nsView: WKWebView, context: Context) { }
 }
 
 //#Preview {

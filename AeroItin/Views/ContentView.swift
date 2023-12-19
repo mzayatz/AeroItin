@@ -20,11 +20,8 @@ struct ContentView: View {
             TabViewLines().tabItem {
                 Label("Lines", systemImage: "list.dash.header.rectangle")
             }
-            SubmitBidView().tabItem {
+            TabSubmitView().tabItem {
                 Label("Submit", systemImage: "globe")
-            }
-            TabSettingsView().tabItem {
-                Label("Settings", systemImage: "gear")
             }
         }
         .onChange(of: scenePhase) { phase in

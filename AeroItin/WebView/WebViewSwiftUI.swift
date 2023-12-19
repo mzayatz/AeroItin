@@ -14,7 +14,6 @@ struct WebViewSwiftUI: View {
     var body: some View {
         NavigationStack {
             WebView(viewModel: webViewModel)
-                .navigationTitle(webViewModel.title ?? "loading...")
                 .onAppear {
                     webViewModel.loadDefaultUrl()
                 }

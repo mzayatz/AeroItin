@@ -1,5 +1,5 @@
 //
-//  SubmitBidView.swift
+//  TabSubmitView.swift
 //  FastBid
 //
 //  Created by Matt Zayatz on 4/24/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SubmitBidView: View {
+struct TabSubmitView: View {
     @State private var showEmptyBidAlert = false
     @EnvironmentObject var bidManager: BidManager
     
@@ -42,9 +42,17 @@ struct SubmitBidView: View {
                         }
                     }
                     Section {
-                        LabeledContent("Employee #:") {
-                            TextField("Employee #", text: $bidManager.settings.employeeNumber)
+#if os(iOS)
+                        LabeledContent {
+                            TextField("", text: $bidManager.settings.employeeNumber, prompt: Text("Required"))
+                        } label: {
+                            Text("Employee #:")
                         }
+#elseif os(macOS)
+                        TextField("Employee #:", text: $bidManager.settings.employeeNumber, prompt: Text("Required")).fixedSize()
+#endif
+
+
                         HStack { Text("Month / Base / Equipment / Seat: "); Text(bidManager.bidpackDescription).foregroundStyle(.secondary) }
                     } header: {
                         Text("Confirmation")
@@ -52,11 +60,12 @@ struct SubmitBidView: View {
                         Text("Change seat on lines tab.")
                     }
                 }
+                WebViewSwiftUI()
             }.navigationTitle("Submit")
-        }
+        }.formStyle(.grouped)
     }
 }
 
-//#Preview {
-//   return SubmitBidView()
-//}
+#Preview {
+    return TabSubmitView().environmentObject(BidManager(seat: .firstOfficer))
+}

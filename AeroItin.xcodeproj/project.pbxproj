@@ -19,7 +19,6 @@
 		C906BBBB2AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB02AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc */; };
 		C906BBBC2AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB12AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc */; };
 		C906BBBD2AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */; };
-		C907095B2B2B414A003A58E9 /* TabSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907095A2B2B414A003A58E9 /* TabSettingsView.swift */; };
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
 		C90CE9152B2FE44600C6BBFF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90CE9142B2FE44600C6BBFF /* Settings.swift */; };
 		C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91093A92ABF45C5002C7474 /* BidpackDateView.swift */; };
@@ -74,7 +73,7 @@
 		C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A615C82AE87F8E00822B26 /* UTType+asc.swift */; };
 		C9A8ACF12B24A25400078057 /* Bid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8ACF02B24A25400078057 /* Bid.swift */; };
 		C9A8ACF32B24A36200078057 /* BidError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8ACF22B24A36200078057 /* BidError.swift */; };
-		C9A8ACF52B24A4B100078057 /* SubmitBidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8ACF42B24A4B100078057 /* SubmitBidView.swift */; };
+		C9A8ACF52B24A4B100078057 /* TabSubmitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8ACF42B24A4B100078057 /* TabSubmitView.swift */; };
 		C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */; };
 		C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */; };
 		C9ACFC0B2A9E4AAB009ACF28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */; };
@@ -138,7 +137,6 @@
 		C906BBB02AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_A300_MEM_LINES.asc; sourceTree = "<group>"; };
 		C906BBB12AD0A2F7004D331E /* 2023_Nov_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B767_MEM_LINES.asc; sourceTree = "<group>"; };
 		C906BBB22AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
-		C907095A2B2B414A003A58E9 /* TabSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSettingsView.swift; sourceTree = "<group>"; };
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
 		C90CE9142B2FE44600C6BBFF /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		C91093A92ABF45C5002C7474 /* BidpackDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDateView.swift; sourceTree = "<group>"; };
@@ -194,7 +192,7 @@
 		C9A615CA2AE880CA00822B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C9A8ACF02B24A25400078057 /* Bid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bid.swift; sourceTree = "<group>"; };
 		C9A8ACF22B24A36200078057 /* BidError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidError.swift; sourceTree = "<group>"; };
-		C9A8ACF42B24A4B100078057 /* SubmitBidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitBidView.swift; sourceTree = "<group>"; };
+		C9A8ACF42B24A4B100078057 /* TabSubmitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSubmitView.swift; sourceTree = "<group>"; };
 		C9ACFC032A9E4AAA009ACF28 /* AeroItin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeroItin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AeroItinApp.swift; sourceTree = "<group>"; };
 		C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -273,8 +271,7 @@
 				C97B7FB12AA66F3400AAE37E /* TestLineView.swift */,
 				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
 				C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */,
-				C9A8ACF42B24A4B100078057 /* SubmitBidView.swift */,
-				C907095A2B2B414A003A58E9 /* TabSettingsView.swift */,
+				C9A8ACF42B24A4B100078057 /* TabSubmitView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -662,7 +659,6 @@
 				C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */,
 				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
 				C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */,
-				C907095B2B2B414A003A58E9 /* TabSettingsView.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
 				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
 				C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */,
@@ -672,7 +668,7 @@
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
-				C9A8ACF52B24A4B100078057 /* SubmitBidView.swift in Sources */,
+				C9A8ACF52B24A4B100078057 /* TabSubmitView.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
 				C930F0602B17C71C00D635C0 /* WebViewSwiftUI.swift in Sources */,
 				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,

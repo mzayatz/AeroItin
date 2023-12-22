@@ -60,7 +60,6 @@ struct TabSubmitView: View {
                         Text("Change seat on lines tab.")
                     }
                 }
-                WebViewSwiftUI()
             }.navigationTitle("Submit")
         }.formStyle(.grouped)
     }

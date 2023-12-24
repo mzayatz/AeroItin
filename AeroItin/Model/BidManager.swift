@@ -57,37 +57,22 @@ class BidManager: ObservableObject {
         "2023_Oct_MD11_LAX_LINES"   // 32
     ]
     
-    let settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
-    
-    func loadSettings() async throws {
-        let task = Task<Settings, Error> {
-            guard let data = try? Data(contentsOf: settingsUrl) else {
-                return Settings()
-            }
-            let settings = try JSONDecoder().decode(Settings.self, from: data)
-            return settings
-        }
-        settings = try await task.value
-    }
-    
-    func saveSettings() async throws {
-        let task = Task {
-            let data = try JSONEncoder().encode(settings)
-            try data.write(to: settingsUrl)
-        }
-        _ = try await task.value
-        
-    }
-    
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
     }
-    
     static let testingUrl = urls[0]
-    
     static let testBidpackExtension = "asc"
     static let testBidpackUrl =
         Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
+    
+    let lineHeight: CGFloat = 50
+    let lineLabelWidth: CGFloat = 50
+    let sensibleScreenWidth: CGFloat = 1000
+    let dayWidth: CGFloat
+    let hourWidth:  CGFloat
+    let minuteWidth: CGFloat
+    let secondWidth: CGFloat
+    let settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
@@ -101,9 +86,9 @@ class BidManager: ObservableObject {
     
     init(url: URL, seat: Bidpack.Seat) {
         do {
-//                        for url in BidManager.urls {
-//                            try Bidpack(with: url, seat: seat)
-//                        }
+//            for url in BidManager.urls {
+//                try Bidpack(with: url, seat: seat)
+//            }
             let loadedBidpack = try Bidpack(with: url, seat: seat)
             bidpack = loadedBidpack
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 10))
@@ -128,25 +113,25 @@ class BidManager: ObservableObject {
         self.init(url: BidManager.testingUrl, seat: seat)
     }
     
+    func loadSettings() async throws {
+        let task = Task<Settings, Error> {
+            guard let data = try? Data(contentsOf: settingsUrl) else {
+                return Settings()
+            }
+            let settings = try JSONDecoder().decode(Settings.self, from: data)
+            return settings
+        }
+        settings = try await task.value
+    }
     
-    
-    let lineHeight: CGFloat = 50
-    let lineLabelWidth: CGFloat = 50
-    
-    let sensibleScreenWidth: CGFloat = 1000
-    
-    let dayWidth: CGFloat
-    let hourWidth:  CGFloat
-    let minuteWidth: CGFloat
-    let secondWidth: CGFloat
-    
-//    let daySize: CGSize {
-//        CGSize(width: dayWidth, height: lineHeight)
-//    }
-    
-//    func lineLabelWidth(_ geometry: GeometryProxy) -> CGFloat {
-//        dayWidth(geometry) * lineLabelWidthThingy
-//    }
+    func saveSettings() async throws {
+        let task = Task {
+            let data = try JSONEncoder().encode(settings)
+            try data.write(to: settingsUrl)
+        }
+        _ = try await task.value
+        
+    }
     
     //MARK: User Intents
     func loadBidpackFromUrl(_ url: URL) {

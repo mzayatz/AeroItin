@@ -19,62 +19,37 @@ struct Bidpack: Equatable, Codable {
     
     static let testBidpackFilename = "2023_Sep_MD11_MEM_LINES"
     static let testBidpackExtension = "asc"
-    static let testBidpackUrl =
-    Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
+    static let testBidpackUrl = Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
     
     static let testOutputFilenameWithExtension = "testOutput.txt"
     static let testOutputUrl = URL.documentsDirectory.appending(path: testOutputFilenameWithExtension)
-    //    let text: [String]
+    
     let base: Base
     let equipment: Equipment
     let month: String
     let year: String
     let dates: [Date]
     let trips: [Trip]
+    private let captainLines: [Line]
+    private let firstOfficerLines: [Line]
+    var lines: [Line]
+    var bids = [Line]()
+    var avoids = [Line]()
     
     var sortLinesBy: SortOptions = .number {
         didSet {
             sortLines()
         }
     }
-    
     var sortDescending = false {
         didSet {
             sortLines()
         }
     }
-    
     var seat: Seat {
         didSet {
             resetBid()
         }
-    }
-    
-    var linesForCurrentSeat: [Line] {
-        seat == .firstOfficer ? firstOfficerLines : captainLines
-    }
-    
-    private let captainLines: [Line]
-    private let firstOfficerLines: [Line]
-    
-    var lines: [Line]
-    var bids = [Line]()
-    var avoids = [Line]()
-  
-    var lineNumbersOfBids: [String] {
-        bids.map { $0.number }
-    }
-    
-    var bes: String {
-        base.rawValue + equipment.rawValue + seat.rawValue + month + year
-    }
-    
-    var startDateLocal: Date {
-        dates.first!
-    }
-    
-    var endDateLocal: Date {
-        dates.last!
     }
     
     private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
@@ -94,6 +69,26 @@ struct Bidpack: Equatable, Codable {
         didSet {
             _ = showRegularLines ? categoryFilter.remove(.regular) : categoryFilter.update(with: .regular)
         }
+    }
+    
+    var linesForCurrentSeat: [Line] {
+        seat == .firstOfficer ? firstOfficerLines : captainLines
+    }
+    
+    var lineNumbersOfBids: [String] {
+        bids.map { $0.number }
+    }
+    
+    var bes: String {
+        base.rawValue + equipment.rawValue + seat.rawValue + month + year
+    }
+    
+    var startDateLocal: Date {
+        dates.first!
+    }
+    
+    var endDateLocal: Date {
+        dates.last!
     }
     
     var shortMonth: String {
@@ -126,11 +121,6 @@ struct Bidpack: Equatable, Codable {
             return ""
         }
     }
-    
-    //    var datesAsDayOfMonthStrings: [String] {
-    //        let formatter = DateFormatter.localDayOfMonthFormatterIn(base.timeZone)
-    //        return dates.map { formatter.string(from: $0) }
-    //    }
     
     private var comparator: KeyPathComparator<Line> {
         sortLinesBy.getKeyPath()
@@ -203,7 +193,13 @@ struct Bidpack: Equatable, Codable {
         return chunks
     }
     
-    static private func findAllReserveLinesIn(_ textRows: [String], startIndex: Int, endIndex: Int, startDateLocal: Date, timeZone: TimeZone) throws -> [Line] {
+    static private func findAllReserveLinesIn(
+        _ textRows: [String],
+        startIndex: Int,
+        endIndex: Int,
+        startDateLocal: Date,
+        timeZone: TimeZone) throws -> [Line] 
+    {
         let rows = textRows[startIndex...endIndex]
         var lines = [Line]()
         let calendarLocal = Calendar.localCalendarFor(timeZone: timeZone)
@@ -248,9 +244,10 @@ struct Bidpack: Equatable, Codable {
         return lines
     }
     
-    static func computeAllSecondaryLinesIn(_ textRows: [String],
-                                           startIndex: Int,
-                                           endIndex: Int) -> (captain: [Line], firstOfficer: [Line])
+    static func computeAllSecondaryLinesIn(
+        _ textRows: [String],
+        startIndex: Int,
+        endIndex: Int) -> (captain: [Line], firstOfficer: [Line])
     {
         var captainLines = [Line]()
         var firstOfficerLines = [Line]()
@@ -275,14 +272,6 @@ struct Bidpack: Equatable, Codable {
     func timeIntervalFromStart(to date: Date) -> TimeInterval {
         startDateLocal.distance(to: date)
     }
-    
-    //    mutating func setFlag(for line: Line, action: TransferActions) {
-    //        let keyPaths = action.getKeyPaths()
-    //        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
-    //            return
-    //        }
-    //        self[keyPath: keyPaths.source][i].flag = action.flag
-    //    }
     
     mutating func transferLine(line: Line, action: TransferActions, byAppending: Bool) {
         let keyPaths = action.getKeyPaths()
@@ -324,7 +313,9 @@ struct Bidpack: Equatable, Codable {
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
-        _ textRows: T, fromOffset: Int, timeZone: TimeZone) throws -> LineSectionHeader where T.Element == String, T.Index == Int
+        _ textRows: T, 
+        fromOffset: Int,
+        timeZone: TimeZone) throws -> LineSectionHeader where T.Element == String, T.Index == Int
     {
         let headerRegex = /(?<month>[A-Z]){3} \((?<start_date>\d\d\d\d-\d\d-\d\d) - (?<end_date>\d\d\d\d-\d\d-\d\d)\)/
         guard textRows.startIndex + fromOffset + 10 < textRows.endIndex else {
@@ -358,7 +349,14 @@ struct Bidpack: Equatable, Codable {
         return header!
     }
     
-    static private func findAllLinesIn(_ textRows: [String], linesStartIndex: Int, linesEndIndex: Int, startDateLocal: Date, timeZone: TimeZone, trips: [Trip]) throws -> [Line] {
+    static private func findAllLinesIn(
+        _ textRows: [String],
+        linesStartIndex: Int,
+        linesEndIndex: Int,
+        startDateLocal: Date,
+        timeZone: TimeZone,
+        trips: [Trip]) throws -> [Line]
+    {
         var lines = [Line]()
         
         var searchStartIndex = try findFirstLineStartIndexIn(textRows[linesStartIndex..<linesEndIndex])
@@ -385,7 +383,13 @@ struct Bidpack: Equatable, Codable {
     }
     
     
-    static private func findAllTripsIn(_ textRows: [String], tripsStartIndex: Int?, tripsEndIndex: Int, bidMonth: String, bidYear: String) throws -> [Trip]? {
+    static private func findAllTripsIn(
+        _ textRows: [String],
+        tripsStartIndex: Int?,
+        tripsEndIndex: Int,
+        bidMonth: String,
+        bidYear: String) throws -> [Trip]?
+    {
         var trips = [Trip]()
         var startIndex = tripsStartIndex ?? 0
         var maxLoopIterations = 50000
@@ -434,7 +438,10 @@ struct Bidpack: Equatable, Codable {
             return index
         }
     
-    static private func findSectionEndIndicies(_ textRows: [String], sectionCount: Int) throws -> EndIndicies {
+    static private func findSectionEndIndicies(
+        _ textRows: [String],
+        sectionCount: Int) throws -> EndIndicies
+    {
         var indicies = [Int]()
         var lastIndex = -1
         for _ in 0..<sectionCount {
@@ -540,17 +547,6 @@ struct Bidpack: Equatable, Codable {
         case fromBidsToAvoids
         case fromAvoidsToLines
         case fromAvoidsToBids
-        
-        //        var flag: Line.Flag {
-        //            switch self {
-        //            case .fromAvoidsToBids, .fromLinesToBids:
-        //                return .bid
-        //            case .fromAvoidsToLines, .fromBidsToLines:
-        //                return .neutral
-        //            case .fromLinesToAvoids, .fromBidsToAvoids:
-        //                return .avoid
-        //            }
-        //        }
         
         func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
             switch self {

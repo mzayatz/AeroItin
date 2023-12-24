@@ -98,7 +98,11 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
             assertionFailure("Remaining words in trip header != 9 or startIndex != 0 (Trip.swift)")
             return nil
         }
-        effectiveDates = Trip.computeValidDatesFrom(firstRowWords, bidMonth: bidMonth, bidYear: bidYear)!.filter {
+        effectiveDates = Trip.computeValidDatesFrom(
+            firstRowWords,
+            bidMonth: bidMonth,
+            bidYear: bidYear
+        )!.filter {
             daysOfWeek.contains(DateFormatter.tripDayFormatter.string(from: $0).uppercased())
         }
         
@@ -148,7 +152,11 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         return layovers
     }
     
-    static private func computeValidDatesFrom(_ firstRowWords: [String], bidMonth: String, bidYear: String) -> [Date]? {
+    static private func computeValidDatesFrom(
+        _ firstRowWords: [String],
+        bidMonth: String,
+        bidYear: String) -> [Date]?
+    {
         let zuluStartTimeString = firstRowWords[2]
         let zuluStartingMonthString = firstRowWords[6]
         var zuluStartingDayWithMaybeEndingMonth = firstRowWords[7].components(separatedBy: "-")
@@ -161,26 +169,46 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
             return nil
         }
         
-        guard let zuluStartingYearString = computeYear(bidMonth: bidMonth, bidYear: bidYear, tripMonth: zuluStartingMonthString) else {
+        guard let zuluStartingYearString = computeYear(
+            bidMonth: bidMonth,
+            bidYear: bidYear,
+            tripMonth: zuluStartingMonthString) else
+        {
             assertionFailure("computeYear function could not compute the trip start/end year")
             return nil
         }
         
         var validDates = [Date]()
         
-        guard let startingDate = DateFormatter.tripHeaderFormatter.date(from:([zuluStartingYearString, zuluStartingMonthString, zuluStartingDayString, zuluStartTimeString].joined(separator: " "))) else {
+        guard let startingDate = DateFormatter.tripHeaderFormatter.date(
+            from:([zuluStartingYearString, 
+                   zuluStartingMonthString,
+                   zuluStartingDayString,
+                   zuluStartTimeString].joined(separator: " ")
+                 )) else 
+        {
             assertionFailure("Problem creating date from starting effective date components")
             return nil
         }
         validDates.append(startingDate)
         
         if zuluEndingMonthString != nil {
-            guard let zuluEndingYearString = computeYear(bidMonth: bidMonth, bidYear: bidYear, tripMonth: zuluEndingMonthString!) else {
+            guard let zuluEndingYearString = computeYear(
+                bidMonth: bidMonth,
+                bidYear: bidYear,
+                tripMonth: zuluEndingMonthString!) else
+            {
                 assertionFailure("computeYear function could not compute the trip start/end year")
                 return nil
             }
             
-            guard let endingDate = DateFormatter.tripHeaderFormatter.date(from:([zuluEndingYearString, zuluEndingMonthString!, zuluEndingDayString!, zuluStartTimeString].joined(separator: " "))) else {
+            guard let endingDate = DateFormatter.tripHeaderFormatter.date(
+                from:([zuluEndingYearString,
+                       zuluEndingMonthString!,
+                       zuluEndingDayString!, 
+                       zuluStartTimeString].joined(separator: " ")
+                     )) else
+            {
                 assertionFailure("Problem creating date from ending effective date components")
                 return nil
             }

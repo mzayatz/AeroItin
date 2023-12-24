@@ -31,6 +31,25 @@ struct Bid {
     private let unaskedTwoCode = "n008"
     private let unaskedThreeCode = "n009"
     private let submitCode = "n999"
+   
+    private var answers: [String: String] {
+        [
+            protectMinDaysForRecurrentTrainingCode:
+                protectMinDaysForRecurrentTraining ? "Yes" : "No",
+            waiveIntlBufferForReccurentTrainingCode:
+                waiveIntlBufferForReccurentTraining ? "Yes" : "No",
+            waiveIntlBufferToAvoidPhaseInConflictCode:
+                waiveIntlBufferToAvoidPhaseInConflict ? "Yes" : "No",
+            waive1in10LegalityToAvoidPhaseInConflictCode:
+                waive1in10LegalityToAvoidPhaseInConflict ? "Yes" : "No",
+            protectMinDaysDueToCarryoverCode:
+                protectMinDaysDueToCarryover ? "Yes" : "No",
+            unaskedOneCode: unaskedOne,
+            unaskedTwoCode: unaskedTwo,
+            unaskedThreeCode: unaskedThree
+        ]
+        
+    }
     
     init(
         employeeNumber: String,
@@ -80,25 +99,6 @@ struct Bid {
         request.httpMethod = "POST"
         request.httpBody = items.percentEncodedQuery?.data(using: .utf8)
         return request
-    }
-    
-    private var answers: [String: String] {
-        [
-            protectMinDaysForRecurrentTrainingCode:
-                protectMinDaysForRecurrentTraining ? "Yes" : "No",
-            waiveIntlBufferForReccurentTrainingCode:
-                waiveIntlBufferForReccurentTraining ? "Yes" : "No",
-            waiveIntlBufferToAvoidPhaseInConflictCode:
-                waiveIntlBufferToAvoidPhaseInConflict ? "Yes" : "No",
-            waive1in10LegalityToAvoidPhaseInConflictCode:
-                waive1in10LegalityToAvoidPhaseInConflict ? "Yes" : "No",
-            protectMinDaysDueToCarryoverCode:
-                protectMinDaysDueToCarryover ? "Yes" : "No",
-            unaskedOneCode: unaskedOne,
-            unaskedTwoCode: unaskedTwo,
-            unaskedThreeCode: unaskedThree
-        ]
-        
     }
     
     private func createEmptyBidDictionary() -> [String: String] {

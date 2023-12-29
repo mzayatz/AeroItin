@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct AeroItinApp: App {
-    @StateObject var bidManager = BidManager(seat: .firstOfficer)
+    @StateObject var bidManager = BidManager()
     var body: some Scene {
         WindowGroup {
             ContentView(saveAction: {

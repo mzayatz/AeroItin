@@ -93,6 +93,7 @@
 		C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */; };
 		C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC232AA768A100F6EF65 /* TripView.swift */; };
 		C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AFBC252AA7A47700F6EF65 /* LineView.swift */; };
+		C9B7B7372B3E62B400099ECD /* BidManager+BigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */; };
 		C9C09A1E2B2D2E7700D8DFCC /* 2024_Jan_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9C09A132B2D2E7700D8DFCC /* 2024_Jan_B767_MEM_LINES.asc */; };
 		C9C09A1F2B2D2E7700D8DFCC /* 2024_Jan_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9C09A142B2D2E7700D8DFCC /* 2024_Jan_B777_MEM_LINES.asc */; };
 		C9C09A202B2D2E7700D8DFCC /* 2024_Jan_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9C09A152B2D2E7700D8DFCC /* 2024_Jan_B767_IND_LINES.asc */; };
@@ -216,6 +217,7 @@
 		C9ACFC4B2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601DateFormatter+localTimeFormatter.swift"; sourceTree = "<group>"; };
 		C9AFBC232AA768A100F6EF65 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		C9AFBC252AA7A47700F6EF65 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
+		C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BidManager+BigConstants.swift"; sourceTree = "<group>"; };
 		C9C09A132B2D2E7700D8DFCC /* 2024_Jan_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jan_B767_MEM_LINES.asc; sourceTree = "<group>"; };
 		C9C09A142B2D2E7700D8DFCC /* 2024_Jan_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jan_B777_MEM_LINES.asc; sourceTree = "<group>"; };
 		C9C09A152B2D2E7700D8DFCC /* 2024_Jan_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jan_B767_IND_LINES.asc; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */,
 				C9ACFC492AA0B592009ACF28 /* Line.swift */,
 				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
+				C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */,
 				C9A8ACF02B24A25400078057 /* Bid.swift */,
 				C90CE9142B2FE44600C6BBFF /* Settings.swift */,
 			);
@@ -641,6 +644,7 @@
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
 				C9ACFC332A9E4ACB009ACF28 /* Bidpack.swift in Sources */,
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
+				C9B7B7372B3E62B400099ECD /* BidManager+BigConstants.swift in Sources */,
 				C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */,
 				C9A8ACF12B24A25400078057 /* Bid.swift in Sources */,
 				C9A615C52AE6F0DC00822B26 /* LineListSectionView.swift in Sources */,

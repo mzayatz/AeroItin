@@ -10,52 +10,7 @@ import SwiftUI
 
 @MainActor
 class BidManager: ObservableObject {
-    static let filenames = [
-        "2024_Jan_MD11_MEM_LINES",  // 0
-        "2024_Jan_A300_MEM_LINES",  // 1
-        "2024_Jan_B757_EUR_LINES",  // 2
-        "2024_Jan_B757_MEM_LINES",  // 3
-        "2024_Jan_B767_IND_LINES",  // 4
-        "2024_Jan_B767_MEM_LINES",  // 5
-        "2024_Jan_B767_OAK_LINES",  // 6
-        "2024_Jan_B777_ANC_LINES",  // 7
-        "2024_Jan_B777_MEM_LINES",  // 8
-        "2024_Jan_MD11_ANC_LINES",  // 9
-        "2024_Jan_MD11_LAX_LINES",  // 10
-        "2023_Dec_MD11_MEM_LINES",  // 11
-        "2023_Dec_A300_MEM_LINES",  // 12
-        "2023_Dec_B757_EUR_LINES",  // 13
-        "2023_Dec_B757_MEM_LINES",  // 14
-        "2023_Dec_B767_IND_LINES",  // 15
-        "2023_Dec_B767_MEM_LINES",  // 16
-        "2023_Dec_B767_OAK_LINES",  // 17
-        "2023_Dec_B777_ANC_LINES",  // 18
-        "2023_Dec_B777_MEM_LINES",  // 19
-        "2023_Dec_MD11_ANC_LINES",  // 20
-        "2023_Dec_MD11_LAX_LINES",  // 10
-        "2023_Nov_MD11_MEM_LINES",  // 11
-        "2023_Nov_A300_MEM_LINES",  // 12
-        "2023_Nov_B757_EUR_LINES",  // 13
-        "2023_Nov_B757_MEM_LINES",  // 14
-        "2023_Nov_B767_IND_LINES",  // 15
-        "2023_Nov_B767_MEM_LINES",  // 16
-        "2023_Nov_B767_OAK_LINES",  // 17
-        "2023_Nov_B777_ANC_LINES",  // 18
-        "2023_Nov_B777_MEM_LINES",  // 19
-        "2023_Nov_MD11_ANC_LINES",  // 20
-        "2023_Nov_MD11_LAX_LINES",  // 21
-        "2023_Oct_MD11_MEM_LINES",  // 22
-        "2023_Oct_A300_MEM_LINES",  // 23
-        "2023_Oct_B757_EUR_LINES",  // 24
-        "2023_Oct_B757_MEM_LINES",  // 25
-        "2023_Oct_B767_IND_LINES",  // 26
-        "2023_Oct_B767_MEM_LINES",  // 27
-        "2023_Oct_B767_OAK_LINES",  // 28
-        "2023_Oct_B777_ANC_LINES",  // 29
-        "2023_Oct_B777_MEM_LINES",  // 30
-        "2023_Oct_MD11_ANC_LINES",  // 31
-        "2023_Oct_MD11_LAX_LINES"   // 32
-    ]
+    
     
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
@@ -68,11 +23,11 @@ class BidManager: ObservableObject {
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     let sensibleScreenWidth: CGFloat = 1000
-    let dayWidth: CGFloat
-    let hourWidth:  CGFloat
-    let minuteWidth: CGFloat
-    let secondWidth: CGFloat
-    let settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
+    var dayWidth: CGFloat
+    var hourWidth:  CGFloat
+    var minuteWidth: CGFloat
+    var secondWidth: CGFloat
+    var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
@@ -81,7 +36,18 @@ class BidManager: ObservableObject {
     @Published var settings = Settings()
     
     var bidpackDescription: String {
-        "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
+        guard bidpack.year != "1971" else {
+            return "No Bidpack Loaded"
+        }
+        return "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
+    }
+    
+    init() {
+        bidpack = Bidpack()
+        dayWidth = 0
+        hourWidth = 0
+        minuteWidth = 0
+        secondWidth = 0
     }
     
     init(url: URL, seat: Bidpack.Seat) {
@@ -91,7 +57,7 @@ class BidManager: ObservableObject {
 //            }
             let loadedBidpack = try Bidpack(with: url, seat: seat)
             bidpack = loadedBidpack
-            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 10))
+            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 7))
             hourWidth = dayWidth / 24
             minuteWidth = hourWidth / 60
             secondWidth = minuteWidth / 60
@@ -137,6 +103,10 @@ class BidManager: ObservableObject {
     func loadBidpackFromUrl(_ url: URL) {
         do {
             try bidpack = Bidpack(with: url, seat: .firstOfficer)
+            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
+            hourWidth = dayWidth / 24
+            minuteWidth = hourWidth / 60
+            secondWidth = minuteWidth / 60
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")

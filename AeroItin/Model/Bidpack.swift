@@ -126,8 +126,25 @@ struct Bidpack: Equatable, Codable {
         sortLinesBy.getKeyPath()
     }
     
-    init() throws {
-        try self.init(with: Bidpack.testBidpackUrl, seat: .firstOfficer)
+    init() {
+        self.base = .other
+        self.equipment = .other
+        self.month = "May"
+        self.year = "1971"
+        self.dates = []
+        self.trips = []
+        self.captainLines = []
+        self.firstOfficerLines = []
+        self.lines = []
+        self.bids = []
+        self.avoids = []
+        self.sortLinesBy = .number
+        self.sortDescending = false
+        self.seat = .firstOfficer
+        self.categoryFilter = []
+        self.showReserveLines = true
+        self.showSecondaryLines = true
+        self.showRegularLines = true
     }
     
     init(with url: URL, seat: Seat) throws {

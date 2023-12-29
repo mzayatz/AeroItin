@@ -26,14 +26,14 @@ struct BidpackDatesStripView: View {
     }
 }
 
-struct BidpackDatesStrip_Previews: PreviewProvider {
-    static var bidManager = BidManager(seat: .firstOfficer)
-    static var previews: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading) {
-                BidpackDatesStripView()
-                
-            }.fixedSize()
-        }.environmentObject(bidManager)
-    }
-}
+//struct BidpackDatesStrip_Previews: PreviewProvider {
+//    static var bidManager = BidManager(seat: .firstOfficer)
+//    static var previews: some View {
+//        GeometryReader { geometry in
+//            VStack(alignment: .leading) {
+//                BidpackDatesStripView()
+//                
+//            }.fixedSize()
+//        }.environmentObject(bidManager)
+//    }
+//}

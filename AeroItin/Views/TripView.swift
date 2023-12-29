@@ -48,19 +48,19 @@ struct TripView: View {
     
 }
 
-struct TripView_Previews: PreviewProvider {
-    static var bidManager = BidManager(seat: .firstOfficer)
-    static var previews: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                TripView(trip: bidManager.bidpack.lines[85].trips[0])
-                TripView(trip: bidManager.bidpack.lines[85].trips[1])
-                TripView(trip: bidManager.bidpack.lines[85].trips[2])
-                TripView(trip: bidManager.bidpack.lines[85].trips[3])
-                TripView(trip: bidManager.bidpack.lines[85].trips[4])
-                TripView(trip: bidManager.bidpack.lines[85].trips[5])
-            }.environmentObject(bidManager)
-        }.frame(height: 25.0)
-            .environmentObject(bidManager)
-    }
-}
+//struct TripView_Previews: PreviewProvider {
+//    static var bidManager = BidManager(seat: .firstOfficer)
+//    static var previews: some View {
+//        GeometryReader { geometry in
+//            ZStack(alignment: .leading) {
+//                TripView(trip: bidManager.bidpack.lines[85].trips[0])
+//                TripView(trip: bidManager.bidpack.lines[85].trips[1])
+//                TripView(trip: bidManager.bidpack.lines[85].trips[2])
+//                TripView(trip: bidManager.bidpack.lines[85].trips[3])
+//                TripView(trip: bidManager.bidpack.lines[85].trips[4])
+//                TripView(trip: bidManager.bidpack.lines[85].trips[5])
+//            }.environmentObject(bidManager)
+//        }.frame(height: 25.0)
+//            .environmentObject(bidManager)
+//    }
+//}

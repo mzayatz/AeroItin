@@ -32,7 +32,7 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    return ContentView(saveAction: {})
-        .environmentObject(BidManager(seat: .firstOfficer))
-}
+//#Preview {
+//    return ContentView(saveAction: {})
+//        .environmentObject(BidManager(seat: .firstOfficer))
+//}

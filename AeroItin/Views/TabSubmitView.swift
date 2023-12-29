@@ -65,6 +65,6 @@ struct TabSubmitView: View {
     }
 }
 
-#Preview {
-    return TabSubmitView().environmentObject(BidManager(seat: .firstOfficer))
-}
+//#Preview {
+//    return TabSubmitView().environmentObject(BidManager(seat: .firstOfficer))
+//}

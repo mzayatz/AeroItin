@@ -50,12 +50,12 @@ class BidManager: ObservableObject {
         secondWidth = 0
     }
     
-    init(url: URL, seat: Bidpack.Seat) {
+    init(text: String, seat: Bidpack.Seat) async {
         do {
 //            for url in BidManager.urls {
 //                try Bidpack(with: url, seat: seat)
 //            }
-            let loadedBidpack = try Bidpack(with: url, seat: seat)
+            let loadedBidpack = try await Bidpack(text: text , seat: seat)
             bidpack = loadedBidpack
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 7))
             hourWidth = dayWidth / 24
@@ -75,8 +75,8 @@ class BidManager: ObservableObject {
         }
     }
     
-    convenience init(seat: Bidpack.Seat) {
-        self.init(url: BidManager.testingUrl, seat: seat)
+    convenience init(seat: Bidpack.Seat) async {
+        await self.init(text: try! String(contentsOf: BidManager.testingUrl), seat: seat)
     }
     
     func loadSettings() async throws {
@@ -101,9 +101,9 @@ class BidManager: ObservableObject {
     }
     
     //MARK: User Intents
-    func loadBidpackFromUrl(_ url: URL) {
+    func loadBidpackWithString(_ text: String) async {
         do {
-            try bidpack = Bidpack(with: url, seat: settings.seat)
+            try bidpack = await Bidpack(text: text, seat: settings.seat)
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
             hourWidth = dayWidth / 24
             minuteWidth = hourWidth / 60

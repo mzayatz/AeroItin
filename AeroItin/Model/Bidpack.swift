@@ -147,8 +147,7 @@ struct Bidpack: Equatable, Codable {
         self.showRegularLines = true
     }
     
-    init(with url: URL, seat: Seat) throws {
-        let text = try String(contentsOf: url)
+    init(text: String, seat: Seat) async throws {
         let textRows = text.components(separatedBy: .newlines)
         
         guard let tripsSectionHeader = textRows.first?.split(separator: " ").map(String.init),

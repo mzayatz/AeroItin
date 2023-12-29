@@ -47,10 +47,10 @@ struct TestLineView: View {
         }
     }
 }
-
-struct TestLineView_Previews: PreviewProvider {
-    @StateObject static var manager = BidManager(seat: .firstOfficer)
-    static var previews: some View {
-        TestLineView(line: manager.bidpack.lines.randomElement()!).environmentObject(manager)
-    }
-}
+//
+//struct TestLineView_Previews: PreviewProvider {
+//    @StateObject static var manager = BidManager(seat: .firstOfficer)
+//    static var previews: some View {
+//        TestLineView(line: manager.bidpack.lines.randomElement()!).environmentObject(manager)
+//    }
+//}

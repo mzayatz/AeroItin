@@ -21,6 +21,6 @@ struct LineListView: View {
     }
 }
 
-#Preview {
-    return LineListView().environmentObject(BidManager(seat: .firstOfficer))
-}
+//#Preview {
+//    return LineListView().environmentObject(BidManager(seat: .firstOfficer))
+//}

@@ -40,7 +40,7 @@ struct LineButton: View {
     }
 }
 
-#Preview {
-    let bidManager = BidManager(seat: .firstOfficer)
-    return LineButton(line: bidManager.bidpack.lines.randomElement()!, action: .fromLinesToBids)
-}
+//#Preview {
+//    let bidManager = BidManager(seat: .firstOfficer)
+//    return LineButton(line: bidManager.bidpack.lines.randomElement()!, action: .fromLinesToBids)
+//}

@@ -31,7 +31,14 @@ struct TabViewLines: View {
                                 switch result {
                                 case .success(let url):
                                     if url.startAccessingSecurityScopedResource() {
-                                        bidManager.loadBidpackFromUrl(url)
+                                        Task {
+                                            do {
+                                                await bidManager.loadBidpackWithString(try String(contentsOf: url))
+                                            }
+                                            catch {
+                                                fatalError(error.localizedDescription)
+                                            }
+                                        }
                                     } else {
                                         
                                     }

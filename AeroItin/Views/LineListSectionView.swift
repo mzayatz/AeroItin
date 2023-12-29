@@ -86,7 +86,7 @@ struct LineListSectionView: View {
     }
 }
 
-#Preview {
-    let bidManager = BidManager(seat: .firstOfficer)
-    return List { LineListSectionView(section: .neutral).environmentObject(bidManager) }
-}
+//#Preview {
+//    let bidManager = BidManager(seat: .firstOfficer)
+//    return List { LineListSectionView(section: .neutral).environmentObject(bidManager) }
+//}

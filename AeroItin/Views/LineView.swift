@@ -81,13 +81,13 @@ struct LineView: View {
     }
 }
 
-struct LineView_Previews: PreviewProvider {
-    static var bidManager = BidManager(seat: .firstOfficer)
-    static var previews: some View {
-            List {
-                ForEach(0..<10) { _ in
-                    LineView(line: bidManager.bidpack.lines.randomElement()!)
-                }
-            }.environmentObject(bidManager)
-    }
-}
+//struct LineView_Previews: PreviewProvider {
+//    static var bidManager = BidManager(seat: .firstOfficer)
+//    static var previews: some View {
+//            List {
+//                ForEach(0..<10) { _ in
+//                    LineView(line: bidManager.bidpack.lines.randomElement()!)
+//                }
+//            }.environmentObject(bidManager)
+//    }
+//}

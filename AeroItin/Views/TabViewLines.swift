@@ -13,11 +13,16 @@ struct TabViewLines: View {
     @State var searchText = ""
     @State var showResetAlert = false
     @State var showFileImporter = false
+    @State var showProgressView = false
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
+
                 LineListScrollView {
+                    if showProgressView {
+                        ProgressView("Bidpack Loading... Please wait.")
+                    }
                     LineListView()
                         .searchable(text:$bidManager.searchFilter)
                         .autocorrectionDisabled()
@@ -33,7 +38,9 @@ struct TabViewLines: View {
                                     if url.startAccessingSecurityScopedResource() {
                                         Task {
                                             do {
+                                                showProgressView = true
                                                 await bidManager.loadBidpackWithString(try String(contentsOf: url))
+                                                showProgressView = false
                                             }
                                             catch {
                                                 fatalError(error.localizedDescription)

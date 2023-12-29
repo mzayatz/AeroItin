@@ -25,6 +25,10 @@ struct BidToolbarContent: ToolbarContent {
                 }
             } label: {
                 Image(systemName: "chair.lounge")
+            }.onChange(of: bidManager.bidpack.seat) { _ in // Deprecated iOS 17
+                Task {
+                    try? await bidManager.saveSettings()
+                }
             }
         }
         

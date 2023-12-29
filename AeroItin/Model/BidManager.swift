@@ -92,6 +92,7 @@ class BidManager: ObservableObject {
     
     func saveSettings() async throws {
         let task = Task {
+            settings.seat = bidpack.seat
             let data = try JSONEncoder().encode(settings)
             try data.write(to: settingsUrl)
         }
@@ -102,7 +103,7 @@ class BidManager: ObservableObject {
     //MARK: User Intents
     func loadBidpackFromUrl(_ url: URL) {
         do {
-            try bidpack = Bidpack(with: url, seat: .firstOfficer)
+            try bidpack = Bidpack(with: url, seat: settings.seat)
             dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
             hourWidth = dayWidth / 24
             minuteWidth = hourWidth / 60

@@ -13,7 +13,7 @@ struct ContentView: View {
     
     @Environment(\.scenePhase) private var scenePhase
     
-    let saveAction: () -> Void
+//    let saveAction: () -> Void
     
     var body: some View {
         TabView {
@@ -26,7 +26,15 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase) { phase in
             if phase == .inactive {
-                saveAction()
+//                saveAction()
+                Task {
+                    do {
+                        try await bidManager.saveSettings()
+                    }
+                    catch {
+                        fatalError(error.localizedDescription)
+                    }
+                }
             }
         }
     }

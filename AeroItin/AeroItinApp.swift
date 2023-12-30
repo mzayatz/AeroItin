@@ -12,15 +12,7 @@ struct AeroItinApp: App {
     @StateObject var bidManager = BidManager()
     var body: some Scene {
         WindowGroup {
-            ContentView(saveAction: {
-                Task {
-                    do {
-                        try await bidManager.saveSettings()
-                    } catch {
-                        fatalError(error.localizedDescription)
-                    }
-                }
-            }).environmentObject(bidManager)
+            ContentView().environmentObject(bidManager)
                 .task {
                     do {
                         try await bidManager.loadSettings()

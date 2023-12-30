@@ -35,21 +35,23 @@ struct TabViewLines: View {
                             allowedContentTypes: [UTType.asc]) { result in
                                 switch result {
                                 case .success(let url):
-                                    if url.startAccessingSecurityScopedResource() {
+//                                        guard let bidpackConents = try? String(contentsOf: url) else {
+//                                            fatalError("crash!")
+//                                        }
                                         Task {
                                             do {
-                                                showProgressView = true
-                                                await bidManager.loadBidpackWithString(try String(contentsOf: url))
-                                                showProgressView = false
+                                                if url.startAccessingSecurityScopedResource() {
+                                                    
+                                                    showProgressView = true
+                                                    await bidManager.loadBidpackWithString(try String(contentsOf: url))
+                                                    showProgressView = false
+                                                }
+                                                url.stopAccessingSecurityScopedResource()
                                             }
                                             catch {
                                                 fatalError(error.localizedDescription)
                                             }
                                         }
-                                    } else {
-                                        
-                                    }
-                                    url.stopAccessingSecurityScopedResource()
                                 case .failure(let error):
                                     print("failure")
                                 }

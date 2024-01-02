@@ -15,6 +15,24 @@ struct BidToolbarContent: ToolbarContent {
     
     var body: some ToolbarContent {
         ToolbarItem {
+            Button {
+                Task {
+                    try? await bidManager.saveSnapshot()
+                }
+            } label: {
+                Image(systemName: "archivebox")
+            }
+        }
+        ToolbarItem {
+            Button {
+                Task {
+                    try? await bidManager.loadSnapshot()
+                }
+            } label: {
+                Image(systemName: "archivebox.fill")
+            }
+        }
+        ToolbarItem {
             Menu {
                 Picker(selection:
                         $bidManager.bidpack.seat) {

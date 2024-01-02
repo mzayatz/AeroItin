@@ -28,6 +28,7 @@ class BidManager: ObservableObject {
     var minuteWidth: CGFloat
     var secondWidth: CGFloat
     var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
+    var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
@@ -98,6 +99,26 @@ class BidManager: ObservableObject {
         }
         _ = try await task.value
         
+    }
+    
+    func saveSnapshot() async throws {
+        let task = Task {
+            let data = try JSONEncoder().encode(bidpack)
+            try data.write(to: snapshotUrlFragment)
+        }
+        _ = try await task.value
+    }
+    
+    func loadSnapshot() async throws {
+        let task = Task<Bidpack, Error> {
+            guard let data = try? Data(contentsOf: snapshotUrlFragment) else {
+                print("hi")
+                return Bidpack()
+            }
+            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
+            return bidpack
+        }
+        bidpack = try await task.value
     }
     
     //MARK: User Intents

@@ -13,6 +13,8 @@ struct TabViewLines: View {
     @State var searchText = ""
     @State var showResetAlert = false
     @State var showFileImporter = false
+    @State var showFileExporter = false
+    @State var boop = false
     @State var showProgressView = false
     
     var body: some View {
@@ -30,6 +32,15 @@ struct TabViewLines: View {
                         .textInputAutocapitalization(.never)
 #endif
                         .navigationTitle(bidManager.bidpackDescription)
+                        .fileExporter(isPresented: $showFileExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json) { result in
+                            switch result {
+                            case .success(let url):
+                                print("success")
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                            }
+                        }
+                        
                         .fileImporter(
                             isPresented: $showFileImporter,
                             allowedContentTypes: [UTType.asc]) { result in
@@ -58,7 +69,7 @@ struct TabViewLines: View {
                             }
                 }
                 .toolbar {
-                    BidToolbarContent(showFileImporter: $showFileImporter, showResetAlert: $showResetAlert)
+                    BidToolbarContent(showFileImporter: $showFileImporter, showFileExporter: $showFileExporter, showResetAlert: $showResetAlert)
                 }
                 if bidManager.selectedTripText != nil {
                     TripTextView(selectedTripText: $bidManager.selectedTripText)
@@ -95,6 +106,39 @@ struct TabViewLines: View {
     }
 }
 
+struct BidpackDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.json] }
+    
+    var bidpack: Bidpack
+    
+    init(bidpack: Bidpack) {
+        self.bidpack = bidpack
+    }
+    
+    init(configuration: ReadConfiguration) {
+        guard let data = configuration.file.regularFileContents else {
+            fatalError("could not parse bidpack")
+        }
+        do {
+            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
+            self.bidpack = bidpack
+        }
+        catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        do {
+            return FileWrapper(regularFileWithContents: try JSONEncoder().encode(bidpack))
+        }
+        catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    
+}
 
 //#Preview {
 //    LinesTabView()

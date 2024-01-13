@@ -9,11 +9,48 @@ import SwiftUI
 
 struct BidToolbarContent: ToolbarContent {
     @Binding var showFileImporter: Bool
+    @Binding var showFileExporter: Bool
+    @State var boop = false
     @Binding var showResetAlert: Bool
     @EnvironmentObject var bidManager: BidManager
     @State var showSheet = false
     
     var body: some ToolbarContent {
+        ToolbarItem {
+            Button {
+                boop = true
+            } label: {
+                Image(systemName: "logo.xbox")
+            }
+            .fileImporter(isPresented: $boop, allowedContentTypes: [.json]) { result in
+                switch result {
+                case .success(let url):
+//                                        guard let bidpackConents = try? String(contentsOf: url) else {
+//                                            fatalError("crash!")
+//                                        }
+                        Task {
+                            do {
+                                if url.startAccessingSecurityScopedResource() {
+                                    try await bidManager.loadSnapshot(data: Data(contentsOf: url))
+                                }
+                                url.stopAccessingSecurityScopedResource()
+                            }
+                            catch {
+                                fatalError(error.localizedDescription)
+                            }
+                        }
+                case .failure(let error):
+                    print("failure")
+                }
+            }
+        }
+        ToolbarItem {
+            Button {
+                showFileExporter = true
+            } label: {
+                Image(systemName: "eye")
+            }
+        }
         ToolbarItem {
             Button {
                 Task {
@@ -40,7 +77,7 @@ struct BidToolbarContent: ToolbarContent {
                     Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
                 } label: {
                     Text("Seat")
-                }
+                }.pickerStyle(.inline)
             } label: {
                 Image(systemName: "chair.lounge")
             }.onChange(of: bidManager.bidpack.seat) { _ in // Deprecated iOS 17
@@ -72,7 +109,7 @@ struct BidToolbarContent: ToolbarContent {
                     }
                 } label: {
                     Text("Sort")
-                }
+                }.pickerStyle(.inline)
             } label: {
                 Image(systemName: "arrow.up.arrow.down")
             }

@@ -121,6 +121,14 @@ class BidManager: ObservableObject {
         bidpack = try await task.value
     }
     
+    func loadSnapshot(data: Data) async throws {
+        let task = Task<Bidpack, Error> {
+            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
+            return bidpack
+        }
+        bidpack = try await task.value
+    }
+    
     //MARK: User Intents
     func loadBidpackWithString(_ text: String) async {
         do {

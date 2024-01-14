@@ -17,9 +17,6 @@ struct Bidpack: Equatable, Codable {
     static let lineDividerPrefix = "___________________________"
     static let sectionCount = 6
     
-    static let testBidpackFilename = "2023_Sep_MD11_MEM_LINES"
-    static let testBidpackExtension = "asc"
-    static let testBidpackUrl = Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
     
     static let testOutputFilenameWithExtension = "testOutput.txt"
     static let testOutputUrl = URL.documentsDirectory.appending(path: testOutputFilenameWithExtension)

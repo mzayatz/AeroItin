@@ -13,12 +13,10 @@ class BidManager: ObservableObject {
     
     
     static let urls = filenames.map {
-        Bundle.main.url(forResource: $0, withExtension: testBidpackExtension)!
+        Bundle.main.url(forResource: $0, withExtension: bidpackExtension)!
     }
     static let testingUrl = urls[0]
-    static let testBidpackExtension = "asc"
-    static let testBidpackUrl =
-        Bundle.main.url(forResource: Bidpack.testBidpackFilename, withExtension: Bidpack.testBidpackExtension)!
+    static let bidpackExtension = "asc"
     
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
@@ -101,25 +99,24 @@ class BidManager: ObservableObject {
         
     }
     
-    func saveSnapshot() async throws {
-        let task = Task {
-            let data = try JSONEncoder().encode(bidpack)
-            try data.write(to: snapshotUrlFragment)
-        }
-        _ = try await task.value
-    }
-    
-    func loadSnapshot() async throws {
-        let task = Task<Bidpack, Error> {
-            guard let data = try? Data(contentsOf: snapshotUrlFragment) else {
-                print("hi")
-                return Bidpack()
-            }
-            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
-            return bidpack
-        }
-        bidpack = try await task.value
-    }
+//    func saveSnapshot() async throws {
+//        let task = Task {
+//            let data = try JSONEncoder().encode(bidpack)
+//            try data.write(to: snapshotUrlFragment)
+//        }
+//        _ = try await task.value
+//    }
+//    
+//    func loadSnapshot() async throws {
+//        let task = Task<Bidpack, Error> {
+//            guard let data = try? Data(contentsOf: snapshotUrlFragment) else {
+//                return Bidpack()
+//            }
+//            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
+//            return bidpack
+//        }
+//        bidpack = try await task.value
+//    }
     
     func loadSnapshot(data: Data) async throws {
         let task = Task<Bidpack, Error> {

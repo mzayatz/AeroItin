@@ -10,12 +10,9 @@ import UniformTypeIdentifiers
 
 struct TabViewLines: View {
     @EnvironmentObject var bidManager: BidManager
+    @State var showProgressView = false
     @State var searchText = ""
     @State var showResetAlert = false
-    @State var showFileImporter = false
-    @State var showFileExporter = false
-    @State var boop = false
-    @State var showProgressView = false
     
     var body: some View {
         NavigationStack {
@@ -32,44 +29,11 @@ struct TabViewLines: View {
                         .textInputAutocapitalization(.never)
 #endif
                         .navigationTitle(bidManager.bidpackDescription)
-                        .fileExporter(isPresented: $showFileExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json) { result in
-                            switch result {
-                            case .success(let url):
-                                print("success")
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                            }
-                        }
+
                         
-                        .fileImporter(
-                            isPresented: $showFileImporter,
-                            allowedContentTypes: [UTType.asc]) { result in
-                                switch result {
-                                case .success(let url):
-//                                        guard let bidpackConents = try? String(contentsOf: url) else {
-//                                            fatalError("crash!")
-//                                        }
-                                        Task {
-                                            do {
-                                                if url.startAccessingSecurityScopedResource() {
-                                                    
-                                                    showProgressView = true
-                                                    await bidManager.loadBidpackWithString(try String(contentsOf: url))
-                                                    showProgressView = false
-                                                }
-                                                url.stopAccessingSecurityScopedResource()
-                                            }
-                                            catch {
-                                                fatalError(error.localizedDescription)
-                                            }
-                                        }
-                                case .failure(let error):
-                                    print("failure")
                                 }
-                            }
-                }
                 .toolbar {
-                    BidToolbarContent(showFileImporter: $showFileImporter, showFileExporter: $showFileExporter, showResetAlert: $showResetAlert)
+                    BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView)
                 }
                 if bidManager.selectedTripText != nil {
                     TripTextView(selectedTripText: $bidManager.selectedTripText)

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct BidToolbarContent: ToolbarContent {
-    @Binding var showFileImporter: Bool
-    @Binding var showFileExporter: Bool
+    @State var showFileImporter = false
+    @State var showFileExporter = false
     @State var boop = false
     @Binding var showResetAlert: Bool
+    @Binding var showProgressView: Bool
     @EnvironmentObject var bidManager: BidManager
     @State var showSheet = false
     
@@ -22,12 +24,10 @@ struct BidToolbarContent: ToolbarContent {
             } label: {
                 Image(systemName: "logo.xbox")
             }
+          
             .fileImporter(isPresented: $boop, allowedContentTypes: [.json]) { result in
                 switch result {
                 case .success(let url):
-//                                        guard let bidpackConents = try? String(contentsOf: url) else {
-//                                            fatalError("crash!")
-//                                        }
                         Task {
                             do {
                                 if url.startAccessingSecurityScopedResource() {
@@ -43,30 +43,20 @@ struct BidToolbarContent: ToolbarContent {
                     print("failure")
                 }
             }
+            .fileExporter(isPresented: $showFileExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json) { result in
+                switch result {
+                case .success(let url):
+                    print("success")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         }
         ToolbarItem {
             Button {
                 showFileExporter = true
             } label: {
                 Image(systemName: "eye")
-            }
-        }
-        ToolbarItem {
-            Button {
-                Task {
-                    try? await bidManager.saveSnapshot()
-                }
-            } label: {
-                Image(systemName: "archivebox")
-            }
-        }
-        ToolbarItem {
-            Button {
-                Task {
-                    try? await bidManager.loadSnapshot()
-                }
-            } label: {
-                Image(systemName: "archivebox.fill")
             }
         }
         ToolbarItem {
@@ -136,6 +126,29 @@ struct BidToolbarContent: ToolbarContent {
             } label: {
                 Image(systemName: "folder")
             }
+            .fileImporter(
+                isPresented: $showFileImporter,
+                allowedContentTypes: [UTType.asc]) { result in
+                    switch result {
+                    case .success(let url):
+                        Task {
+                            do {
+                                if url.startAccessingSecurityScopedResource() {
+                                    
+                                    showProgressView = true
+                                    await bidManager.loadBidpackWithString(try String(contentsOf: url))
+                                    showProgressView = false
+                                }
+                                url.stopAccessingSecurityScopedResource()
+                            }
+                            catch {
+                                fatalError(error.localizedDescription)
+                            }
+                        }
+                    case .failure(let error):
+                        print("failure")
+                    }
+                }
         }
         
         ToolbarItem {

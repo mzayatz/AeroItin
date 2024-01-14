@@ -106,6 +106,7 @@
 		C9C09A272B2D2E7700D8DFCC /* 2024_Jan_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9C09A1C2B2D2E7700D8DFCC /* 2024_Jan_MD11_LAX_LINES.asc */; };
 		C9C09A282B2D2E7700D8DFCC /* 2024_Jan_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9C09A1D2B2D2E7700D8DFCC /* 2024_Jan_B757_MEM_LINES.asc */; };
 		C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D487712ACCD8BC001BC17C /* Color+background.swift */; };
+		C9E12B362B543FB8002A788C /* MenuItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E12B352B543FB8002A788C /* MenuItemLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -230,6 +231,7 @@
 		C9C09A1C2B2D2E7700D8DFCC /* 2024_Jan_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jan_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C9C09A1D2B2D2E7700D8DFCC /* 2024_Jan_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jan_B757_MEM_LINES.asc; sourceTree = "<group>"; };
 		C9D487712ACCD8BC001BC17C /* Color+background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+background.swift"; sourceTree = "<group>"; };
+		C9E12B352B543FB8002A788C /* MenuItemLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +264,7 @@
 			children = (
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
+				C9E12B352B543FB8002A788C /* MenuItemLabel.swift */,
 				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
 				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
@@ -666,6 +669,7 @@
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
 				C9ACFC442AA02353009ACF28 /* TimeInterval+InitWithString.swift in Sources */,
 				C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */,
+				C9E12B362B543FB8002A788C /* MenuItemLabel.swift in Sources */,
 				C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */,
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
 				C920AC622AF291D4001344BC /* BidToolbarContent.swift in Sources */,

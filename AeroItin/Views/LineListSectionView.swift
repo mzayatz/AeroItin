@@ -57,7 +57,7 @@ struct LineListSectionView: View {
                     }
                 }.onMove {
                     bidManager.bidpack[keyPath: section.associatedArrayKeypath].move(fromOffsets: $0, toOffset: $1)
-                }.moveDisabled(!bidManager.searchFilter.isEmpty || !bidManager.bidpack.categoryFilter.isEmpty)
+                }.moveDisabled(!bidManager.searchFilter.isEmpty)
             } header: {
                 HStack {
                     Text(bidManager.bidpack.sortDescending ? "⌄ descending" : "⌃ ascending").foregroundStyle(Color.accentColor)

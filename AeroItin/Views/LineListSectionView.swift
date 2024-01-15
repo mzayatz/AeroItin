@@ -32,20 +32,6 @@ struct LineListSectionView: View {
         }
     }
     
-//    var filteredLines: [Line] {
-//        let iatas = bidManager.searchFilter.components(separatedBy: .whitespaces).filter { $0.count == 3 }.map { $0.lowercased() }
-//        
-//        var lines = bidManager.bidpack[keyPath: section.associatedArrayKeypath].filter {
-//            !bidManager.bidpack.categoryFilter.contains($0.category)
-//        }
-//        
-//        var filteredLines = bidManager.bidpack[keyPath: section.associatedArrayKeypath].filter { $0.layovers.contains { iatas.contains($0) }
-//        }
-//        
-//        return filteredLines.isEmpty ? lines : filteredLines
-//    }
-    
-    
     var body: some View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
             Section {

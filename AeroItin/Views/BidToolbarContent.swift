@@ -26,7 +26,7 @@ struct BidToolbarContent: ToolbarContent {
                     Text(Bidpack.Seat.firstOfficer.rawValue).tag(Bidpack.Seat.firstOfficer)
                 } label: {
                     Text("Seat")
-                }.pickerStyle(.inline)
+                }.pickerStyle(.inline).labelsHidden()
             } label: {
                 Image(systemName: "chair.lounge")
             }.onChange(of: bidManager.bidpack.seat) { _ in // Deprecated iOS 17
@@ -49,16 +49,15 @@ struct BidToolbarContent: ToolbarContent {
             Menu {
                 Picker(selection: $bidManager.bidpack.sortLinesBy) {
                     ForEach(Bidpack.SortOptions.allCases, id: \.self) { sortItem in
-                        Button { } label: {
-                            HStack {
-                                Text(sortItem.rawValue)
-                                Image(systemName: sortItem.symbol)
-                            }
+                        Button { 
+                            
+                        } label: {
+                            Label(sortItem.rawValue, systemImage: sortItem.symbol)
                         }
                     }
                 } label: {
                     Text("Sort")
-                }.pickerStyle(.inline)
+                }.pickerStyle(.inline).labelsHidden()
             } label: {
                 Image(systemName: "arrow.up.arrow.down")
             }
@@ -92,25 +91,25 @@ struct BidToolbarContent: ToolbarContent {
                 Button {
                     showAscFileImporter = true
                 } label: {
-                    MenuItemLabel(text: "Open New Bidpack", imageSystemName: "doc")
+                    Label("Open New Bidpack", systemImage: "doc")
                 }
                 
                 Button(role: .destructive) {
                     showResetAlert = true
                 } label: {
-                    MenuItemLabel(text: "Clear Bids & Avoids", imageSystemName: "clear")
+                    Label("Clear Bids & Avoids", systemImage: "clear")
                 }
                 
                 Button {
                     showSavedBidExporter = true
                 } label: {
-                    MenuItemLabel(text: "Save Current Bid", imageSystemName: "square.and.arrow.down")
+                    Label("Save Current Bid", systemImage: "square.and.arrow.down")
                 }
                 
                 Button {
                     showSavedBidImporter = true
                 } label: {
-                    MenuItemLabel(text: "Load Saved Bid", imageSystemName: "arrow.down.doc")
+                    Label("Load Saved Bid", systemImage: "arrow.down.doc")
                 }
             } label: {
                 Image(systemName: "folder")
@@ -134,7 +133,7 @@ struct BidToolbarContent: ToolbarContent {
                         print("failure")
                     }
                 }
-                .fileExporter(isPresented: $showSavedBidExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json) { result in
+                    .fileExporter(isPresented: $showSavedBidExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json, defaultFilename: bidManager.suggestedBidFileName) { result in
                     switch result {
                     case .success(let url):
                         print("success")

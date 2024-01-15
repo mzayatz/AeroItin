@@ -77,7 +77,11 @@ struct Bidpack: Equatable, Codable {
     }
     
     var bes: String {
-        base.rawValue + equipment.rawValue + seat.rawValue + month + year
+        base.rawValue + equipment.rawValue + seat.abbreviatedSeat
+    }
+    
+    var besWithBidMonth: String {
+        "\(shortMonth) \(year.suffix(2)) (" + bes + ")"
     }
     
     var startDateLocal: Date {

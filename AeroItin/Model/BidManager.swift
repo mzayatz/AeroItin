@@ -99,6 +99,11 @@ class BidManager: ObservableObject {
         
     }
     
+    var suggestedBidFileName: String {
+        return bidpack.year == "1971" ? "no bidpack loaded" :
+            "\(DateFormatter.fileTimeStamp)-\(bidpack.besWithBidMonth)"
+    }
+    
 //    func saveSnapshot() async throws {
 //        let task = Task {
 //            let data = try JSONEncoder().encode(bidpack)

@@ -30,7 +30,7 @@ struct TripView: View {
     }
     
     var offset: CGSize {
-        CGSize(width: bidManager.secondWidth * trip.firstEffectiveDate.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
+        CGSize(width: bidManager.secondWidth * trip.startDateTime.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
     }
     
     var tripColor: Color {

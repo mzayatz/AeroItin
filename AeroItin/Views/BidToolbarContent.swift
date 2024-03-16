@@ -87,6 +87,20 @@ struct BidToolbarContent: ToolbarContent {
                 }
         }
         ToolbarItem {
+            Button {
+                showSheet = true
+            } label: {
+                Image(systemName: "calendar")
+            }.sheet(isPresented: $showSheet) {
+                VStack {
+                    Button("Clear Dates", role: .destructive) {
+                        bidManager.avoidedDateComponents.removeAll()
+                    }
+                    MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.bidpack.dateRange)
+                }
+            }
+        }
+        ToolbarItem {
             Menu {
                 Button {
                     showAscFileImporter = true

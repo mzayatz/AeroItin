@@ -85,11 +85,15 @@ struct Bidpack: Equatable, Codable {
     }
     
     var startDateLocal: Date {
-        dates.first!
+        dates.first ?? Date(timeIntervalSince1970: .day * 365)
     }
     
     var endDateLocal: Date {
-        dates.last!
+        dates.last ?? Date(timeIntervalSince1970: .day * 366)
+    }
+    
+    var dateRange: Range<Date> {
+        startDateLocal..<endDateLocal.addingTimeInterval(.day)
     }
     
     var shortMonth: String {

@@ -17,7 +17,11 @@ struct AeroItinApp: App {
                     do {
                         try await bidManager.loadSettings()
                     } catch {
-                        //fatalError(error.localizedDescription)
+                        do {
+                            try await bidManager.saveSettings()
+                        } catch {
+                            fatalError(error.localizedDescription)
+                        }
                     }
                 }
         }

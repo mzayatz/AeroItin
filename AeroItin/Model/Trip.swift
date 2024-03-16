@@ -20,14 +20,28 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
-    var firstEffectiveDate: Date {
-        return effectiveDates.first!
-    }
-    
     var shortDescription: String {
         layovers.isEmpty ? number : layovers.joined(separator: "-")
     }
-   
+    
+    var startDateTime: Date {
+        effectiveDates.first!
+    }
+    
+    var endDateTime: Date {
+        startDateTime.addingTimeInterval(timeAwayFromBase)
+    }
+    
+    var startDate: Date {
+        let components: Set<Calendar.Component> = [.year, .month, .day]
+        return Calendar.zulu.date(from: Calendar.zulu.dateComponents(components, from: startDateTime))!
+    }
+    
+    var endDate: Date {
+        let components: Set<Calendar.Component> = [.year, .month, .day]
+        return Calendar.zulu.date(from: Calendar.zulu.dateComponents(components, from: endDateTime))!
+    }
+    
     init() {
         text = [String]()
         number = ""

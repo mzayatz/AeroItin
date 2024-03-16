@@ -33,6 +33,13 @@ class BidManager: ObservableObject {
     @Published var searchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var settings = Settings()
+    @Published var avoidedDateComponents = Set<DateComponents>()
+    
+    var avoidedDates: [Date] {
+        avoidedDateComponents.compactMap {
+            Calendar.localCalendarFor(timeZone: bidpack.base.timeZone).date(from: $0)
+        }
+    }
     
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {

@@ -87,6 +87,15 @@ struct BidToolbarContent: ToolbarContent {
                 }
         }
         ToolbarItem {
+            Button {
+                showSheet = true
+            } label: {
+                Image(systemName: "calendar")
+            }.sheet(isPresented: $showSheet) {
+                MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.bidpack.dateRange)
+            }
+        }
+        ToolbarItem {
             Menu {
                 Button {
                     showAscFileImporter = true

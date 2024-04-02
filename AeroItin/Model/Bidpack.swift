@@ -25,7 +25,8 @@ struct Bidpack: Equatable, Codable {
     let equipment: Equipment
     let month: String
     let year: String
-    let dates: [Date]
+//    let dates: [Date]
+    var dates: [BidPeriodDate]
     let trips: [Trip]
     private let captainLines: [Line]
     private let firstOfficerLines: [Line]
@@ -85,11 +86,11 @@ struct Bidpack: Equatable, Codable {
     }
     
     var startDateLocal: Date {
-        dates.first ?? Date(timeIntervalSince1970: .day * 365)
+        dates.first?.calendarDate ?? Date(timeIntervalSince1970: .day * 365)
     }
     
     var endDateLocal: Date {
-        dates.last ?? Date(timeIntervalSince1970: .day * 366)
+        dates.last?.calendarDate ?? Date(timeIntervalSince1970: .day * 366)
     }
     
     var dateRange: Range<Date> {
@@ -175,17 +176,23 @@ struct Bidpack: Equatable, Codable {
         
         let lineSectionHeader = try Bidpack.findFirstLineSectionHeaderIn(textRows[endIndicies.trips..<endIndicies.captainRegularLines], fromOffset: 0, timeZone: base.timeZone)
         
-        dates = lineSectionHeader.dates
+        var datesBuffer = [BidPeriodDate]()
+        for date in lineSectionHeader.dates {
+            let isWeekend = Calendar.localCalendarFor(timeZone: base.timeZone).isDateInWeekend(date)
+            datesBuffer.append(BidPeriodDate(calendarDate: date, isWeekend: isWeekend))
+        }
         
-        var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips)
+        dates = datesBuffer
         
-        var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!, timeZone: base.timeZone, trips: trips)
+        var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, trips: trips)
+        
+        var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, trips: trips)
         
         let secondaryLines = Bidpack.computeAllSecondaryLinesIn(textRows, startIndex: endIndicies.firstOfficerReserveLines, endIndex: endIndicies.captainAndFirstOfficerVtoLines)
         
-        let captainReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.firstOfficerRegularLines + 7, endIndex: endIndicies.captainReserveLines - 2, startDateLocal: dates.first!, timeZone: base.timeZone)
+        let captainReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.firstOfficerRegularLines + 7, endIndex: endIndicies.captainReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone)
         
-        let firstOfficerReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.captainReserveLines + 7, endIndex: endIndicies.firstOfficerReserveLines - 2, startDateLocal: dates.first!, timeZone: base.timeZone)
+        let firstOfficerReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.captainReserveLines + 7, endIndex: endIndicies.firstOfficerReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone)
         captainLines.append(contentsOf: captainReserveLines)
         firstOfficerLines.append(contentsOf: firstOfficerReserveLines)
         captainLines.append(contentsOf: secondaryLines.captain)
@@ -691,4 +698,3 @@ extension Line.Flag {
         }
     }
 }
-

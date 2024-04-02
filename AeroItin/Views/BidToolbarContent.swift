@@ -90,14 +90,14 @@ struct BidToolbarContent: ToolbarContent {
             Button {
                 showSheet = true
             } label: {
-                Image(systemName: "calendar")
-            }.sheet(isPresented: $showSheet) {
+                Image(systemName: "calendar.badge.minus")
+            }.popover(isPresented: $showSheet) {
                 VStack {
                     Button("Clear Dates", role: .destructive) {
                         bidManager.avoidedDateComponents.removeAll()
                     }
                     MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.bidpack.dateRange)
-                }
+                }.padding()
             }
         }
         ToolbarItem {

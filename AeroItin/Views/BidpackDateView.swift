@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct BidpackDateView: View, Equatable {
-    let date: Date
+    let date: BidPeriodDate
     let timeZone: TimeZone
     
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundColor(Calendar.localCalendarFor(timeZone: timeZone).isDateInWeekend(date) ? .secondary.opacity(0.25) : .clear)
+                .foregroundColor(date.color)
                 .border(.secondary.opacity(0.6))
-            Text(date.formatted(.dateTime.day().inTimeZone(timeZone)))
+            Text(date.calendarDate.formatted(.dateTime.day().inTimeZone(timeZone)))
                 .font(.callout)
                 .foregroundColor(.secondary.opacity(0.6))
         }
@@ -26,7 +26,7 @@ struct BidpackDateView: View, Equatable {
 
 struct BidpackDateView_Previews: PreviewProvider {
     static var previews: some View {
-        BidpackDateView(date: Date(), timeZone: .mem)
+        BidpackDateView(date: BidPeriodDate(), timeZone: .mem)
             .frame(width: 25, height: 25)
     }
 }

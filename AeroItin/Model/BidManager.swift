@@ -18,6 +18,7 @@ class BidManager: ObservableObject {
     static let testingUrl = urls[0]
     static let bidpackExtension = "asc"
     
+    let testing = true
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     let sensibleScreenWidth: CGFloat = 1000
@@ -33,13 +34,22 @@ class BidManager: ObservableObject {
     @Published var searchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var settings = Settings()
-    @Published var avoidedDateComponents = Set<DateComponents>()
-    
-    var avoidedDates: [Date] {
-        avoidedDateComponents.compactMap {
-            Calendar.localCalendarFor(timeZone: bidpack.base.timeZone).date(from: $0)
+    @Published var avoidedDateComponents = Set<DateComponents>() {
+        didSet {
+            avoidedDates = avoidedDateComponents.compactMap {
+                Calendar.localCalendarFor(timeZone: bidpack.base.timeZone).date(from: $0)
+            }
+            bidpack.dates = bidpack.dates.map { $0.resetCategory() }
+            for date in avoidedDates {
+                if let i = bidpack.dates.firstIndex(where: {
+                    $0.calendarDate == date
+                }) {
+                    bidpack.dates[i].category = .avoid
+                }
+            }
         }
     }
+    @Published var avoidedDates = [Date]()
     
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {
@@ -68,7 +78,6 @@ class BidManager: ObservableObject {
             minuteWidth = hourWidth / 60
             secondWidth = minuteWidth / 60
             
-            print(BidManager.testingUrl)
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")
@@ -179,4 +188,15 @@ class BidManager: ObservableObject {
         bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)
     }
     
+}
+
+extension BidPeriodDate {
+    var color: Color {
+        switch self.category {
+        case .normal:
+            return isWeekend ? .secondary.opacity(0.25) : .clear
+        case .avoid:
+            return .red.opacity(0.25)
+        }
+    }
 }

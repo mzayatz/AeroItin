@@ -96,7 +96,9 @@ struct BidToolbarContent: ToolbarContent {
                     Button("Clear Dates", role: .destructive) {
                         bidManager.avoidedDateComponents.removeAll()
                     }
+                    #if os(iOS)
                     MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.bidpack.dateRange)
+                    #endif
                 }.padding()
             }
         }

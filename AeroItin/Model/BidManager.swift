@@ -32,6 +32,7 @@ class BidManager: ObservableObject {
     @Published var bidpack: Bidpack
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
+    @Published var debouncedSearchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var settings = Settings()
     @Published var avoidedDateComponents = Set<DateComponents>() {
@@ -51,11 +52,33 @@ class BidManager: ObservableObject {
     }
     @Published var avoidedDates = [Date]()
     
+    
+    
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {
             return "No Bidpack Loaded"
         }
         return "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
+    }
+    
+    var filteredLines: [Line] {
+        return bidpack.lines.filter { line in
+            let isCategoryFiltered = !bidpack.categoryFilter.contains(line.category)
+            let isIATAMatched = line.layovers.contains { searchIatas.contains($0) }
+            return (searchIatas.isEmpty || isIATAMatched) && isCategoryFiltered
+        }.filter { line in
+            let conflicts = line.trips.contains { trip in
+                avoidedDates.contains { avoidedDate in
+                    trip.startDate <= avoidedDate && trip.endDate >= avoidedDate
+                }
+            }
+            // If there are conflicts, filter out this line
+            return !conflicts
+        }
+    }
+    
+    var searchIatas: [String] {
+        return debouncedSearchFilter.lowercased().components(separatedBy: .whitespaces).filter { $0.count == 3 }
     }
     
     init() {
@@ -64,35 +87,38 @@ class BidManager: ObservableObject {
         hourWidth = 0
         minuteWidth = 0
         secondWidth = 0
+        $searchFilter
+            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .assign(to: &$debouncedSearchFilter)
     }
     
-    init(text: String, seat: Bidpack.Seat) async {
-        do {
-//            for url in BidManager.urls {
-//                try Bidpack(with: url, seat: seat)
-//            }
-            let loadedBidpack = try await Bidpack(text: text , seat: seat)
-            bidpack = loadedBidpack
-            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 7))
-            hourWidth = dayWidth / 24
-            minuteWidth = hourWidth / 60
-            secondWidth = minuteWidth / 60
-            
-        }
-        catch ParserError.sectionDividerNotFoundError {
-            fatalError("SectionDividerNotFound Error... quitting.")
-        }
-        catch ParserError.tokenNotFoundError {
-            fatalError("Token not found... quitting.")
-        }
-        catch {
-            fatalError("Other error!\n\(error)")
-        }
-    }
+//    init(text: String, seat: Bidpack.Seat) async {
+//        do {
+//            let loadedBidpack = try await Bidpack(text: text , seat: seat)
+//            bidpack = loadedBidpack
+//            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 7))
+//            hourWidth = dayWidth / 24
+//            minuteWidth = hourWidth / 60
+//            secondWidth = minuteWidth / 60
+//            
+//        }
+//        catch ParserError.sectionDividerNotFoundError {
+//            fatalError("SectionDividerNotFound Error... quitting.")
+//        }
+//        catch ParserError.tokenNotFoundError {
+//            fatalError("Token not found... quitting.")
+//        }
+//        catch {
+//            fatalError("Other error!\n\(error)")
+//        }
+//        $searchFilter
+//            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+//            .assign(to: &$debouncedSearchFilter)
+//    }
     
-    convenience init(seat: Bidpack.Seat) async {
-        await self.init(text: try! String(contentsOf: BidManager.testingUrl), seat: seat)
-    }
+//    convenience init(seat: Bidpack.Seat) async {
+//        await self.init(text: try! String(contentsOf: BidManager.testingUrl), seat: seat)
+//    }
     
     func loadSettings() async throws {
         let task = Task<Settings, Error> {

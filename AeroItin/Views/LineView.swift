@@ -20,7 +20,7 @@ struct LineView: View {
                 HStack {
                     Text("\(attributeSymbol)  \(attributeText)").font(.subheadline).frame(alignment: .trailing)
                 }
-            }
+            }.frame(width: 75)
             ScrollView(.horizontal) {
                 ZStack(alignment: .leading) {
                     Rectangle().fill(backgroundColor())

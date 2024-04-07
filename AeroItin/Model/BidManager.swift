@@ -15,7 +15,7 @@ class BidManager: ObservableObject {
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: bidpackExtension)!
     }
-    static let testingUrl = urls[0]
+    static let testingUrl = urls[8]
     static let bidpackExtension = "asc"
     
     let testing = true

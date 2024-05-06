@@ -15,24 +15,40 @@ import SwiftUI
 import WebKit
 
 struct WebView: WebViewRepresentable {
-   
-    @ObservedObject var viewModel: WebViewModel
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    weak var webView: WKWebView!
+    
+    @Binding var title: String
     
     func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        viewModel.webView = webView
+        webView.navigationDelegate = context.coordinator
         return webView
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) { }
     
     func makeNSView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        viewModel.webView = webView
         return webView
     }
     
     func updateNSView(_ nsView: WKWebView, context: Context) { }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        var parent: WebView
+        
+        init(_ parent: WebView) {
+            self.parent = parent
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            parent.title = webView.title ?? ""
+        }
+        
+    }
+    
 }
 
 //#Preview {

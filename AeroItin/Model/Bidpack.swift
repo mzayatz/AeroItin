@@ -33,7 +33,7 @@ struct Bidpack: Equatable, Codable {
     var lines: [Line]
     var bids = [Line]()
     var avoids = [Line]()
-    
+        
     var sortLinesBy: SortOptions = .number {
         didSet {
             sortLines()

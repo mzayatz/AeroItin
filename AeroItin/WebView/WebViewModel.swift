@@ -9,21 +9,23 @@ import SwiftUI
 import WebKit
 
 class WebViewModel: ObservableObject {
-    weak var webView: WKWebView?
-    let initialUrlString = "https://pilot.fedex.com"
+    @Published var webView = WKWebView()
+    @Published var title = ""
     
-    var title: String? {
-        webView?.title
-    }
+    let initialUrlString = "https://pilot.fedex.com/vips-bin/vipscgi?webmtb"
     
     func loadUrlString(_ string: String) {
         guard let url = URL(string: string) else {
             return
         }
-        webView?.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url))
     }
    
     func loadDefaultUrl() {
         loadUrlString(initialUrlString)
+    }
+   
+    func loadRequest(_ urlRequest: URLRequest) {
+        webView.load(urlRequest)
     }
 }

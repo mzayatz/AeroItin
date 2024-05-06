@@ -9,13 +9,8 @@ import Foundation
 
 struct Bid {
     
-    private let employeeNumber: String
-    private let protectMinDaysForRecurrentTraining: Bool
-    private let waiveIntlBufferForReccurentTraining: Bool
-    private let waiveIntlBufferToAvoidPhaseInConflict: Bool
-    private let waive1in10LegalityToAvoidPhaseInConflict: Bool
-    private let protectMinDaysDueToCarryover: Bool
     private let lineSelection: [String]
+    private let settings: Settings
     
     private let unaskedOne = "Unasked"
     private let unaskedTwo = "Unasked"
@@ -35,15 +30,15 @@ struct Bid {
     private var answers: [String: String] {
         [
             protectMinDaysForRecurrentTrainingCode:
-                protectMinDaysForRecurrentTraining ? "Yes" : "No",
+                settings.protectMinDaysForRecurrentTraining ? "Yes" : "No",
             waiveIntlBufferForReccurentTrainingCode:
-                waiveIntlBufferForReccurentTraining ? "Yes" : "No",
+                settings.waiveIntlBufferForReccurentTraining ? "Yes" : "No",
             waiveIntlBufferToAvoidPhaseInConflictCode:
-                waiveIntlBufferToAvoidPhaseInConflict ? "Yes" : "No",
+                settings.waiveIntlBufferToAvoidPhaseInConflict ? "Yes" : "No",
             waive1in10LegalityToAvoidPhaseInConflictCode:
-                waive1in10LegalityToAvoidPhaseInConflict ? "Yes" : "No",
+                settings.waive1in10LegalityToAvoidPhaseInConflict ? "Yes" : "No",
             protectMinDaysDueToCarryoverCode:
-                protectMinDaysDueToCarryover ? "Yes" : "No",
+                settings.protectMinDaysDueToCarryover ? "Yes" : "No",
             unaskedOneCode: unaskedOne,
             unaskedTwoCode: unaskedTwo,
             unaskedThreeCode: unaskedThree
@@ -52,19 +47,10 @@ struct Bid {
     }
     
     init(
-        employeeNumber: String,
-        protectMinDaysForRecurrentTraining: Bool,
-        waiveIntlBufferForReccurentTraining: Bool,
-        waiveIntlBufferToAvoidPhaseInConflict: Bool,
-        waive1in10LegalityToAvoidPhaseInConflict: Bool,
-        protectMinDaysDueToCarryover: Bool, lineSelection: [String]
+        settings: Settings,
+        lineSelection: [String]
     ) throws {
-        self.protectMinDaysForRecurrentTraining = protectMinDaysForRecurrentTraining
-        self.waiveIntlBufferForReccurentTraining = waiveIntlBufferForReccurentTraining
-        self.waiveIntlBufferToAvoidPhaseInConflict = waiveIntlBufferToAvoidPhaseInConflict
-        self.waive1in10LegalityToAvoidPhaseInConflict = waive1in10LegalityToAvoidPhaseInConflict
-        self.protectMinDaysDueToCarryover = protectMinDaysDueToCarryover
-        self.employeeNumber = employeeNumber
+        self.settings = settings
         if lineSelection.count > 0 && lineSelection.count < 491 {
             self.lineSelection = lineSelection
         }
@@ -93,7 +79,7 @@ struct Bid {
             items.queryItems!.append(URLQueryItem(name: k, value: bidDictionary[k]))
         }
         
-        var postUrl = URL(string: "https://pilot.fedex.com/vips-bin/vipscgi?webmtb?\(employeeNumber)?input")!
+        var postUrl = URL(string: "https://pilot.fedex.com/vips-bin/vipscgi?webmtb?\(settings.employeeNumber)?input")!
         postUrl.append(queryItems: items.queryItems!)
         var request = URLRequest(url: postUrl)
         request.httpMethod = "POST"

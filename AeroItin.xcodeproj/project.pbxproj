@@ -50,7 +50,6 @@
 		C920AC782AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */; };
 		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
 		C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C930F05D2B17B3D000D635C0 /* WebError.swift */; };
-		C930F0602B17C71C00D635C0 /* WebViewSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C930F05F2B17C71C00D635C0 /* WebViewSwiftUI.swift */; };
 		C942D7A72B1FDAAB00FCE4A7 /* TabViewLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */; };
 		C94B8F182BAC69D700E3C22C /* BidPeriodDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */; };
 		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
@@ -215,7 +214,6 @@
 		C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
 		C930F05D2B17B3D000D635C0 /* WebError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebError.swift; sourceTree = "<group>"; };
-		C930F05F2B17C71C00D635C0 /* WebViewSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewSwiftUI.swift; sourceTree = "<group>"; };
 		C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewLines.swift; sourceTree = "<group>"; };
 		C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidPeriodDate.swift; sourceTree = "<group>"; };
 		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
@@ -374,7 +372,6 @@
 		C973B5822B0D24C2009EBAAA /* WebView */ = {
 			isa = PBXGroup;
 			children = (
-				C930F05F2B17C71C00D635C0 /* WebViewSwiftUI.swift */,
 				C973B5872B0D2C9D009EBAAA /* WebView.swift */,
 				C9A4A4EF2B1ABD6D00744A3E /* WebViewModel.swift */,
 			);
@@ -858,7 +855,6 @@
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
 				C9A8ACF52B24A4B100078057 /* TabSubmitView.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
-				C930F0602B17C71C00D635C0 /* WebViewSwiftUI.swift in Sources */,
 				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,
 				C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */,
 				C9A8ACF32B24A36200078057 /* BidError.swift in Sources */,

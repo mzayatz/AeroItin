@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct TabSubmitView: View {
-    @State private var showEmptyBidAlert = false
+    @State private var showBlankEmployeeNumberAlert = false
+    @State private var showNumberOfLinesBidAlert = false
+
+    @State private var showBidSubmitPage = false
+    @StateObject private var webViewModel = WebViewModel()
     @EnvironmentObject var bidManager: BidManager
+    
+    @State private var bid: Bid?
     
     var body: some View {
         NavigationStack {
@@ -53,11 +59,60 @@ struct TabSubmitView: View {
 #endif
 
 
-                        HStack { Text("Month / Base / Equipment / Seat: "); Text(bidManager.bidpackDescription).foregroundStyle(.secondary) }
+                        HStack { 
+                            Text("Month / Base / Equipment / Seat: ")
+                            Text(bidManager.bidpackDescription).foregroundStyle(.secondary).foregroundStyle(.accent).bold()
+                        }
                     } header: {
                         Text("Confirmation")
                     } footer: {
                         Text("Change seat on lines tab.")
+                    }
+                    Section {
+                        Button("Submit Bid") {
+                            guard bidManager.settings.employeeNumber != "" else {
+                                showBlankEmployeeNumberAlert = true
+                                return
+                            }
+                            do {
+                                bid = try Bid(settings: bidManager.settings, lineSelection: bidManager.bidpack.lineNumbersOfBids)
+                                showBidSubmitPage = true
+//                                webViewModel.loadRequest(bid.createPostRequest())
+                            }
+                            catch (BidError.numberOfLinesBidError) {
+                               showNumberOfLinesBidAlert = true
+                            }
+                            catch {
+                                fatalError(error.localizedDescription)
+                            }
+                        }.buttonStyle(.bordered)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.title)
+                    } header: {
+                        Text("Submit")
+                    }.alert("Employee # is blank", isPresented: $showBlankEmployeeNumberAlert) {
+                        Button("Dismiss") {
+                            
+                        }
+                    } message: {
+                        Text("The employee # field cannot be blank. Please enter your employee number above.")
+                    }.textCase(nil).alert("Check # of bid lines", isPresented: $showNumberOfLinesBidAlert) {
+                        Button("Dismiss") {
+                            
+                        }
+                    } message: {
+                        Text("The number of lines bid must be greater than 0 but less than 472. Check your bid.")
+                    }.textCase(nil)
+                }.sheet(isPresented: $showBidSubmitPage) {
+                    VStack {
+                        Button(webViewModel.title != "VIPS Monthly Bid Input" ? "Please Login" : "Submit Now") {
+                            if let bid {
+                                webViewModel.loadRequest(bid.createPostRequest())
+                            }
+                        }.disabled(webViewModel.title != "VIPS Monthly Bid Input").buttonStyle(.bordered).font(.title).padding()
+                        WebView(webView: webViewModel.webView, title: $webViewModel.title).onAppear {
+                            webViewModel.loadDefaultUrl()
+                        }.padding()
                     }
                 }
             }.navigationTitle("Submit")
@@ -65,6 +120,10 @@ struct TabSubmitView: View {
     }
 }
 
-//#Preview {
-//    return TabSubmitView().environmentObject(BidManager(seat: .firstOfficer))
-//}
+#Preview {
+    let bidManager = BidManager()
+    Task {
+        try! await bidManager.loadBidpackWithString(String(contentsOf: BidManager.testingUrl))
+    }
+    return TabSubmitView().environmentObject(bidManager)
+}

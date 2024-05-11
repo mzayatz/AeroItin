@@ -9,6 +9,17 @@ import Foundation
 
 extension BidManager {
     static let filenames = [
+        "2024_Jun_MD11_MEM_LINES",  // 0
+        "2024_Jun_A300_MEM_LINES",  // 1
+        "2024_Jun_B757_EUR_LINES",  // 2
+        "2024_Jun_B757_MEM_LINES",  // 3
+        "2024_Jun_B767_IND_LINES",  // 4
+        "2024_Jun_B767_MEM_LINES",  // 5
+        "2024_Jun_B767_OAK_LINES",  // 6
+        "2024_Jun_B777_ANC_LINES",  // 7
+        "2024_Jun_B777_MEM_LINES",  // 8
+        "2024_Jun_MD11_ANC_LINES",  // 9
+        "2024_Jun_MD11_LAX_LINES",  // 10
         "2024_May_MD11_MEM_LINES",  // 0
         "2024_May_A300_MEM_LINES",  // 1
         "2024_May_B757_EUR_LINES",  // 2

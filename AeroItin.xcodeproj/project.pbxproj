@@ -49,6 +49,17 @@
 		C920AC772AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */; };
 		C920AC782AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */; };
 		C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92BA3502AC3925000BEA0F4 /* TripTextView.swift */; };
+		C92C0DC72BEFA5C300F54869 /* 2024_Jun_B777_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DBC2BEFA5C200F54869 /* 2024_Jun_B777_ANC_LINES.asc */; };
+		C92C0DC82BEFA5C300F54869 /* 2024_Jun_MD11_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DBD2BEFA5C200F54869 /* 2024_Jun_MD11_ANC_LINES.asc */; };
+		C92C0DC92BEFA5C300F54869 /* 2024_Jun_MD11_LAX_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DBE2BEFA5C200F54869 /* 2024_Jun_MD11_LAX_LINES.asc */; };
+		C92C0DCA2BEFA5C300F54869 /* 2024_Jun_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DBF2BEFA5C200F54869 /* 2024_Jun_B757_EUR_LINES.asc */; };
+		C92C0DCB2BEFA5C300F54869 /* 2024_Jun_B767_OAK_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC02BEFA5C200F54869 /* 2024_Jun_B767_OAK_LINES.asc */; };
+		C92C0DCC2BEFA5C300F54869 /* 2024_Jun_MD11_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC12BEFA5C200F54869 /* 2024_Jun_MD11_MEM_LINES.asc */; };
+		C92C0DCD2BEFA5C300F54869 /* 2024_Jun_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC22BEFA5C300F54869 /* 2024_Jun_B777_MEM_LINES.asc */; };
+		C92C0DCE2BEFA5C300F54869 /* 2024_Jun_A300_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC32BEFA5C300F54869 /* 2024_Jun_A300_MEM_LINES.asc */; };
+		C92C0DCF2BEFA5C300F54869 /* 2024_Jun_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC42BEFA5C300F54869 /* 2024_Jun_B757_MEM_LINES.asc */; };
+		C92C0DD02BEFA5C300F54869 /* 2024_Jun_B767_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC52BEFA5C300F54869 /* 2024_Jun_B767_MEM_LINES.asc */; };
+		C92C0DD12BEFA5C300F54869 /* 2024_Jun_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C92C0DC62BEFA5C300F54869 /* 2024_Jun_B767_IND_LINES.asc */; };
 		C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C930F05D2B17B3D000D635C0 /* WebError.swift */; };
 		C942D7A72B1FDAAB00FCE4A7 /* TabViewLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */; };
 		C94B8F182BAC69D700E3C22C /* BidPeriodDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */; };
@@ -213,6 +224,17 @@
 		C920AC6C2AF44F69001344BC /* 2023_Dec_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_B757_EUR_LINES.asc; sourceTree = "<group>"; };
 		C920AC6D2AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Dec_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
 		C92BA3502AC3925000BEA0F4 /* TripTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTextView.swift; sourceTree = "<group>"; };
+		C92C0DBC2BEFA5C200F54869 /* 2024_Jun_B777_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B777_ANC_LINES.asc; sourceTree = "<group>"; };
+		C92C0DBD2BEFA5C200F54869 /* 2024_Jun_MD11_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_MD11_ANC_LINES.asc; sourceTree = "<group>"; };
+		C92C0DBE2BEFA5C200F54869 /* 2024_Jun_MD11_LAX_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_MD11_LAX_LINES.asc; sourceTree = "<group>"; };
+		C92C0DBF2BEFA5C200F54869 /* 2024_Jun_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B757_EUR_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC02BEFA5C200F54869 /* 2024_Jun_B767_OAK_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B767_OAK_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC12BEFA5C200F54869 /* 2024_Jun_MD11_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_MD11_MEM_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC22BEFA5C300F54869 /* 2024_Jun_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B777_MEM_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC32BEFA5C300F54869 /* 2024_Jun_A300_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_A300_MEM_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC42BEFA5C300F54869 /* 2024_Jun_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B757_MEM_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC52BEFA5C300F54869 /* 2024_Jun_B767_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B767_MEM_LINES.asc; sourceTree = "<group>"; };
+		C92C0DC62BEFA5C300F54869 /* 2024_Jun_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_Jun_B767_IND_LINES.asc; sourceTree = "<group>"; };
 		C930F05D2B17B3D000D635C0 /* WebError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebError.swift; sourceTree = "<group>"; };
 		C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewLines.swift; sourceTree = "<group>"; };
 		C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidPeriodDate.swift; sourceTree = "<group>"; };
@@ -459,6 +481,17 @@
 		C9ACFC342A9E4B1B009ACF28 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				C92C0DC32BEFA5C300F54869 /* 2024_Jun_A300_MEM_LINES.asc */,
+				C92C0DBF2BEFA5C200F54869 /* 2024_Jun_B757_EUR_LINES.asc */,
+				C92C0DC42BEFA5C300F54869 /* 2024_Jun_B757_MEM_LINES.asc */,
+				C92C0DC62BEFA5C300F54869 /* 2024_Jun_B767_IND_LINES.asc */,
+				C92C0DC52BEFA5C300F54869 /* 2024_Jun_B767_MEM_LINES.asc */,
+				C92C0DC02BEFA5C200F54869 /* 2024_Jun_B767_OAK_LINES.asc */,
+				C92C0DBC2BEFA5C200F54869 /* 2024_Jun_B777_ANC_LINES.asc */,
+				C92C0DC22BEFA5C300F54869 /* 2024_Jun_B777_MEM_LINES.asc */,
+				C92C0DBD2BEFA5C200F54869 /* 2024_Jun_MD11_ANC_LINES.asc */,
+				C92C0DBE2BEFA5C200F54869 /* 2024_Jun_MD11_LAX_LINES.asc */,
+				C92C0DC12BEFA5C200F54869 /* 2024_Jun_MD11_MEM_LINES.asc */,
 				C9D6B9272BC3312A00E80EE5 /* 2024_May_A300_MEM_LINES.asc */,
 				C9D6B92B2BC3312A00E80EE5 /* 2024_May_B757_EUR_LINES.asc */,
 				C9D6B92F2BC3312A00E80EE5 /* 2024_May_B757_MEM_LINES.asc */,
@@ -706,6 +739,8 @@
 				C984FFEE2AA22E1800DFB924 /* 2023_Sep_B767_OAK_LINES.asc in Resources */,
 				C9C09A222B2D2E7700D8DFCC /* 2024_Jan_B777_ANC_LINES.asc in Resources */,
 				C920AC782AF44F69001344BC /* 2023_Dec_MD11_LAX_LINES.asc in Resources */,
+				C92C0DC92BEFA5C300F54869 /* 2024_Jun_MD11_LAX_LINES.asc in Resources */,
+				C92C0DD12BEFA5C300F54869 /* 2024_Jun_B767_IND_LINES.asc in Resources */,
 				C916F7DC2AABCD340080EFE6 /* 2023_Oct_A300_MEM_LINES.asc in Resources */,
 				C9B5E8982BB8BEF900097F44 /* 2024_Mar_A300_MEM_LINES.asc in Resources */,
 				C906BBBA2AD0A2F7004D331E /* 2023_Nov_MD11_MEM_LINES.asc in Resources */,
@@ -725,6 +760,7 @@
 				C984FFEB2AA22E1800DFB924 /* 2023_Sep_A300_MEM_LINES.asc in Resources */,
 				C920AC702AF44F69001344BC /* 2023_Dec_MD11_MEM_LINES.asc in Resources */,
 				C9B5E87E2BB8BEF900097F44 /* 2024_Apr_B767_OAK_LINES.asc in Resources */,
+				C92C0DCA2BEFA5C300F54869 /* 2024_Jun_B757_EUR_LINES.asc in Resources */,
 				C9C09A272B2D2E7700D8DFCC /* 2024_Jan_MD11_LAX_LINES.asc in Resources */,
 				C916F7E32AABCD3B0080EFE6 /* 2023_Oct_MD11_MEM_LINES.asc in Resources */,
 				C9B5E88E2BB8BEF900097F44 /* 2024_Apr_MD11_ANC_LINES.asc in Resources */,
@@ -753,6 +789,8 @@
 				C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */,
 				C9AD97802BBC4FE300DB9454 /* 2024_Feb_B767_MEM_LINES.asc in Resources */,
 				C916F7DA2AABCD340080EFE6 /* 2023_Oct_B767_MEM_LINES.asc in Resources */,
+				C92C0DC82BEFA5C300F54869 /* 2024_Jun_MD11_ANC_LINES.asc in Resources */,
+				C92C0DCD2BEFA5C300F54869 /* 2024_Jun_B777_MEM_LINES.asc in Resources */,
 				C9ACFC0F2A9E4AAB009ACF28 /* Preview Assets.xcassets in Resources */,
 				C984FFED2AA22E1800DFB924 /* 2023_Sep_MD11_ANC_LINES.asc in Resources */,
 				C9ACFC0B2A9E4AAB009ACF28 /* Assets.xcassets in Resources */,
@@ -769,19 +807,25 @@
 				C9AD97832BBC4FE300DB9454 /* 2024_Feb_B777_ANC_LINES.asc in Resources */,
 				C9AD977D2BBC4FE300DB9454 /* 2024_Feb_B767_OAK_LINES.asc in Resources */,
 				C9AD977F2BBC4FE300DB9454 /* 2024_Feb_MD11_ANC_LINES.asc in Resources */,
+				C92C0DC72BEFA5C300F54869 /* 2024_Jun_B777_ANC_LINES.asc in Resources */,
 				C9B5E8852BB8BEF900097F44 /* 2024_Apr_B777_ANC_LINES.asc in Resources */,
 				C9B5E88B2BB8BEF900097F44 /* 2024_Mar_B767_MEM_LINES.asc in Resources */,
+				C92C0DD02BEFA5C300F54869 /* 2024_Jun_B767_MEM_LINES.asc in Resources */,
 				C920AC762AF44F69001344BC /* 2023_Dec_B777_MEM_LINES.asc in Resources */,
 				C9B5E8892BB8BEF900097F44 /* 2024_Apr_MD11_MEM_LINES.asc in Resources */,
 				C916F7E52AABCD3B0080EFE6 /* 2023_Oct_B777_MEM_LINES.asc in Resources */,
 				C920AC752AF44F69001344BC /* 2023_Dec_B767_OAK_LINES.asc in Resources */,
 				C9B5E8922BB8BEF900097F44 /* 2024_Apr_B767_IND_LINES.asc in Resources */,
 				C906BBB82AD0A2F7004D331E /* 2023_Nov_MD11_ANC_LINES.asc in Resources */,
+				C92C0DCB2BEFA5C300F54869 /* 2024_Jun_B767_OAK_LINES.asc in Resources */,
+				C92C0DCC2BEFA5C300F54869 /* 2024_Jun_MD11_MEM_LINES.asc in Resources */,
 				C906BBBB2AD0A2F7004D331E /* 2023_Nov_A300_MEM_LINES.asc in Resources */,
+				C92C0DCE2BEFA5C300F54869 /* 2024_Jun_A300_MEM_LINES.asc in Resources */,
 				C984FFE72AA22E1800DFB924 /* 2023_Sep_B767_IND_LINES.asc in Resources */,
 				C9AD977A2BBC4FE300DB9454 /* 2024_Feb_MD11_LAX_LINES.asc in Resources */,
 				C906BBBD2AD0A2F7004D331E /* 2023_Nov_MD11_LAX_LINES.asc in Resources */,
 				C920AC722AF44F69001344BC /* 2023_Dec_B767_IND_LINES.asc in Resources */,
+				C92C0DCF2BEFA5C300F54869 /* 2024_Jun_B757_MEM_LINES.asc in Resources */,
 				C9AD97822BBC4FE300DB9454 /* 2024_Feb_B757_EUR_LINES.asc in Resources */,
 				C9B5E88C2BB8BEF900097F44 /* 2024_Mar_MD11_LAX_LINES.asc in Resources */,
 				C920AC6E2AF44F69001344BC /* 2023_Dec_A300_MEM_LINES.asc in Resources */,

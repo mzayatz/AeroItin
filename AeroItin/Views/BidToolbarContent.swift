@@ -41,6 +41,7 @@ struct BidToolbarContent: ToolbarContent {
                 Toggle("Show Regular Lines", isOn: $bidManager.bidpack.showRegularLines)
                 Toggle("Show Secondary Lines", isOn: $bidManager.bidpack.showSecondaryLines)
                 Toggle("Show Reserve Lines", isOn: $bidManager.bidpack.showReserveLines)
+                Toggle("Show only deadheads", isOn: $bidManager.filterDeadheads)
             } label: {
                 Image(systemName: "line.3.horizontal.decrease")
             }

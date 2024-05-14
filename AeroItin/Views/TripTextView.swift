@@ -51,14 +51,13 @@ struct TripTextView: View {
         var attributedTripText = AttributedString(tripText)
         
         for match in tripText.attributedRanges(of: /\b\w\w\d\d\d\d\b/, using: attributedTripText) {
-            attributedTripText[match].foregroundColor = .mint
-            attributedTripText[match].font = font.bold()
+//            attributedTripText[match].foregroundColor = .accentColor
+            attributedTripText[match].font = font.bold().italic()
 
         }
         for match in tripText.attributedRanges(of: /\b[A-Z]{3}\b(?= \d\d\d\d)/, using: attributedTripText) {
-            attributedTripText[match].foregroundColor =
-                .mint
-            attributedTripText[match].font = font.bold()
+//            attributedTripText[match].foregroundColor = .accentColor
+            attributedTripText[match].font = font.bold().italic()
 
         }
         return attributedTripText

@@ -15,6 +15,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let summary: Summary
     let layovers: Set<String>
     let category: Line.Category
+    let hasDeadhead: Bool
     
     var id: String {
         number
@@ -28,6 +29,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         summary = Summary()
         layovers = Set<String>()
         category = .secondary
+        hasDeadhead = false
     }
     
     init(number: String, trips: [Trip]) {
@@ -38,6 +40,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         summary = Summary()
         layovers = Set<String>()
         category = .reserve
+        hasDeadhead = false
     }
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
@@ -88,11 +91,14 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         self.trips = lineTrips
         flag = .neutral
         var layoversBuffer = Set<String>()
+        var deadheadBuffer = false
         for trip in trips {
             layoversBuffer.formUnion(trip.layovers)
+            deadheadBuffer = deadheadBuffer ? deadheadBuffer : trip.deadheads != .none
         }
         layovers = layoversBuffer
         category = .regular
+        hasDeadhead = deadheadBuffer
     }
     
     mutating func resetFlag() {

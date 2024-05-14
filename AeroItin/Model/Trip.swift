@@ -17,6 +17,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     let timeAwayFromBase: TimeInterval
     let layovers: [String]
     let deadheads: Deadheads
+    let isRfo: Bool
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
@@ -52,6 +53,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         timeAwayFromBase = 0
         layovers = [String]()
         deadheads = .none
+        isRfo = false
     }
     
     init(number: String, effectiveDate: Date) {
@@ -64,6 +66,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         timeAwayFromBase = .day
         layovers = [String]()
         deadheads = .none
+        isRfo = false
     }
     
     init(trip: Trip, effectiveDate: Date) {
@@ -76,6 +79,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         timeAwayFromBase = trip.timeAwayFromBase
         layovers = trip.layovers
         deadheads = trip.deadheads
+        isRfo = trip.isRfo
     }
     
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {
@@ -140,6 +144,9 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         
         self.layovers = Trip.findLayovers(in: textRows)
         self.deadheads = Trip.findDeadheads(in: textRows)
+        
+        self.isRfo = text[1].firstMatch(of: /1 RFO/) != nil
+
     }
     
     static private func findDeadheads(in rows: ArraySlice<String>) -> Deadheads {

@@ -21,6 +21,11 @@ struct LineListSectionView: View {
             return "Lines"
         }
     }
+    var sectionHeaderText: String {
+        "\(sectionTitle) " +
+        "\(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath].count : bidManager.filteredLines.count)" +
+        (section != .neutral ? "" : " (\(bidManager.bidpack.lines.count - bidManager.filteredLines.count) filtered)")
+    }
     
     var body: some View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
@@ -41,7 +46,7 @@ struct LineListSectionView: View {
                             bidManager.bidpack.sortDescending.toggle()
                         }
                     Spacer()
-                    Text("\(sectionTitle) \(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath].count : bidManager.filteredLines.count)")
+                    Text(sectionHeaderText)
                     Spacer()
                     Text("Bids").foregroundStyle(Color.accentColor)
                         .onTapGesture {

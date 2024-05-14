@@ -35,6 +35,7 @@ class BidManager: ObservableObject {
     @Published var debouncedSearchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var settings = Settings()
+    @Published var filterDeadheads = false
     @Published var avoidedDateComponents = Set<DateComponents>() {
         didSet {
             avoidedDates = avoidedDateComponents.compactMap {
@@ -64,8 +65,9 @@ class BidManager: ObservableObject {
     var filteredLines: [Line] {
         return bidpack.lines.filter { line in
             let isCategoryFiltered = !bidpack.categoryFilter.contains(line.category)
+            let isDeadheadFiltered = !filterDeadheads || line.hasDeadhead
             let isIATAMatched = line.layovers.contains { searchIatas.contains($0) }
-            return (searchIatas.isEmpty || isIATAMatched) && isCategoryFiltered
+            return (searchIatas.isEmpty || isIATAMatched) && isCategoryFiltered && isDeadheadFiltered
         }.filter { line in
             let conflicts = line.trips.contains { trip in
                 avoidedDates.contains { avoidedDate in

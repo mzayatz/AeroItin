@@ -20,12 +20,12 @@ struct TripTextView: View {
             VStack {
                 Text(attText ?? "")
                     .font(font)
-                    .padding()
+                    .padding(EdgeInsets(top: 20, leading: 20, bottom: 5, trailing: 20))
                 Button("dismiss") {
                     withAnimation {
                         selectedTripText = nil
                     }
-                }.padding()
+                }.padding(.bottom)
             }
         }.frame(width: 800)
             .fixedSize(horizontal: false, vertical: true)

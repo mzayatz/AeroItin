@@ -13,7 +13,7 @@ struct LineListView: View {
         ScrollViewReader { reader in
             List {
                 LineListSectionView(section: .bid).id("bids")
-                LineListSectionView(section: .neutral).id("lines")
+                LineListSectionView(section: .neutral).id("lines").moveDisabled(true)
                 LineListSectionView(section: .avoid).id("avoids")
             }
         }

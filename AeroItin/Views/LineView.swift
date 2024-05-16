@@ -18,11 +18,11 @@ struct LineView: View {
             LineButton(line: line, action: section.plusTransferAction)
             VStack(alignment: .trailing)
             {
-                Text(line.number).font(.headline).frame(width: bidManager.lineLabelWidth, alignment: .trailing)
+                Text(line.number).font(.footnote).frame(width: bidManager.lineLabelWidth, alignment: .trailing)
                 HStack {
-                    Text("\(attributeSymbol)  \(attributeText)").font(.subheadline).frame(alignment: .trailing)
+                    Text("\(attributeSymbol)  \(attributeText)").font(.caption).frame(alignment: .trailing)
                 }
-            }.frame(width: 75)
+            }.frame(width: bidManager.lineLabelWidth)
             ScrollView(.horizontal) {
                 ZStack(alignment: .leading) {
                     Rectangle().fill(backgroundColor())
@@ -35,7 +35,7 @@ struct LineView: View {
                 }
             } 
             LineButton(line: line, action: section.minusTransferAction)
-        }.frame(height: 35)
+        }.frame(height: bidManager.lineHeight)
     }
     
     func backgroundColor() -> Color {

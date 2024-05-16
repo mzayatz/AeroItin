@@ -17,7 +17,7 @@ struct BidpackDateView: View, Equatable {
                 .foregroundColor(date.color)
                 .border(.secondary.opacity(0.6))
             Text(date.calendarDate.formatted(.dateTime.day().inTimeZone(timeZone)))
-                .font(.callout)
+                .font(.footnote)
                 .foregroundColor(.secondary.opacity(0.6))
         }
     }

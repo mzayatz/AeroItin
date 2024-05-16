@@ -12,12 +12,13 @@ struct LineListView: View {
     var body: some View {
         ScrollViewReader { reader in
             List {
-                LineListSectionView(section: .bid).id("bids")
-                LineListSectionView(section: .neutral).id("lines").moveDisabled(true)
-                LineListSectionView(section: .avoid).id("avoids")
+                LineListSectionView(section: .bid).id("bids").listRowInsets(.init())
+                LineListSectionView(section: .neutral).id("lines").moveDisabled(true).listRowInsets(.init())
+                LineListSectionView(section: .avoid).id("avoids").listRowInsets(.init())
             }
+            .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, bidManager.lineHeight + 5)
         }
-        .listStyle(.plain)
     }
 }
 

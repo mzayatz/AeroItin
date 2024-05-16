@@ -10,8 +10,6 @@ import SwiftUI
 
 @MainActor
 class BidManager: ObservableObject {
-    
-    
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: bidpackExtension)!
     }
@@ -19,11 +17,12 @@ class BidManager: ObservableObject {
     static let bidpackExtension = "asc"
     
     let testing = true
-    let lineHeight: CGFloat = 50
-    let lineLabelWidth: CGFloat = 50
+    let lineHeight: CGFloat = 35
+    let lineLabelWidth: CGFloat = 60
     let sensibleScreenWidth: CGFloat = 1000
+    
     var dayWidth: CGFloat {
-        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
+        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 3))
     }
     var hourWidth: CGFloat  {
         dayWidth / 24

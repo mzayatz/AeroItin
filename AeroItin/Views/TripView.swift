@@ -18,7 +18,7 @@ struct TripView: View {
             Text(trip.shortDescription).foregroundColor(Color.primary)
                 .padding(1.5)
                 .background(.background.opacity(0.5))
-                .font(trip.isRfo ? .footnote.italic() : .footnote)
+                .font(trip.isRfo ? .caption.italic() : .caption2)
                 .underline(trip.isRfo)
 
         }.onTapGesture {

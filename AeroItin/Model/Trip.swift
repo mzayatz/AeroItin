@@ -149,6 +149,42 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
 
     }
     
+    //TODO: This function fails to find backend deadhead in this circumstance:
+    //TODO: The problem is the transportation information at the very bottom...
+//    --------------------------------------------------------------------------------------------
+//
+//     Report for B777 schedule JUNE 2024                         MEM BASE  #    90
+//        90 SU               REPORT AT  22:24 (17:24 L.T.)  EFFECTIVE JUN 09 ONLY
+//     FULL CREW
+//      DAY   FLT.  EQP  DEPARTS (L.T.)  ARRIVES (L.T.)  BLK.     BLK.   DUTY    CR.      LAYOVER
+//     09SU   0038  F84  MEM 2324(1824)  CDG 0816(1016)  08:52 DH/BH
+//                  BERCY PULLMAN 011-33-1-446-73402              08:52  10:22  08:52   CDG 40:44
+//                  TRANS BY URBANRIDE-CHABE LIMO 011-331-4120-9510
+//     12WE   5342  F83  CDG 0230(0430)  CAN 1509(2309)  12:39 BH/DH
+//                  WHITE SWAN 011-86-20-8188-6968                12:39  14:09  12:39   CAN 26:11
+//                  TRANS BY URBANRIDE, INC (FOR OTIS GROUP  212-920-8360
+//      #TH   5608  F83  CAN 1850(0250)  NRT 2313(0813)  04:23 BSI
+//                  HILTON NRT 011-81-476-33-1121 011-81-476-33-  04:23  05:53  04:23   NRT 57:57
+//                  TRANS BY KEISEI TAXI NARITA 011-81-476-33-5405(RAMP)
+//     16SU   5311  F83  NRT 1040(1940)  SIN 1757(0157)  07:17 DH
+//                  FAIRMONT SINGAPORE HOTEL 011-65-6339-7777     07:17  08:47  07:17   SIN 37:53
+//                  TRANS BY ALLIANCE TRANSPORTATION (URBAN  212-920-8360
+//     18TU   5601  F83  SIN 0920(1720)  KIX 1541(0041)  06:21 DH
+//                  SWISSOTEL OSAKA 011-81-6-6646-1111            06:21  07:51  06:21   KIX 31:00
+//                  TRANS BY OSAKA DAIICHI KOUTSU. CO. LTD 011-81-72-434-0120 (Ramp)
+//     20TH   5170  F83  KIX 0011(0911)  ANC 0739(2339)  07:28 BH
+//                  CAPTAIN COOK 907-276-6000                     07:28  08:58  07:28   ANC 19:14
+//                  TRANS BY BESPOKE TRANSPORTATION 212-203-0706
+//      *FR   9731  F83  ANC 0423(2023)  NLU 1125(0525)  07:02 DH
+//                  JW MARRIOTT MEX 011-52-555-999-0000           07:02  08:32  07:02   NLU 24:45
+//                  TRANS BY TRANSPORTACIONES SERAFIN VALLE 011-52-555-175-0364
+//     22SA GT9999  CAB  NLU 1240(0640)  MEX 1340(0740)  00:30
+//     22SA DL0593  738  MEX 1440(0840)  ATL 1815(1415)  03:35
+//     22SA DL0852  739  ATL 2016(1616)  MEM 2136(1636)  01:20
+//                                                                00:00  09:26  05:25
+//                  TRANS BY TRANSPORTACIONES SERAFIN VALLE 011-52-555-175-0364
+//         CREDIT HRS:   85:46T    BLK HRS:  54:02     LDGS:   7      TAFB:   311:42
+    
     static private func findDeadheads(in rows: ArraySlice<String>) -> Deadheads {
         let isFrontDeadhead = rows[rows.startIndex + 3].split(separator: " ")[1].isDeadheadFlightCode
         let isBackDeadhead = rows[rows.endIndex - 3].split(separator: " ")[1].isDeadheadFlightCode

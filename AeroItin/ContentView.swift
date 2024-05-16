@@ -12,9 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var bidManager: BidManager
     
     @Environment(\.scenePhase) private var scenePhase
-    
-//    let saveAction: () -> Void
-    
+        
     var body: some View {
         TabView {
             TabViewLines().tabItem {
@@ -25,17 +23,17 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase) { phase in
-            if phase == .inactive {
-//                saveAction()
+            if phase == .inactive || phase == .background {
                 Task {
                     do {
                         try await bidManager.saveSettings()
+                        try await bidManager.saveSnapshot()
                     }
                     catch {
                         fatalError(error.localizedDescription)
                     }
                 }
-            }
+            } 
         }
     }
 }

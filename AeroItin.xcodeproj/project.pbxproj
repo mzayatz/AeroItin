@@ -374,7 +374,6 @@
 		C920AC5E2AF29014001344BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
 				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
 				C9E12B352B543FB8002A788C /* MenuItemLabel.swift */,
 				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
@@ -426,13 +425,16 @@
 			isa = PBXGroup;
 			children = (
 				C9A615CA2AE880CA00822B26 /* Info.plist */,
+				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
+				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
+				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
+				C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */,
 				C9ACFC482AA02FFA009ACF28 /* Extensions */,
 				C9ACFC382A9E4FCE009ACF28 /* Errors */,
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
 				C920AC5E2AF29014001344BC /* Views */,
 				C973B5822B0D24C2009EBAAA /* WebView */,
-				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
 				C9ACFC0C2A9E4AAB009ACF28 /* AeroItin.entitlements */,
 				C9ACFC0D2A9E4AAB009ACF28 /* Preview Content */,
@@ -472,8 +474,6 @@
 				C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */,
 				C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */,
 				C9ACFC492AA0B592009ACF28 /* Line.swift */,
-				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
-				C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */,
 				C9A8ACF02B24A25400078057 /* Bid.swift */,
 				C90CE9142B2FE44600C6BBFF /* Settings.swift */,
 				C97788F92BF636E900DD5D74 /* BidpackDocument.swift */,

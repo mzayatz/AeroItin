@@ -16,7 +16,6 @@ class BidManager: ObservableObject {
     static let testingUrl = urls[8]
     static let bidpackExtension = "asc"
     
-    let testing = true
     let lineHeight: CGFloat = 35
     let lineLabelWidth: CGFloat = 60
     let sensibleScreenWidth: CGFloat = 1000
@@ -98,34 +97,6 @@ class BidManager: ObservableObject {
             .assign(to: &$debouncedSearchFilter)
     }
     
-//    init(text: String, seat: Bidpack.Seat) async {
-//        do {
-//            let loadedBidpack = try await Bidpack(text: text , seat: seat)
-//            bidpack = loadedBidpack
-//            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(loadedBidpack.dates.count - 7))
-//            hourWidth = dayWidth / 24
-//            minuteWidth = hourWidth / 60
-//            secondWidth = minuteWidth / 60
-//            
-//        }
-//        catch ParserError.sectionDividerNotFoundError {
-//            fatalError("SectionDividerNotFound Error... quitting.")
-//        }
-//        catch ParserError.tokenNotFoundError {
-//            fatalError("Token not found... quitting.")
-//        }
-//        catch {
-//            fatalError("Other error!\n\(error)")
-//        }
-//        $searchFilter
-//            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-//            .assign(to: &$debouncedSearchFilter)
-//    }
-    
-//    convenience init(seat: Bidpack.Seat) async {
-//        await self.init(text: try! String(contentsOf: BidManager.testingUrl), seat: seat)
-//    }
-    
     func loadSettings() async throws {
         let task = Task<Settings, Error> {
             guard let data = try? Data(contentsOf: settingsUrl) else {
@@ -152,32 +123,30 @@ class BidManager: ObservableObject {
             "\(DateFormatter.fileTimeStamp)-\(bidpack.besWithBidMonth)"
     }
     
-//    func saveSnapshot() async throws {
-//        let task = Task {
-//            let data = try JSONEncoder().encode(bidpack)
-//            try data.write(to: snapshotUrlFragment)
-//        }
-//        _ = try await task.value
-//    }
-//    
-//    func loadSnapshot() async throws {
-//        let task = Task<Bidpack, Error> {
-//            guard let data = try? Data(contentsOf: snapshotUrlFragment) else {
-//                return Bidpack()
-//            }
-//            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
-//            return bidpack
-//        }
-//        bidpack = try await task.value
-//    }
+    func saveSnapshot() async throws {
+        let task = Task {
+            let data = try JSONEncoder().encode(bidpack)
+            try data.write(to: snapshotUrlFragment)
+        }
+        _ = try await task.value
+    }
+    
+    func loadSnapshot() async throws {
+        bidpack = try await makeLoadSnapshotTask().value
+    }
     
     func loadSnapshot(data: Data) async throws {
+        bidpack = try await makeLoadSnapshotTask(data: data).value
+    }
+    
+    private func makeLoadSnapshotTask(data: Data? = nil) throws -> Task<Bidpack, Error> {
         let task = Task<Bidpack, Error> {
-            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data)
+            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data ?? Data(contentsOf: snapshotUrlFragment))
             return bidpack
         }
-        bidpack = try await task.value
+        return task
     }
+
     
     //MARK: User Intents
     func loadBidpackWithString(_ text: String) async {

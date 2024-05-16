@@ -31,11 +31,7 @@ struct LineListSectionView: View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
             Section {
                 ForEach(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : bidManager.filteredLines) { line in
-                    HStack {
-                        LineButton(line: line, action: section.plusTransferAction)
-                        LineView(line: line)
-                        LineButton(line: line, action: section.minusTransferAction)
-                    }
+                        LineView(line: line, section: section)
                 }.onMove {
                     bidManager.bidpack[keyPath: section.associatedArrayKeypath].move(fromOffsets: $0, toOffset: $1)
                 }

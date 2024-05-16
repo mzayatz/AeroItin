@@ -9,11 +9,13 @@ import SwiftUI
 
 struct LineView: View {
     let line: Line
+    let section: Line.Flag
     
     @EnvironmentObject var bidManager: BidManager
     
     var body: some View {
         HStack {
+            LineButton(line: line, action: section.plusTransferAction)
             VStack(alignment: .trailing)
             {
                 Text(line.number).font(.headline).frame(width: bidManager.lineLabelWidth, alignment: .trailing)
@@ -32,6 +34,7 @@ struct LineView: View {
                     }
                 }
             } 
+            LineButton(line: line, action: section.minusTransferAction)
         }.frame(height: 35)
     }
     

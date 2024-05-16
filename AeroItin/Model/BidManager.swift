@@ -22,10 +22,19 @@ class BidManager: ObservableObject {
     let lineHeight: CGFloat = 50
     let lineLabelWidth: CGFloat = 50
     let sensibleScreenWidth: CGFloat = 1000
-    var dayWidth: CGFloat
-    var hourWidth:  CGFloat
-    var minuteWidth: CGFloat
-    var secondWidth: CGFloat
+    var dayWidth: CGFloat {
+        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
+    }
+    var hourWidth: CGFloat  {
+        dayWidth / 24
+    }
+    var minuteWidth: CGFloat {
+        hourWidth / 60
+    }
+    var secondWidth: CGFloat {
+        minuteWidth / 60
+    }
+    
     var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
@@ -85,10 +94,6 @@ class BidManager: ObservableObject {
     
     init() {
         bidpack = Bidpack()
-        dayWidth = 0
-        hourWidth = 0
-        minuteWidth = 0
-        secondWidth = 0
         $searchFilter
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .assign(to: &$debouncedSearchFilter)
@@ -179,10 +184,6 @@ class BidManager: ObservableObject {
     func loadBidpackWithString(_ text: String) async {
         do {
             try bidpack = await Bidpack(text: text, seat: settings.seat)
-            dayWidth = (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 7))
-            hourWidth = dayWidth / 24
-            minuteWidth = hourWidth / 60
-            secondWidth = minuteWidth / 60
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")

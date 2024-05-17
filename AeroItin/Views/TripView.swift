@@ -14,41 +14,32 @@ struct TripView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(tripColor).opacity(0.55)
-            VStack(spacing: 2) {
-                Text(trip.number).background(.background.opacity(0.5))
-                Text(trip.shortDescription).foregroundColor(Color.primary).background(.background.opacity(0.5))
-            }
-            .padding(1.5)
-            .font(trip.isRfo ? .caption2.italic() : .caption2)
-            .underline(trip.isRfo)
-
-        }.onTapGesture {
-            withAnimation {
-                bidManager.selectedTripText = trip.text.joined(separator: "\n")
-            }
+                .foregroundStyle(tripColor.opacity(0.55))
+            TripCaptionView(number: trip.number, description: trip.shortDescription, isRfo: trip.isRfo)
         }
+        .onTapGesture(perform: tripTapHandler)
         .frame(width: bidManager.secondWidth * trip.timeAwayFromBase)
         .offset(offset)
     }
     
-    var offset: CGSize {
+    private var offset: CGSize {
         CGSize(width: bidManager.secondWidth * trip.startDateTime.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
     }
     
-    var tripColor: Color {
+    private var tripColor: Color {
         switch trip.deadheads {
-        case .double:
-            return .orange
-        case .front:
-            return .blue
-        case .back:
-            return .green
-        case .none:
-            return .yellow
+        case .double: return .orange
+        case .front: return .blue
+        case .back: return .green
+        case .none: return .yellow
         }
     }
     
+    private func tripTapHandler() {
+        withAnimation {
+            bidManager.selectedTripText = trip.text.joined(separator: "\n")
+        }
+    }
 }
 
 //struct TripView_Previews: PreviewProvider {

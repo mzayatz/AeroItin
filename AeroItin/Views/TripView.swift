@@ -15,11 +15,13 @@ struct TripView: View {
         ZStack {
             Rectangle()
                 .foregroundStyle(tripColor).opacity(0.55)
-            Text(trip.shortDescription).foregroundColor(Color.primary)
-                .padding(1.5)
-                .background(.background.opacity(0.5))
-                .font(trip.isRfo ? .caption2.italic() : .caption2)
-                .underline(trip.isRfo)
+            VStack(spacing: 2) {
+                Text(trip.number).background(.background.opacity(0.5))
+                Text(trip.shortDescription).foregroundColor(Color.primary).background(.background.opacity(0.5))
+            }
+            .padding(1.5)
+            .font(trip.isRfo ? .caption2.italic() : .caption2)
+            .underline(trip.isRfo)
 
         }.onTapGesture {
             withAnimation {

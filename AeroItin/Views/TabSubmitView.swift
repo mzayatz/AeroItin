@@ -75,6 +75,9 @@ struct TabSubmitView: View {
                                 return
                             }
                             do {
+                                Task {
+                                    try await bidManager.saveSettings()
+                                }
                                 bid = try Bid(settings: bidManager.settings, lineSelection: bidManager.bidpack.lineNumbersOfBids)
                                 showBidSubmitPage = true
 //                                webViewModel.loadRequest(bid.createPostRequest())

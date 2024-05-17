@@ -21,7 +21,7 @@ class BidManager: ObservableObject {
     let sensibleScreenWidth: CGFloat = 1000
     
     var dayWidth: CGFloat {
-        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 3))
+        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 5))
     }
     var hourWidth: CGFloat  {
         dayWidth / 24
@@ -36,7 +36,17 @@ class BidManager: ObservableObject {
     var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
-    @Published var bidpack: Bidpack
+    @Published var bidpack: Bidpack {
+        didSet {
+            Task {
+                do {
+                    try await saveSnapshot()
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
+            }
+        }
+    }
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
     @Published var debouncedSearchFilter = ""

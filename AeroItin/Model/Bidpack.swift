@@ -97,36 +97,25 @@ struct Bidpack: Equatable, Codable {
         startDateLocal..<endDateLocal.addingTimeInterval(.day)
     }
     
+    let monthDictionary = [
+        "JANUARY": "Jan",
+        "FEBRUARY": "Feb",
+        "MARCH": "Mar",
+        "APRIL": "Apr",
+        "MAY": "May",
+        "JUNE": "Jun",
+        "JULY": "Jul",
+        "AUGUST": "Aug",
+        "SEPTEMBER": "Sep",
+        "OCTOBER": "Oct",
+        "NOVEMBER": "Nov",
+        "DECEMBER": "Dec"
+    ]
+    
     var shortMonth: String {
-        switch month {
-        case "JANUARY":
-            return "Jan"
-        case "FEBRUARY":
-            return "Feb"
-        case "MARCH":
-            return "Mar"
-        case "APRIL":
-            return "Apr"
-        case "MAY":
-            return "May"
-        case "JUNE":
-            return "Jun"
-        case "JULY":
-            return "Jul"
-        case "AUGUST":
-            return "Aug"
-        case "SEPTEMBER":
-            return "Sep"
-        case "OCTOBER":
-            return "Oct"
-        case "NOVEMBER":
-            return "Nov"
-        case "DECEMBER":
-            return "Dec"
-        default:
-            return ""
-        }
+        monthDictionary[month] ?? ""
     }
+    
     
     private var comparator: KeyPathComparator<Line> {
         sortLinesBy.getKeyPath()

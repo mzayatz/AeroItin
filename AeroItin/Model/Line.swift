@@ -32,12 +32,12 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         hasDeadhead = false
     }
     
-    init(number: String, trips: [Trip]) {
+    init(number: String, trips: [Trip], creditHours: TimeInterval = 0) {
         self.number = number
         text = [String]()
         self.trips = trips
         flag = .neutral
-        summary = Summary()
+        summary = Summary(creditHours: creditHours)
         layovers = Set<String>()
         category = .reserve
         hasDeadhead = false
@@ -145,6 +145,17 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         
         init() {
             creditHours = 0
+            timeAwayFromBase = 0
+            carryOutCreditHours = 0
+            dutyPeriods = 0
+            blockHours = 0
+            landings = 0
+            carryOutBlockHours = 0
+            daysOff = 0
+        }
+        
+        init(creditHours: TimeInterval) {
+            self.creditHours = creditHours
             timeAwayFromBase = 0
             carryOutCreditHours = 0
             dutyPeriods = 0

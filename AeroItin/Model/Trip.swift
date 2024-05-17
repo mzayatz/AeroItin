@@ -56,11 +56,11 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         isRfo = false
     }
     
-    init(number: String, effectiveDate: Date) {
+    init(number: String, effectiveDate: Date, rdayValue: TimeInterval = 0) {
         text = ["\(number) Reserve"]
         self.number = number
         self.effectiveDates = [effectiveDate]
-        creditHours = 0
+        creditHours = rdayValue
         blockHours = 0
         landings = 0
         timeAwayFromBase = .day

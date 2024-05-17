@@ -23,7 +23,7 @@ struct TabViewLines: View {
                         ProgressView("Bidpack Loading... Please wait.")
                     }
                     LineListView()
-                        .searchable(text:$bidManager.searchFilter)
+                        .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
                         .autocorrectionDisabled()
 #if os(iOS)
                         .textInputAutocapitalization(.never)

@@ -185,14 +185,22 @@ struct Bidpack: Equatable, Codable {
         dates = datesBuffer
         
         var captainLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.trips, linesEndIndex: endIndicies.captainRegularLines, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, trips: trips)
+       
+        let captainRlg = (captainLines.reduce(0.0) {
+            $0 + $1.summary.creditHours
+        } / Double(captainLines.count)) * 0.96
         
         var firstOfficerLines = try Bidpack.findAllLinesIn(textRows, linesStartIndex: endIndicies.captainRegularLines, linesEndIndex: endIndicies.firstOfficerRegularLines, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, trips: trips)
         
+        let firstOfficerRlg = (firstOfficerLines.reduce(0.0) {
+            $0 + $1.summary.creditHours
+        } / Double(firstOfficerLines.count)) * 0.96
+        
         let secondaryLines = Bidpack.computeAllSecondaryLinesIn(textRows, startIndex: endIndicies.firstOfficerReserveLines, endIndex: endIndicies.captainAndFirstOfficerVtoLines)
         
-        let captainReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.firstOfficerRegularLines + 7, endIndex: endIndicies.captainReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone)
+        let captainReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.firstOfficerRegularLines + 7, endIndex: endIndicies.captainReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, creditHours: captainRlg)
         
-        let firstOfficerReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.captainReserveLines + 7, endIndex: endIndicies.firstOfficerReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone)
+        let firstOfficerReserveLines = try Bidpack.findAllReserveLinesIn(textRows, startIndex: endIndicies.captainReserveLines + 7, endIndex: endIndicies.firstOfficerReserveLines - 2, startDateLocal: dates.first!.calendarDate, timeZone: base.timeZone, creditHours: firstOfficerRlg)
         captainLines.append(contentsOf: captainReserveLines)
         firstOfficerLines.append(contentsOf: firstOfficerReserveLines)
         captainLines.append(contentsOf: secondaryLines.captain)
@@ -226,7 +234,8 @@ struct Bidpack: Equatable, Codable {
         startIndex: Int,
         endIndex: Int,
         startDateLocal: Date,
-        timeZone: TimeZone) throws -> [Line] 
+        timeZone: TimeZone,
+        creditHours: TimeInterval) throws -> [Line]
     {
         let rows = textRows[startIndex...endIndex]
         var lines = [Line]()
@@ -247,7 +256,7 @@ struct Bidpack: Equatable, Codable {
                     }
                     return trip
                 }
-                lines.append(Line(number: String(lineNumber), trips: trips))
+                lines.append(Line(number: String(lineNumber), trips: trips, creditHours: creditHours))
             } else {
                 let lineNumbers = lineNumber.split(separator: "-")
                 if lineNumbers.count == 2 {
@@ -264,7 +273,7 @@ struct Bidpack: Equatable, Codable {
                     let startNumber = Int(lineNumbers.first!) ?? 0
                     let endNumber = Int(lineNumbers.last!) ?? 0
                     for number in startNumber...endNumber {
-                        lines.append(Line(number: String(number), trips: trips))
+                        lines.append(Line(number: String(number), trips: trips, creditHours: creditHours))
                     }
                 }
             }

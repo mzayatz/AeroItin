@@ -97,23 +97,22 @@ struct Bidpack: Equatable, Codable {
         startDateLocal..<endDateLocal.addingTimeInterval(.day)
     }
     
-    let monthDictionary = [
-        "JANUARY": "Jan",
-        "FEBRUARY": "Feb",
-        "MARCH": "Mar",
-        "APRIL": "Apr",
-        "MAY": "May",
-        "JUNE": "Jun",
-        "JULY": "Jul",
-        "AUGUST": "Aug",
-        "SEPTEMBER": "Sep",
-        "OCTOBER": "Oct",
-        "NOVEMBER": "Nov",
-        "DECEMBER": "Dec"
-    ]
-    
     var shortMonth: String {
-        monthDictionary[month] ?? ""
+        let monthDictionary = [
+            "JANUARY": "Jan",
+            "FEBRUARY": "Feb",
+            "MARCH": "Mar",
+            "APRIL": "Apr",
+            "MAY": "May",
+            "JUNE": "Jun",
+            "JULY": "Jul",
+            "AUGUST": "Aug",
+            "SEPTEMBER": "Sep",
+            "OCTOBER": "Oct",
+            "NOVEMBER": "Nov",
+            "DECEMBER": "Dec"
+        ]
+        return monthDictionary[month] ?? ""
     }
     
     
@@ -166,8 +165,9 @@ struct Bidpack: Equatable, Codable {
         let lineSectionHeader = try Bidpack.findFirstLineSectionHeaderIn(textRows[endIndicies.trips..<endIndicies.captainRegularLines], fromOffset: 0, timeZone: base.timeZone)
         
         var datesBuffer = [BidPeriodDate]()
+        let baseCalendar = Calendar.localCalendarFor(timeZone: base.timeZone)
         for date in lineSectionHeader.dates {
-            let isWeekend = Calendar.localCalendarFor(timeZone: base.timeZone).isDateInWeekend(date)
+            let isWeekend = baseCalendar.isDateInWeekend(date)
             datesBuffer.append(BidPeriodDate(calendarDate: date, isWeekend: isWeekend))
         }
         

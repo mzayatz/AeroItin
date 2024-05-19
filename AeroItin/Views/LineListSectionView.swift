@@ -31,9 +31,21 @@ struct LineListSectionView: View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
             Section {
                 ForEach(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : bidManager.filteredLines) { line in
-                        LineView(line: line, section: section)
+                    LineView(line: line, section: section)
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             LineButton(line: line, action: section.plusTransferAction)
+                            if(section == .bid) {
+                                Button {
+                                    bidManager.moveToBookmark(line)
+                                } label: {
+                                    Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
+                                }.tint(.yellow)
+                                Button {
+                                    bidManager.bookmark = bidManager.bidpack.bids.firstIndex(of: line) ?? 0
+                                } label: {
+                                    Image(systemName: "bookmark.square")
+                                }.tint(.blue)
+                            }
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             LineButton(line: line, action: section.minusTransferAction)

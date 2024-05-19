@@ -17,11 +17,11 @@ struct LineButton: View {
         case .fromAvoidsToBids:
             return Image(systemName: "plus.circle")
         case .fromAvoidsToLines:
-            return Image(systemName: "minus.circle")
+            return Image(systemName: "arrow.uturn.backward.circle")
         case .fromBidsToAvoids:
             return Image(systemName: "minus.circle")
         case .fromBidsToLines:
-            return Image(systemName: "plus.circle")
+            return Image(systemName: "arrow.uturn.backward.circle")
         case .fromLinesToAvoids:
             return Image(systemName: "minus.circle")
         case .fromLinesToBids:

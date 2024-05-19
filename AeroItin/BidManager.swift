@@ -73,7 +73,7 @@ class BidManager: ObservableObject {
         }
     }
     @Published var avoidedDates = [Date]()
-    
+    @Published var bookmark = 0
     
     
     var bidpackDescription: String {
@@ -179,6 +179,16 @@ class BidManager: ObservableObject {
     }
     func resetBid() {
         bidpack.resetBid()
+    }
+    
+    func moveToBookmark(_ line: Line) {
+        if bookmark > bidpack.bids.endIndex {
+            bookmark = 0
+        }
+        
+        if let index = bidpack.bids.firstIndex(of: line) {
+            bidpack.bids.move(fromOffsets: [index], toOffset: bookmark)
+        }
     }
     
     func moveLine(from source: IndexSet, toOffset destination: Int) {

@@ -10,13 +10,14 @@ import SwiftUI
 struct BidpackDatesStripView: View {
     @EnvironmentObject var bidManager: BidManager
     let strokeWidth = 2.0
+    let dayWidth: CGFloat
     
     var body: some View {
         LazyHStack(spacing: 0) {
             ForEach(bidManager.bidpack.dates.indices, id: \.self) { i in
                 ZStack {
-                    BidpackDateView(date: bidManager.bidpack.dates[i], timeZone: bidManager.bidpack.base.timeZone).frame(width: bidManager.dayWidth)
-                        .frame(width: bidManager.dayWidth)
+                    BidpackDateView(date: bidManager.bidpack.dates[i], timeZone: bidManager.bidpack.base.timeZone)
+                        .frame(width: dayWidth)
                     if(i > bidManager.bidpack.dates.count - 8) {
                         Color.yellow.opacity(0.2)
                     }

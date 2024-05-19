@@ -33,6 +33,10 @@ class BidManager: ObservableObject {
         minuteWidth / 60
     }
     
+    var dateCount: Int {
+        bidpack.dates.count
+    }
+    
     var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     

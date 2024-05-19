@@ -9,6 +9,12 @@ import SwiftUI
 
 struct TripView: View {
     let trip: Trip
+    let dayWidth: CGFloat
+    
+    var secondWidth: CGFloat {
+        dayWidth / (24 * 3600)
+    }
+    
     @EnvironmentObject var bidManager: BidManager
     
     var body: some View {
@@ -18,12 +24,12 @@ struct TripView: View {
             TripCaptionView(number: trip.number, description: trip.shortDescription, isRfo: trip.isRfo)
         }
         .onTapGesture(perform: tripTapHandler)
-        .frame(width: bidManager.secondWidth * trip.timeAwayFromBase)
+        .frame(width: secondWidth * trip.timeAwayFromBase)
         .offset(offset)
     }
     
     private var offset: CGSize {
-        CGSize(width: bidManager.secondWidth * trip.startDateTime.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
+        CGSize(width: secondWidth * trip.startDateTime.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
     }
     
     private var tripColor: Color {

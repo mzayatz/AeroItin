@@ -15,17 +15,34 @@ struct LineButton: View {
     var buttonImage: some View {
         switch action {
         case .fromAvoidsToBids:
-            return Image(systemName: "plus.circle").foregroundStyle(.green)
+            return Image(systemName: "plus.circle")
         case .fromAvoidsToLines:
-            return Image(systemName: "minus.circle").foregroundStyle(.gray)
+            return Image(systemName: "minus.circle")
         case .fromBidsToAvoids:
-            return Image(systemName: "minus.circle").foregroundStyle(.red)
+            return Image(systemName: "minus.circle")
         case .fromBidsToLines:
-            return Image(systemName: "plus.circle").foregroundStyle(.gray)
+            return Image(systemName: "plus.circle")
         case .fromLinesToAvoids:
-            return Image(systemName: "minus.circle").foregroundStyle(.red)
+            return Image(systemName: "minus.circle")
         case .fromLinesToBids:
-            return Image(systemName: "plus.circle").foregroundStyle(.green)
+            return Image(systemName: "plus.circle")
+        }
+    }
+    
+    var buttonTint: Color? {
+        switch action {
+        case .fromAvoidsToBids:
+            return .green
+        case .fromAvoidsToLines:
+            return nil
+        case .fromBidsToAvoids:
+            return .red
+        case .fromBidsToLines:
+            return nil
+        case .fromLinesToAvoids:
+            return .red
+        case .fromLinesToBids:
+            return .green
         }
     }
     
@@ -36,7 +53,7 @@ struct LineButton: View {
             }
         } label: {
             buttonImage
-        }.buttonStyle(.plain)
+        }.tint(buttonTint)
     }
 }
 

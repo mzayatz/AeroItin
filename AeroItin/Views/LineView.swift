@@ -15,26 +15,20 @@ struct LineView: View {
     
     var body: some View {
         HStack {
-            LineButton(line: line, action: section.plusTransferAction)
-            VStack(alignment: .trailing)
-            {
-                Text(line.number).font(.footnote).frame(width: bidManager.lineLabelWidth, alignment: .trailing)
-                HStack {
-                    Text("\(attributeSymbol)  \(attributeText)").font(.caption).frame(alignment: .trailing)
-                }
-            }.frame(width: bidManager.lineLabelWidth)
-            ScrollView(.horizontal) {
+            Text(line.number).font(.caption.monospaced())
+            GeometryReader { geometry in
+                let dayWidth = dayWidthFrom(geometry)
                 ZStack(alignment: .leading) {
                     Rectangle().fill(backgroundColor())
-                    BidpackDatesStripView()
+                    BidpackDatesStripView(dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
                         ForEach(line.trips.indices, id: \.self) {
-                            TripView(trip: line.trips[$0])
+                            TripView(trip: line.trips[$0], dayWidth: dayWidth)
                         }
                     }
                 }
-            } 
-            LineButton(line: line, action: section.minusTransferAction)
+            }
+            //
         }.frame(height: bidManager.lineHeight)
     }
     
@@ -81,6 +75,10 @@ struct LineView: View {
         case .number:
             return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
         }
+    }
+    
+    func dayWidthFrom(_ geometry: GeometryProxy) -> CGFloat {
+        geometry.size.width / CGFloat(bidManager.dateCount)
     }
 }
 

@@ -32,6 +32,12 @@ struct LineListSectionView: View {
             Section {
                 ForEach(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : bidManager.filteredLines) { line in
                         LineView(line: line, section: section)
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            LineButton(line: line, action: section.plusTransferAction)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            LineButton(line: line, action: section.minusTransferAction)
+                        }
                 }.onMove {
                     bidManager.bidpack[keyPath: section.associatedArrayKeypath].move(fromOffsets: $0, toOffset: $1)
                 }

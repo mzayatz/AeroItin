@@ -13,6 +13,7 @@ struct TripTextView: View {
 //    @GestureState var offset = CGSize()
     
     let font: Font = .system(size: 12, weight: .regular, design: .monospaced)
+    let largerFont: Font = .system(size: 12, weight: .bold, design: .monospaced)
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5.0).foregroundStyle(.regularMaterial)
@@ -50,16 +51,21 @@ struct TripTextView: View {
         }
         var attributedTripText = AttributedString(tripText)
         
-        for match in tripText.attributedRanges(of: /\b\w\w\d\d\d\d\b/, using: attributedTripText) {
-//            attributedTripText[match].foregroundColor = .accentColor
-            attributedTripText[match].font = font.bold().italic()
-
+        for match in tripText.attributedRanges(of: /.*\b(\w\w)?\d\d\d\d *\b\w\w\w *\b[A-Z]{3}\b(?= \d\d\d\d).*/, using: attributedTripText) {
+            attributedTripText[match].font = largerFont
         }
-        for match in tripText.attributedRanges(of: /\b[A-Z]{3}\b(?= \d\d\d\d)/, using: attributedTripText) {
+        
+//        for match in tripText.attributedRanges(of: /\b\w\w\d\d\d\d\b/, using: attributedTripText) {
 //            attributedTripText[match].foregroundColor = .accentColor
-            attributedTripText[match].font = font.bold().italic()
+//            attributedTripText[match].font = font.bold()
+//
+//        }
+//        for match in tripText.attributedRanges(of: /\b[A-Z]{3}\b(?= \d\d\d\d)/, using: attributedTripText) {
+//            attributedTripText[match].foregroundColor = .accentColor
+//            attributedTripText[match].font = font.bold()
+//        }
+        
 
-        }
         return attributedTripText
     }
 }

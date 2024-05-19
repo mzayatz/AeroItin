@@ -36,12 +36,12 @@ struct LineListSectionView: View {
                             LineButton(line: line, action: section.plusTransferAction)
                             if(section == .bid) {
                                 Button {
-                                    bidManager.moveToBookmark(line)
+                                    bidManager.bidpack.moveToBookmark(line)
                                 } label: {
                                     Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
                                 }.tint(.yellow)
                                 Button {
-                                    bidManager.bookmark = bidManager.bidpack.bids.firstIndex(of: line) ?? 0
+                                    bidManager.bidpack.bookmark = bidManager.bidpack.bids.firstIndex(of: line) ?? 0
                                 } label: {
                                     Image(systemName: "bookmark.square")
                                 }.tint(.blue)

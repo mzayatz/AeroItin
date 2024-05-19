@@ -33,7 +33,9 @@ struct Bidpack: Equatable, Codable {
     var lines: [Line]
     var bids = [Line]()
     var avoids = [Line]()
-        
+    
+    var bookmark: Int? = nil
+
     var sortLinesBy: SortOptions = .number {
         didSet {
             sortLines()
@@ -313,8 +315,28 @@ struct Bidpack: Equatable, Codable {
         guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
             return
         }
-        action != .fromBidsToLines ? self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i)) :
-        self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
+        switch action {
+        case .fromBidsToLines:
+            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
+        case .fromLinesToBids:
+            if let bookmark,
+               bookmark < bids.endIndex {
+                if bookmark == bids.startIndex {
+                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bids.startIndex)
+                    self.bookmark = bids.startIndex
+                } else if bookmark == bids.endIndex - 1 {
+                    self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
+                    self.bookmark = bids.endIndex - 1
+                } else {
+                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bookmark)
+                    self.bookmark = bookmark + 1
+                }
+            } else {
+                self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
+            }
+        default:
+            self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
+        }
     }
     
     mutating func resetBid() {
@@ -335,6 +357,18 @@ struct Bidpack: Equatable, Codable {
         lines.sort(using: comparator)
         if sortDescending {
             lines.reverse()
+        }
+    }
+    
+    mutating func moveToBookmark(_ line: Line) {
+        guard let bookmark,
+              bookmark < bids.endIndex else
+        {
+              return
+        }
+        
+        if let index = bids.firstIndex(of: line) {
+            bids.move(fromOffsets: [index], toOffset: bookmark)
         }
     }
     

@@ -11,7 +11,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let text: [String]
     let number: String
     let trips: [Trip]
-    var flag: Flag
     let summary: Summary
     let layovers: Set<String>
     let category: Line.Category
@@ -25,7 +24,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         self.number = number
         text = [String]()
         trips = [Trip]()
-        flag = .neutral
         summary = Summary()
         layovers = Set<String>()
         category = .secondary
@@ -36,7 +34,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         self.number = number
         text = [String]()
         self.trips = trips
-        flag = .neutral
         summary = Summary(creditHours: creditHours)
         layovers = Set<String>()
         category = .reserve
@@ -89,7 +86,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
             return nil
         }
         self.trips = lineTrips
-        flag = .neutral
         var layoversBuffer = Set<String>()
         var deadheadBuffer = false
         for trip in trips {
@@ -99,10 +95,6 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         layovers = layoversBuffer
         category = .regular
         hasDeadhead = deadheadBuffer
-    }
-    
-    mutating func resetFlag() {
-        self.flag = .neutral
     }
     
     static func matchTrip(tripList: [Trip], dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date, subtractDayFromEffectiveDates: Bool = false) -> Trip? {

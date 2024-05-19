@@ -39,7 +39,7 @@ struct LineView: View {
     }
     
     func backgroundColor() -> Color {
-        switch line.flag {
+        switch section {
         case .avoid:
             return .red.opacity(0.25)
         case .bid:

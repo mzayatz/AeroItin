@@ -26,7 +26,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     }
     
     var startDateTime: Date {
-        effectiveDates.first!
+        effectiveDates.first ?? Date(timeIntervalSince1970: .day * 365)
     }
     
     var endDateTime: Date {

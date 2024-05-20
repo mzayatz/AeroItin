@@ -55,6 +55,7 @@ class BidManager: ObservableObject {
     @Published var searchFilter = ""
     @Published var debouncedSearchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
+    @Published var scrollNow = false
     @Published var settings = Settings()
     @Published var filterDeadheads = false
     @Published var avoidedDateComponents = Set<DateComponents>() {

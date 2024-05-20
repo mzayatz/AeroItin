@@ -28,7 +28,7 @@ struct TabViewLines: View {
 #if os(iOS)
                         .textInputAutocapitalization(.never)
 #endif
-                        .navigationTitle(bidManager.bidpackDescription)
+                        .navigationTitle("\(bidManager.bidpackDescription)")
 
                         
                                 }
@@ -53,17 +53,19 @@ struct TabViewLines: View {
         ScrollViewReader { proxy in
             if #available(iOS 17.0, macOS 14.0, *) {
                 content()
-                    .onChange(of: bidManager.scrollSnap) {
+                    .onChange(of: bidManager.scrollNow) {
                         withAnimation {
                             proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
                         }
+                        bidManager.scrollNow = false
                     }
             } else {
                 content()
-                    .onChange(of: bidManager.scrollSnap, perform: { _ in
+                    .onChange(of: bidManager.scrollNow, perform: { _ in
                         withAnimation {
                             proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
                         }
+                        bidManager.scrollNow = false
                     })
             }
         }

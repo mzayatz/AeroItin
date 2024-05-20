@@ -10,7 +10,9 @@ import SwiftUI
 struct TabSubmitView: View {
     @State private var showBlankEmployeeNumberAlert = false
     @State private var showNumberOfLinesBidAlert = false
-
+    @State private var showExpiredBidPackAlert = false
+    @State private var overrideExpiredBid = false
+    
     @State private var showBidSubmitPage = false
     @StateObject private var webViewModel = WebViewModel()
     @EnvironmentObject var bidManager: BidManager
@@ -70,11 +72,17 @@ struct TabSubmitView: View {
                     }
                     Section {
                         Button("Submit Bid") {
+                            guard bidManager.bidpack.isStartInFuture || overrideExpiredBid else {
+                                showExpiredBidPackAlert = true
+                                return
+                            }
+                            
                             guard bidManager.settings.employeeNumber != "" else {
                                 showBlankEmployeeNumberAlert = true
                                 return
                             }
                             do {
+                                overrideExpiredBid = false
                                 Task {
                                     try await bidManager.saveSettings()
                                 }
@@ -105,6 +113,19 @@ struct TabSubmitView: View {
                         }
                     } message: {
                         Text("The number of lines bid must be greater than 0 but less than 472. Check your bid.")
+                    }.textCase(nil).alert("Old bidpack", isPresented: $showExpiredBidPackAlert) {
+                        Button("Dismiss") {
+                            
+                        }
+                        Button("Override") {
+                            overrideExpiredBid = true
+                        }
+                    } message: {
+                        Text("It appears this bidpack is old.") +
+                        Text("\n\nToday's date is: \(Date(), format: .dateTime.day().month().year()).") +
+                        Text("\nBidpack starts on: \(bidManager.bidpack.startDateLocal, format: .dateTime.day().month().year()).") +
+                        Text("\n\nDismiss to load a new bid pack.") +
+                        Text("\nor Override and resubmit.")
                     }.textCase(nil)
                 }.sheet(isPresented: $showBidSubmitPage) {
                     VStack {

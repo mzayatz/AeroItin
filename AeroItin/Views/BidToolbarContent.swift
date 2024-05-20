@@ -71,10 +71,11 @@ struct BidToolbarContent: ToolbarContent {
                         Task {
                             do {
                                 if url.startAccessingSecurityScopedResource() {
-                                    
                                     showProgressView = true
                                     await bidManager.loadBidpackWithString(try String(contentsOf: url))
                                     showProgressView = false
+                                    bidManager.scrollSnap = .neutral
+                                    bidManager.scrollNow = true
                                 }
                                 url.stopAccessingSecurityScopedResource()
                             }

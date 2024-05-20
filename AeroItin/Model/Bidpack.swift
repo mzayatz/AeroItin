@@ -91,6 +91,10 @@ struct Bidpack: Equatable, Codable {
         dates.first?.calendarDate ?? Date(timeIntervalSince1970: .day * 365)
     }
     
+    var isStartInFuture: Bool {
+       startDateLocal.timeIntervalSinceNow > 0
+    }
+    
     var endDateLocal: Date {
         dates.last?.calendarDate ?? Date(timeIntervalSince1970: .day * 366)
     }

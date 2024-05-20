@@ -36,7 +36,9 @@ struct LineListSectionView: View {
                             LineButton(line: line, action: section.plusTransferAction)
                             if(section == .bid) {
                                 Button {
-                                    bidManager.bidpack.moveToBookmark(line)
+                                    withAnimation {
+                                        bidManager.bidpack.moveToBookmark(line)
+                                    }
                                 } label: {
                                     Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
                                 }.tint(.yellow)
@@ -65,14 +67,17 @@ struct LineListSectionView: View {
                     Text("Bids").foregroundStyle(Color.accentColor)
                         .onTapGesture {
                             bidManager.scrollSnap = .bid
+                            bidManager.scrollNow = true
                         }
                     Text("Lines").foregroundStyle(Color.accentColor)
                         .onTapGesture {
                             bidManager.scrollSnap = .neutral
+                            bidManager.scrollNow = true
                         }
                     Text("Avoids").foregroundStyle(Color.accentColor)
                         .onTapGesture {
                             bidManager.scrollSnap = .avoid
+                            bidManager.scrollNow = true
                         }
                 }
                 

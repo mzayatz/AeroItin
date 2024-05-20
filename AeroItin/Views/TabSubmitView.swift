@@ -114,10 +114,10 @@ struct TabSubmitView: View {
                     } message: {
                         Text("The number of lines bid must be greater than 0 but less than 472. Check your bid.")
                     }.textCase(nil).alert("Old bidpack", isPresented: $showExpiredBidPackAlert) {
-                        Button("Dismiss") {
+                        Button("Dismiss", role: .cancel) {
                             
                         }
-                        Button("Override") {
+                        Button("Override", role: .destructive) {
                             overrideExpiredBid = true
                         }
                     } message: {

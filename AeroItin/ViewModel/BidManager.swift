@@ -16,27 +16,6 @@ class BidManager: ObservableObject {
     static let testingUrl = urls[8]
     static let bidpackExtension = "asc"
     
-    let lineHeight: CGFloat = 35
-    let lineLabelWidth: CGFloat = 60
-    let sensibleScreenWidth: CGFloat = 1000
-    
-    var dayWidth: CGFloat {
-        (sensibleScreenWidth - lineLabelWidth) / CGFloat(Double(bidpack.dates.count - 5))
-    }
-    var hourWidth: CGFloat  {
-        dayWidth / 24
-    }
-    var minuteWidth: CGFloat {
-        hourWidth / 60
-    }
-    var secondWidth: CGFloat {
-        minuteWidth / 60
-    }
-    
-    var dateCount: Int {
-        bidpack.dates.count
-    }
-    
     var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
     @Published var bidpack: Bidpack {
@@ -73,6 +52,8 @@ class BidManager: ObservableObject {
     }
     @Published var avoidedDates = [Date]()
     
+    let uiProperties: UIProperties
+    
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {
             return "No Bidpack Loaded"
@@ -102,7 +83,9 @@ class BidManager: ObservableObject {
     }
     
     init() {
-        bidpack = Bidpack()
+        let localBidpack = Bidpack()
+        uiProperties = UIProperties(dateCount: localBidpack.dateCount)
+        bidpack = localBidpack
         $searchFilter
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .assign(to: &$debouncedSearchFilter)

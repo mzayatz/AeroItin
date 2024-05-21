@@ -31,7 +31,8 @@ struct LineListSectionView: View {
         if(!bidManager.bidpack[keyPath: section.associatedArrayKeypath].isEmpty) {
             Section {
                 ForEach(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath] : bidManager.filteredLines) { line in
-                    LineView(line: line, section: section)
+                    LineView(line: line, section: section, dates: bidManager.bidpack.dates, timeZone: bidManager.bidpack.base.timeZone)
+                        .frame(height: bidManager.uiProperties.lineHeight)
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             LineButton(line: line, action: section.plusTransferAction)
                             if(section == .bid) {

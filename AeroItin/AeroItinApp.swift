@@ -12,6 +12,7 @@ struct AeroItinApp: App {
     @StateObject var bidManager = BidManager()
     @StateObject var settingsManager = SettingsManager()
     
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

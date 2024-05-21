@@ -103,6 +103,10 @@ struct Bidpack: Equatable, Codable {
         startDateLocal..<endDateLocal.addingTimeInterval(.day)
     }
     
+    var dateCount: Int {
+        dates.count
+    }
+    
     var shortMonth: String {
         let monthDictionary = [
             "JANUARY": "Jan",

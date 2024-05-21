@@ -66,6 +66,7 @@
 		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
 		C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B5872B0D2C9D009EBAAA /* WebView.swift */; };
 		C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */; };
+		C975D4E82BFCCFAD00AE0E47 /* UIProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */; };
 		C97788FA2BF636E900DD5D74 /* BidpackDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97788F92BF636E900DD5D74 /* BidpackDocument.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -244,6 +245,7 @@
 		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
 		C973B5872B0D2C9D009EBAAA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProperties.swift; sourceTree = "<group>"; };
 		C97788F92BF636E900DD5D74 /* BidpackDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDocument.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				C9A8ACF02B24A25400078057 /* Bid.swift */,
 				C90CE9142B2FE44600C6BBFF /* Settings.swift */,
 				C97788F92BF636E900DD5D74 /* BidpackDocument.swift */,
+				C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -896,6 +899,7 @@
 				C97788FA2BF636E900DD5D74 /* BidpackDocument.swift in Sources */,
 				C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */,
 				C9B7B7372B3E62B400099ECD /* BidManager+BigConstants.swift in Sources */,
+				C975D4E82BFCCFAD00AE0E47 /* UIProperties.swift in Sources */,
 				C92BA3512AC3925000BEA0F4 /* TripTextView.swift in Sources */,
 				C9A8ACF12B24A25400078057 /* Bid.swift in Sources */,
 				C9A615C52AE6F0DC00822B26 /* LineListSectionView.swift in Sources */,

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LineListView: View {
-    @EnvironmentObject var bidManager: BidManager
+    let xxLineHeight: CGFloat = 25
+    
     var body: some View {
         ScrollViewReader { reader in
             List {
@@ -17,7 +18,7 @@ struct LineListView: View {
                 LineListSectionView(section: .avoid).id("avoids").listRowInsets(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
             }
             .listStyle(.plain)
-            .environment(\.defaultMinListRowHeight, bidManager.lineHeight + 5)
+            .environment(\.defaultMinListRowHeight, xxLineHeight + 5)
         }
     }
 }

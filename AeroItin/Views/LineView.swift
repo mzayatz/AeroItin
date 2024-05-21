@@ -11,7 +11,8 @@ struct LineView: View {
     let line: Line
     let section: Line.Flag
     
-    @EnvironmentObject var bidManager: BidManager
+    let dates: [BidPeriodDate]
+    let timeZone: TimeZone
     
     var body: some View {
         HStack {
@@ -20,7 +21,7 @@ struct LineView: View {
                 let dayWidth = dayWidthFrom(geometry)
                 ZStack(alignment: .leading) {
                     Rectangle().fill(backgroundColor())
-                    BidpackDatesStripView(dayWidth: dayWidth)
+                    BidpackDatesStripView(dates: dates, timeZone: timeZone, dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
                         ForEach(line.trips.indices, id: \.self) {
                             TripView(trip: line.trips[$0], dayWidth: dayWidth)
@@ -29,7 +30,7 @@ struct LineView: View {
                 }
             }
             //
-        }.frame(height: bidManager.lineHeight)
+        }
     }
     
     func backgroundColor() -> Color {
@@ -43,52 +44,41 @@ struct LineView: View {
         }
     }
     
-    var attributeSymbol: Image {
-        switch bidManager.bidpack.sortLinesBy {
-        case .blockHours:
-            return Image(systemName: "clock")
-        case .creditHours:
-            return Image(systemName: "creditcard")
-        case .daysOff:
-            return Image(systemName: "sunglasses.fill")
-        case .dutyPeriods:
-            return Image(systemName: "mappin.and.ellipse")
-        case .landings:
-            return Image(systemName: "airplane.arrival")
-        case .number:
-            return Image(systemName: "creditcard")
-        }
-    }
+//    var attributeSymbol: Image {
+//        switch bidManager.bidpack.sortLinesBy {
+//        case .blockHours:
+//            return Image(systemName: "clock")
+//        case .creditHours:
+//            return Image(systemName: "creditcard")
+//        case .daysOff:
+//            return Image(systemName: "sunglasses.fill")
+//        case .dutyPeriods:
+//            return Image(systemName: "mappin.and.ellipse")
+//        case .landings:
+//            return Image(systemName: "airplane.arrival")
+//        case .number:
+//            return Image(systemName: "creditcard")
+//        }
+//    }
     
-    var attributeText: String {
-        switch bidManager.bidpack.sortLinesBy {
-        case .blockHours:
-            return line.summary.blockHours.asHours.formatted(.number.precision(.fractionLength(1)))
-        case .creditHours:
-            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
-        case .daysOff:
-            return String(line.summary.daysOff)
-        case .dutyPeriods:
-            return String(line.summary.dutyPeriods)
-        case .landings:
-            return String(line.summary.landings)
-        case .number:
-            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
-        }
-    }
+//    var attributeText: String {
+//        switch bidManager.bidpack.sortLinesBy {
+//        case .blockHours:
+//            return line.summary.blockHours.asHours.formatted(.number.precision(.fractionLength(1)))
+//        case .creditHours:
+//            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
+//        case .daysOff:
+//            return String(line.summary.daysOff)
+//        case .dutyPeriods:
+//            return String(line.summary.dutyPeriods)
+//        case .landings:
+//            return String(line.summary.landings)
+//        case .number:
+//            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
+//        }
+//    }
     
     func dayWidthFrom(_ geometry: GeometryProxy) -> CGFloat {
-        geometry.size.width / CGFloat(bidManager.dateCount)
+        geometry.size.width / CGFloat(dates.count)
     }
 }
-
-//struct LineView_Previews: PreviewProvider {
-//    static var bidManager = BidManager(seat: .firstOfficer)
-//    static var previews: some View {
-//            List {
-//                ForEach(0..<10) { _ in
-//                    LineView(line: bidManager.bidpack.lines.randomElement()!)
-//                }
-//            }.environmentObject(bidManager)
-//    }
-//}

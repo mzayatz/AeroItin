@@ -22,14 +22,3 @@ struct LineListView: View {
     }
 }
 
-#Preview {
-    struct PreviewView: View {
-        @StateObject var bidManager = BidManager()
-        var body: some View {
-            LineListView().environmentObject(bidManager).task {
-                try! await bidManager.loadBidpackWithString(String(contentsOf: BidManager.testingUrl))
-            }
-        }
-    }
-    return PreviewView()
-}

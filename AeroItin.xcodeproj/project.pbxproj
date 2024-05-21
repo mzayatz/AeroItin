@@ -65,6 +65,7 @@
 		C94B8F182BAC69D700E3C22C /* BidPeriodDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */; };
 		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
 		C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B5872B0D2C9D009EBAAA /* WebView.swift */; };
+		C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */; };
 		C97788FA2BF636E900DD5D74 /* BidpackDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97788F92BF636E900DD5D74 /* BidpackDocument.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -242,6 +243,7 @@
 		C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidPeriodDate.swift; sourceTree = "<group>"; };
 		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
 		C973B5872B0D2C9D009EBAAA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		C97788F92BF636E900DD5D74 /* BidpackDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDocument.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -403,6 +405,16 @@
 			path = WebView;
 			sourceTree = "<group>";
 		};
+		C975D4E42BFC2E0200AE0E47 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
+				C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */,
+				C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C9ACFBFA2A9E4AAA009ACF28 = {
 			isa = PBXGroup;
 			children = (
@@ -429,13 +441,12 @@
 				C9A615CA2AE880CA00822B26 /* Info.plist */,
 				C9ACFC062A9E4AAA009ACF28 /* AeroItinApp.swift */,
 				C9ACFC082A9E4AAA009ACF28 /* ContentView.swift */,
-				C984FFF12AA29AC100DFB924 /* BidManager.swift */,
-				C9B7B7362B3E62B400099ECD /* BidManager+BigConstants.swift */,
 				C9ACFC482AA02FFA009ACF28 /* Extensions */,
 				C9ACFC382A9E4FCE009ACF28 /* Errors */,
 				C9ACFC342A9E4B1B009ACF28 /* Private */,
 				C9ACFC312A9E4AB7009ACF28 /* Model */,
 				C920AC5E2AF29014001344BC /* Views */,
+				C975D4E42BFC2E0200AE0E47 /* ViewModel */,
 				C9FF3A3D2BF808F7006F6C53 /* ViewModifiers */,
 				C973B5822B0D24C2009EBAAA /* WebView */,
 				C9ACFC0A2A9E4AAB009ACF28 /* Assets.xcassets */,
@@ -877,6 +888,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */,
 				C9ACFC3E2A9E5F0F009ACF28 /* Trip.swift in Sources */,
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
 				C94B8F182BAC69D700E3C22C /* BidPeriodDate.swift in Sources */,

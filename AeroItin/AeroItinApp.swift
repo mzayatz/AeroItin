@@ -10,16 +10,19 @@ import SwiftUI
 @main
 struct AeroItinApp: App {
     @StateObject var bidManager = BidManager()
+    @StateObject var settingsManager = SettingsManager()
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(bidManager)
+            ContentView()
+                .environmentObject(bidManager)
+                .environmentObject(settingsManager)
                 .task {
                     do {
-                        try await bidManager.loadSettings()
+                        try await settingsManager.load()
                     } catch {
                         do {
-                            try await bidManager.saveSettings()
+                            try await settingsManager.save()
                         } catch {
                             fatalError(error.localizedDescription)
                         }

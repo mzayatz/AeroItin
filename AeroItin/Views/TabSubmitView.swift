@@ -16,6 +16,7 @@ struct TabSubmitView: View {
     @State private var showBidSubmitPage = false
     @StateObject private var webViewModel = WebViewModel()
     @EnvironmentObject var bidManager: BidManager
+    @EnvironmentObject var settingsManager: SettingsManager
     
     @State private var bid: Bid?
     
@@ -24,27 +25,27 @@ struct TabSubmitView: View {
             VStack {
                 Form {
                     Section("Questions") {
-                        Toggle(isOn: $bidManager.settings.protectMinDaysForRecurrentTraining) {
+                        Toggle(isOn: $settingsManager.settings.protectMinDaysForRecurrentTraining) {
                             Text("Recurrent training: Drop to protect min days off?")
                             Text("If you have recurrent training, do you want to drop activities to protect minimum days off?")
                         }
                         
-                        Toggle(isOn: $bidManager.settings.waiveIntlBufferForReccurentTraining) {
+                        Toggle(isOn: $settingsManager.settings.waiveIntlBufferForReccurentTraining) {
                             Text("Recurrent training: Waive int'l buffers?")
                             Text("Do you want to waive int'l duty free buffers to schedule recurrent training closer to a trip?")
                         }
                         
-                        Toggle(isOn: $bidManager.settings.waiveIntlBufferToAvoidPhaseInConflict) {
+                        Toggle(isOn: $settingsManager.settings.waiveIntlBufferToAvoidPhaseInConflict) {
                             Text("Phase-in conflict: Waive int'l buffers?")
                             Text("Do you want to waive your int'l duty free buffers to prevent a phase-in conflict?")
                         }
                         
-                        Toggle(isOn: $bidManager.settings.waive1in10LegalityToAvoidPhaseInConflict) {
+                        Toggle(isOn: $settingsManager.settings.waive1in10LegalityToAvoidPhaseInConflict) {
                             Text("Phase-in conflict: Waive 1-in-10?")
                             Text("Do you want to waive your 1-in-10 legality to prevent a phase-in conflict?")
                         }
                         
-                        Toggle(isOn: $bidManager.settings.protectMinDaysDueToCarryover) {
+                        Toggle(isOn: $settingsManager.settings.protectMinDaysDueToCarryover) {
                             Text("Previous month carryover: Drop to protect min days off?")
                             Text("If you have carryover from last month, do you want activities dropped to protect min days off?")
                         }
@@ -52,12 +53,12 @@ struct TabSubmitView: View {
                     Section {
 #if os(iOS)
                         LabeledContent {
-                            TextField("", text: $bidManager.settings.employeeNumber, prompt: Text("Required"))
+                            TextField("", text: $settingsManager.settings.employeeNumber, prompt: Text("Required"))
                         } label: {
                             Text("Employee #:")
                         }
 #elseif os(macOS)
-                        TextField("Employee #:", text: $bidManager.settings.employeeNumber, prompt: Text("Required")).fixedSize()
+                        TextField("Employee #:", text: $settingsManager.settings.employeeNumber, prompt: Text("Required")).fixedSize()
 #endif
 
 
@@ -77,16 +78,16 @@ struct TabSubmitView: View {
                                 return
                             }
                             
-                            guard bidManager.settings.employeeNumber != "" else {
+                            guard settingsManager.settings.employeeNumber != "" else {
                                 showBlankEmployeeNumberAlert = true
                                 return
                             }
                             do {
                                 overrideExpiredBid = false
                                 Task {
-                                    try await bidManager.saveSettings()
+                                    try await settingsManager.save()
                                 }
-                                bid = try Bid(settings: bidManager.settings, lineSelection: bidManager.bidpack.lineNumbersOfBids)
+                                bid = try Bid(settings: settingsManager.settings, lineSelection: bidManager.bidpack.lineNumbersOfBids)
                                 showBidSubmitPage = true
 //                                webViewModel.loadRequest(bid.createPostRequest())
                             }
@@ -142,12 +143,4 @@ struct TabSubmitView: View {
             }.navigationTitle("Submit")
         }.formStyle(.grouped)
     }
-}
-
-#Preview {
-    let bidManager = BidManager()
-    Task {
-        try! await bidManager.loadBidpackWithString(String(contentsOf: BidManager.testingUrl))
-    }
-    return TabSubmitView().environmentObject(bidManager)
 }

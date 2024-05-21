@@ -37,7 +37,6 @@ class BidManager: ObservableObject {
         bidpack.dates.count
     }
     
-    var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
     var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
     @Published var bidpack: Bidpack {
@@ -56,7 +55,6 @@ class BidManager: ObservableObject {
     @Published var debouncedSearchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var scrollNow = false
-    @Published var settings = Settings()
     @Published var filterDeadheads = false
     @Published var avoidedDateComponents = Set<DateComponents>() {
         didSet {
@@ -110,26 +108,7 @@ class BidManager: ObservableObject {
             .assign(to: &$debouncedSearchFilter)
     }
     
-    func loadSettings() async throws {
-        let task = Task<Settings, Error> {
-            guard let data = try? Data(contentsOf: settingsUrl) else {
-                return Settings()
-            }
-            let settings = try JSONDecoder().decode(Settings.self, from: data)
-            return settings
-        }
-        settings = try await task.value
-    }
-    
-    func saveSettings() async throws {
-        let task = Task {
-            settings.seat = bidpack.seat
-            let data = try JSONEncoder().encode(settings)
-            try data.write(to: settingsUrl)
-        }
-        _ = try await task.value
-        
-    }
+
     
     var suggestedBidFileName: String {
         return bidpack.year == "1971" ? "no bidpack loaded" :
@@ -162,9 +141,9 @@ class BidManager: ObservableObject {
 
     
     //MARK: User Intents
-    func loadBidpackWithString(_ text: String) async {
+    func loadBidpackWithString(_ text: String, seat: Bidpack.Seat) async {
         do {
-            try bidpack = await Bidpack(text: text, seat: settings.seat)
+            try bidpack = await Bidpack(text: text, seat: seat)
         }
         catch ParserError.sectionDividerNotFoundError {
             fatalError("SectionDividerNotFound Error... quitting.")

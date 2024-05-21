@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @EnvironmentObject var bidManager: BidManager
+    @EnvironmentObject var settingsManager: SettingsManager
     
     @Environment(\.scenePhase) private var scenePhase
         
@@ -26,7 +27,7 @@ struct ContentView: View {
             if phase == .inactive || phase == .background {
                 Task {
                     do {
-                        try await bidManager.saveSettings()
+                        try await settingsManager.save()
                         try await bidManager.saveSnapshot()
                     }
                     catch {

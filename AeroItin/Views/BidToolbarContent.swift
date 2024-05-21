@@ -15,6 +15,7 @@ struct BidToolbarContent: ToolbarContent {
     @Binding var showResetAlert: Bool
     @Binding var showProgressView: Bool
     @EnvironmentObject var bidManager: BidManager
+    @EnvironmentObject var settingsManager: SettingsManager
     @State var showSheet = false
     
     var body: some ToolbarContent {
@@ -31,7 +32,7 @@ struct BidToolbarContent: ToolbarContent {
                 Image(systemName: "chair.lounge")
             }.onChange(of: bidManager.bidpack.seat) { _ in // Deprecated iOS 17
                 Task {
-                    try? await bidManager.saveSettings()
+                    try? await settingsManager.save()
                 }
             }
         }
@@ -72,7 +73,7 @@ struct BidToolbarContent: ToolbarContent {
                             do {
                                 if url.startAccessingSecurityScopedResource() {
                                     showProgressView = true
-                                    await bidManager.loadBidpackWithString(try String(contentsOf: url))
+                                    await bidManager.loadBidpackWithString(try String(contentsOf: url), seat: settingsManager.settings.seat)
                                     showProgressView = false
                                     bidManager.scrollSnap = .neutral
                                     bidManager.scrollNow = true

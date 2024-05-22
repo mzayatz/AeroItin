@@ -15,7 +15,7 @@ struct BidpackDatesStripView: View {
     let dayWidth: CGFloat
     
     var body: some View {
-        LazyHStack(spacing: 0) {
+        HStack(spacing: 0) {
             ForEach(dates.indices, id: \.self) { i in
                 ZStack {
                     BidpackDateView(date: dates[i], timeZone: timeZone)

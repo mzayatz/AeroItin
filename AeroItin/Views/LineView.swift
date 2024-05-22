@@ -24,8 +24,8 @@ struct LineView: View {
                     Rectangle().fill(backgroundColor())
                     BidpackDatesStripView(dates: dates, timeZone: timeZone, dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
-                        ForEach(line.trips.indices, id: \.self) {
-                            TripView(trip: line.trips[$0], dayWidth: dayWidth, startDateLocal: dates.first?.calendarDate, selectedTripText: $selectedTripText)
+                        ForEach(line.trips) { trip in
+                            TripView(trip: trip, dayWidth: dayWidth, startDateLocal: dates.first?.calendarDate, selectedTripText: $selectedTripText)
                         }
                     }
                 }

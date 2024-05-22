@@ -65,7 +65,7 @@ struct LineListSectionView: View {
             }
         } header: {
             HStack {
-                Text(sortDescending ? "⌄ descending" : "⌃ ascending").foregroundStyle(Color.accentColor)
+                Text(section == .neutral ? (sortDescending ? "⌄ descending" : "⌃ ascending") : "").foregroundStyle(Color.accentColor)
                     .onTapGesture {
                         sortDescending.toggle()
                     }

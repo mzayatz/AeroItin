@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Trip: CustomStringConvertible, Equatable, Codable {
+struct Trip: CustomStringConvertible, Equatable, Codable, Identifiable {
     let text: [String]
     let number: String
     let effectiveDates: [Date]
@@ -18,12 +18,11 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
     let layovers: [String]
     let deadheads: Deadheads
     let isRfo: Bool
+    let id: UUID
     
     static let dayAbbreviations = ["EXCEPT", "MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     
-    var shortDescription: String {
-        layovers.isEmpty ? number : layovers.joined(separator: "-")
-    }
+    let shortDescription: String
     
     var startDateTime: Date {
         effectiveDates.first ?? Date(timeIntervalSince1970: .day * 365)
@@ -54,6 +53,8 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         layovers = [String]()
         deadheads = .none
         isRfo = false
+        shortDescription = layovers.isEmpty ? number : layovers.joined(separator: "-")
+        id = UUID()
     }
     
     init(number: String, effectiveDate: Date, rdayValue: TimeInterval = 0) {
@@ -67,6 +68,8 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         layovers = [String]()
         deadheads = .none
         isRfo = false
+        shortDescription = layovers.isEmpty ? number : layovers.joined(separator: "-")
+        id = UUID()
     }
     
     init(trip: Trip, effectiveDate: Date) {
@@ -80,6 +83,8 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         layovers = trip.layovers
         deadheads = trip.deadheads
         isRfo = trip.isRfo
+        shortDescription = layovers.isEmpty ? number : layovers.joined(separator: "-")
+        id = trip.id
     }
     
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {
@@ -146,7 +151,8 @@ struct Trip: CustomStringConvertible, Equatable, Codable {
         self.deadheads = Trip.findDeadheads(in: textRows)
         
         self.isRfo = text[1].firstMatch(of: /1 RFO/) != nil
-
+        shortDescription = layovers.isEmpty ? number : layovers.joined(separator: "-")
+        id = UUID()
     }
     
     //TODO: This function fails to find backend deadhead in this circumstance:

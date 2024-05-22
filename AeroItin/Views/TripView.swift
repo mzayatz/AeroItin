@@ -10,12 +10,16 @@ import SwiftUI
 struct TripView: View {
     let trip: Trip
     let dayWidth: CGFloat
+    let startDateLocal: Date?
+    @Binding var selectedTripText: String?
     
     var secondWidth: CGFloat {
         dayWidth / (24 * 3600)
     }
     
-    @EnvironmentObject var bidManager: BidManager
+    var startDateLocalOr1971: Date {
+        startDateLocal ?? Date(timeIntervalSince1970: .day * 365)
+    }
     
     var body: some View {
         ZStack {
@@ -29,7 +33,7 @@ struct TripView: View {
     }
     
     private var offset: CGSize {
-        CGSize(width: secondWidth * trip.startDateTime.timeIntervalSince(bidManager.bidpack.startDateLocal), height: 0)
+        CGSize(width: secondWidth * trip.startDateTime.timeIntervalSince(startDateLocalOr1971), height: 0)
     }
     
     private var tripColor: Color {
@@ -43,7 +47,7 @@ struct TripView: View {
     
     private func tripTapHandler() {
         withAnimation {
-            bidManager.selectedTripText = trip.text.joined(separator: "\n")
+           selectedTripText = trip.text.joined(separator: "\n")
         }
     }
 }

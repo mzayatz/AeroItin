@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct LineButton: View {
-    @EnvironmentObject var bidManager: BidManager
     let line: Line
     let action: Bidpack.TransferActions
+    let transferLine: (Line, Bidpack.TransferActions, Int?) -> ()
+    @Binding var destinationIndex: Int?
     
     var buttonImage: some View {
         switch action {
@@ -49,7 +50,7 @@ struct LineButton: View {
     var body: some View {
         Button {
             withAnimation {
-                bidManager.bidpack.transferLine(line: line, action: action)
+                transferLine(line, action, destinationIndex)
             }
         } label: {
             buttonImage

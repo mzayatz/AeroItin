@@ -67,6 +67,7 @@
 		C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B5872B0D2C9D009EBAAA /* WebView.swift */; };
 		C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */; };
 		C975D4E82BFCCFAD00AE0E47 /* UIProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */; };
+		C975D4EA2BFD1D3100AE0E47 /* Array+moveToBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E92BFD1D3100AE0E47 /* Array+moveToBookmark.swift */; };
 		C97788FA2BF636E900DD5D74 /* BidpackDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97788F92BF636E900DD5D74 /* BidpackDocument.swift */; };
 		C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFD92AA13A7E00DFB924 /* DateError.swift */; };
 		C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */; };
@@ -246,6 +247,7 @@
 		C973B5872B0D2C9D009EBAAA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProperties.swift; sourceTree = "<group>"; };
+		C975D4E92BFD1D3100AE0E47 /* Array+moveToBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+moveToBookmark.swift"; sourceTree = "<group>"; };
 		C97788F92BF636E900DD5D74 /* BidpackDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDocument.swift; sourceTree = "<group>"; };
 		C984FFD92AA13A7E00DFB924 /* DateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateError.swift; sourceTree = "<group>"; };
 		C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringProtocol+Helpers.swift"; sourceTree = "<group>"; };
@@ -380,19 +382,19 @@
 		C920AC5E2AF29014001344BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
-				C9E12B352B543FB8002A788C /* MenuItemLabel.swift */,
+				C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */,
+				C920AC5F2AF29094001344BC /* LineListView.swift */,
+				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
+				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
 				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
 				C9AFBC232AA768A100F6EF65 /* TripView.swift */,
 				C9FF3A3E2BF809C2006F6C53 /* TripCaptionView.swift */,
 				C92BA3502AC3925000BEA0F4 /* TripTextView.swift */,
-				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
-				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
-				C920AC5F2AF29094001344BC /* LineListView.swift */,
 				C91F6C1C2AE6D9EF008D0717 /* LineButton.swift */,
+				C920AC612AF291D4001344BC /* BidToolbarContent.swift */,
+				C9E12B352B543FB8002A788C /* MenuItemLabel.swift */,
 				C9D487712ACCD8BC001BC17C /* Color+background.swift */,
-				C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */,
 				C9A8ACF42B24A4B100078057 /* TabSubmitView.swift */,
 			);
 			path = Views;
@@ -639,6 +641,7 @@
 				C9ACFC452AA02BBF009ACF28 /* TimeZone+Bases.swift */,
 				C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */,
 				C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */,
+				C975D4E92BFD1D3100AE0E47 /* Array+moveToBookmark.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				C9ACFC4C2AA1286C009ACF28 /* ISO8601DateFormatter+localTimeFormatter.swift in Sources */,
 				C9AFBC242AA768A100F6EF65 /* TripView.swift in Sources */,
 				C984FFDA2AA13A7E00DFB924 /* DateError.swift in Sources */,
+				C975D4EA2BFD1D3100AE0E47 /* Array+moveToBookmark.swift in Sources */,
 				C9ACFC462AA02BBF009ACF28 /* TimeZone+Bases.swift in Sources */,
 				C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */,
 				C9ACFC422AA0008A009ACF28 /* Calendar+zulu.swift in Sources */,
@@ -1111,10 +1115,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.stepbrief.AeroItin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1151,10 +1155,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.stepbrief.AeroItin;
 				PRODUCT_NAME = "$(TARGET_NAME)";

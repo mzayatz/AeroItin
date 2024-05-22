@@ -13,6 +13,7 @@ struct LineView: View {
     
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
+    @Binding var selectedTripText: String?
     
     var body: some View {
         HStack {
@@ -24,7 +25,7 @@ struct LineView: View {
                     BidpackDatesStripView(dates: dates, timeZone: timeZone, dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
                         ForEach(line.trips.indices, id: \.self) {
-                            TripView(trip: line.trips[$0], dayWidth: dayWidth)
+                            TripView(trip: line.trips[$0], dayWidth: dayWidth, startDateLocal: dates.first?.calendarDate, selectedTripText: $selectedTripText)
                         }
                     }
                 }

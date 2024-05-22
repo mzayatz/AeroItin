@@ -29,6 +29,7 @@ class BidManager: ObservableObject {
             }
         }
     }
+    
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
     @Published var debouncedSearchFilter = ""
@@ -91,7 +92,9 @@ class BidManager: ObservableObject {
             .assign(to: &$debouncedSearchFilter)
     }
     
-
+    func transferLine(line: Line, action: Bidpack.TransferActions, atIndex destIndex: Int? = nil) {
+        bidpack.transferLine(line: line, action: action, atIndex: destIndex)
+    }
     
     var suggestedBidFileName: String {
         return bidpack.year == "1971" ? "no bidpack loaded" :

@@ -22,7 +22,16 @@ struct TabViewLines: View {
                     if showProgressView {
                         ProgressView("Bidpack Loading... Please wait.")
                     }
-                    LineListView()
+                    LineListView(
+                        bids: $bidManager.bidpack.bids,
+                        lines: $bidManager.bidpack.lines,
+                        avoids: $bidManager.bidpack.avoids,
+                        dates: bidManager.bidpack.dates,
+                        timeZone: bidManager.bidpack.base.timeZone,
+                        lineHeight: bidManager.uiProperties.lineHeight,
+                        transferLine: bidManager.transferLine,
+                        selectedTripText: $bidManager.selectedTripText
+                    )
                         .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
                         .autocorrectionDisabled()
 #if os(iOS)

@@ -7,12 +7,15 @@
 
 import Foundation
 
-struct UIProperties {
-    
+public struct UIProperties {
     let dateCount: Int
     
     init(dateCount: Int) {
         self.dateCount = dateCount
+    }
+    
+    init() {
+        self.dateCount = 28
     }
     
     let lineHeight: CGFloat = 35

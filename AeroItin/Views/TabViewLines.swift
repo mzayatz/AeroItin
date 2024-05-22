@@ -28,7 +28,6 @@ struct TabViewLines: View {
                         avoids: $bidManager.bidpack.avoids,
                         dates: bidManager.bidpack.dates,
                         timeZone: bidManager.bidpack.base.timeZone,
-                        lineHeight: bidManager.uiProperties.lineHeight,
                         transferLine: bidManager.transferLine,
                         selectedTripText: $bidManager.selectedTripText
                     )

@@ -22,6 +22,8 @@
 		C90A4E5F2AA68D6F00C50F3F /* BidpackDatesStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */; };
 		C90CE9152B2FE44600C6BBFF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90CE9142B2FE44600C6BBFF /* Settings.swift */; };
 		C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91093A92ABF45C5002C7474 /* BidpackDateView.swift */; };
+		C9169A122BFE1BF0001BE241 /* Color+random.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9169A112BFE1BF0001BE241 /* Color+random.swift */; };
+		C9169A142BFE1F8A001BE241 /* EnvironmentKey+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9169A132BFE1F8A001BE241 /* EnvironmentKey+LineHeight.swift */; };
 		C916A5502AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */; };
 		C916F7D82AABCD340080EFE6 /* 2023_Oct_B767_IND_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */; };
 		C916F7D92AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */; };
@@ -202,6 +204,8 @@
 		C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDatesStripView.swift; sourceTree = "<group>"; };
 		C90CE9142B2FE44600C6BBFF /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		C91093A92ABF45C5002C7474 /* BidpackDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidpackDateView.swift; sourceTree = "<group>"; };
+		C9169A112BFE1BF0001BE241 /* Color+random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+random.swift"; sourceTree = "<group>"; };
+		C9169A132BFE1F8A001BE241 /* EnvironmentKey+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentKey+LineHeight.swift"; sourceTree = "<group>"; };
 		C916A54F2AC0D5650042ACA1 /* Date.FormatStyle.DateStyle+inTimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date.FormatStyle.DateStyle+inTimeZone.swift"; sourceTree = "<group>"; };
 		C916F7D22AABCD330080EFE6 /* 2023_Oct_B767_IND_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B767_IND_LINES.asc; sourceTree = "<group>"; };
 		C916F7D32AABCD340080EFE6 /* 2023_Oct_B757_EUR_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Oct_B757_EUR_LINES.asc; sourceTree = "<group>"; };
@@ -496,6 +500,7 @@
 				C90CE9142B2FE44600C6BBFF /* Settings.swift */,
 				C97788F92BF636E900DD5D74 /* BidpackDocument.swift */,
 				C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */,
+				C9169A132BFE1F8A001BE241 /* EnvironmentKey+LineHeight.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -642,6 +647,7 @@
 				C984FFDB2AA1742500DFB924 /* StringProtocol+Helpers.swift */,
 				C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */,
 				C975D4E92BFD1D3100AE0E47 /* Array+moveToBookmark.swift */,
+				C9169A112BFE1BF0001BE241 /* Color+random.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -894,6 +900,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9169A142BFE1F8A001BE241 /* EnvironmentKey+LineHeight.swift in Sources */,
 				C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */,
 				C9ACFC3E2A9E5F0F009ACF28 /* Trip.swift in Sources */,
 				C9ACFC092A9E4AAA009ACF28 /* ContentView.swift in Sources */,
@@ -938,6 +945,7 @@
 				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,
 				C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */,
 				C9A8ACF32B24A36200078057 /* BidError.swift in Sources */,
+				C9169A122BFE1BF0001BE241 /* Color+random.swift in Sources */,
 				C91F6C1D2AE6D9EF008D0717 /* LineButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

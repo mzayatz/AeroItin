@@ -53,8 +53,6 @@ class BidManager: ObservableObject {
     }
     @Published var avoidedDates = [Date]()
     
-    let uiProperties: UIProperties
-    
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {
             return "No Bidpack Loaded"
@@ -85,7 +83,6 @@ class BidManager: ObservableObject {
     
     init() {
         let localBidpack = Bidpack()
-        uiProperties = UIProperties(dateCount: localBidpack.dateCount)
         bidpack = localBidpack
         $searchFilter
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)

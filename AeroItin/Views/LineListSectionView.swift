@@ -10,7 +10,7 @@ import SwiftUI
 struct LineListSectionView: View {
     @Binding var lines: [Line]
     let section: Line.Flag
-    let lineHeight: CGFloat
+    @Environment(\.lineHeight) var lineHeight
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
     @State var sortDescending = false

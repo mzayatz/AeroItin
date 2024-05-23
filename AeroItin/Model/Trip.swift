@@ -84,7 +84,7 @@ struct Trip: CustomStringConvertible, Equatable, Codable, Identifiable {
         deadheads = trip.deadheads
         isRfo = trip.isRfo
         shortDescription = layovers.isEmpty ? number : layovers.joined(separator: "-")
-        id = trip.id
+        id = UUID()
     }
     
     init?(textRows: ArraySlice<String>, bidMonth: String, bidYear: String) {

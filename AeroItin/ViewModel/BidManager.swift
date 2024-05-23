@@ -32,7 +32,7 @@ class BidManager: ObservableObject {
     
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
-    @Published var debouncedSearchFilter = ""
+//    @Published var debouncedSearchFilter = ""
     @Published var scrollSnap: Line.Flag = .neutral
     @Published var scrollNow = false
     @Published var filterDeadheads = false
@@ -78,15 +78,15 @@ class BidManager: ObservableObject {
     }
     
     var searchIatas: [String] {
-        return debouncedSearchFilter.lowercased().components(separatedBy: .whitespaces).filter { $0.count == 3 }
+        return searchFilter.lowercased().components(separatedBy: .whitespaces).filter { $0.count == 3 }
     }
     
     init() {
         let localBidpack = Bidpack()
         bidpack = localBidpack
-        $searchFilter
-            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .assign(to: &$debouncedSearchFilter)
+//        $searchFilter
+//            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+//            .assign(to: &$debouncedSearchFilter)
     }
     
     func transferLine(line: Line, action: Bidpack.TransferActions, atIndex destIndex: Int? = nil) {

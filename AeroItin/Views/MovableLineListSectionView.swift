@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct LineListSectionView: View {
-    let lines: [Line]
+struct MovableLineListSectionView: View {
+    @Binding var lines: [Line]
     let section: Line.Flag
     @Environment(\.lineHeight) var lineHeight
     let dates: [BidPeriodDate]
@@ -16,7 +16,6 @@ struct LineListSectionView: View {
     let transferLine: (Line, Bidpack.TransferActions, Int?) -> ()
     @Binding var bookmark: Int?
     @Binding var selectedTripText: String?
-    @Binding var sortDescending: Bool
 
     var sectionTitle: String {
         switch section {
@@ -28,11 +27,12 @@ struct LineListSectionView: View {
             return "Lines"
         }
     }
-    var sectionHeaderText: String {
-        "\(sectionTitle) " +
-        "\(lines.count)" 
-//        (" (\(bidManager.bidpack.lines.count - bidManager.filteredLines.count) filtered)")
-    }
+    let sectionHeaderText = "Placeholder Text"
+    //    var sectionHeaderText: String {
+    //        "\(sectionTitle) " +
+    //        "\(section != .neutral ? bidManager.bidpack[keyPath: section.associatedArrayKeypath].count : bidManager.filteredLines.count)" +
+    //        (section != .neutral ? "" : " (\(bidManager.bidpack.lines.count - bidManager.filteredLines.count) filtered)")
+    //    }
     
     var body: some View {
         Section {
@@ -41,17 +41,29 @@ struct LineListSectionView: View {
                     .frame(height: lineHeight)
                     .swipeActions(edge: .leading, allowsFullSwipe: true) {
                         LineButton(line: line, action: section.plusTransferAction, transferLine: transferLine, destinationIndex: $bookmark)
+                        if(section == .bid) {
+                            Button {
+                                withAnimation {
+                                    lines.moveElementToIndex(element: line, index: bookmark ?? lines.startIndex)
+                                }
+                            } label: {
+                                Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
+                            }.tint(.yellow)
+                            Button {
+                                bookmark = lines.firstIndex(of: line) ?? 0
+                            } label: {
+                                Image(systemName: "bookmark.square")
+                            }.tint(.blue)
+                        }
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         LineButton(line: line, action: section.minusTransferAction, transferLine: transferLine, destinationIndex: $bookmark)
                     }
+            }.onMove {
+                lines.move(fromOffsets: $0, toOffset: $1)
             }
         } header: {
             HStack {
-                Text(section == .neutral ? (sortDescending ? "⌄ descending" : "⌃ ascending") : "").foregroundStyle(Color.accentColor)
-                    .onTapGesture {
-                        sortDescending.toggle()
-                    }
                 Spacer()
                 Text(sectionHeaderText)
                 Spacer()

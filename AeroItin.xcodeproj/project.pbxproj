@@ -167,6 +167,7 @@
 		C9D6B93B2BC3312A00E80EE5 /* 2024_May_B767_OAK_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9D6B9302BC3312A00E80EE5 /* 2024_May_B767_OAK_LINES.asc */; };
 		C9D6B93C2BC3312A00E80EE5 /* 2024_May_B777_ANC_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C9D6B9312BC3312A00E80EE5 /* 2024_May_B777_ANC_LINES.asc */; };
 		C9E12B362B543FB8002A788C /* MenuItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E12B352B543FB8002A788C /* MenuItemLabel.swift */; };
+		C9FAD8972BFECE6E0099B221 /* MovableLineListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FAD8962BFECE6E0099B221 /* MovableLineListSectionView.swift */; };
 		C9FF3A3C2BF80838006F6C53 /* TripCaptionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FF3A3B2BF80838006F6C53 /* TripCaptionModifier.swift */; };
 		C9FF3A3F2BF809C2006F6C53 /* TripCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FF3A3E2BF809C2006F6C53 /* TripCaptionView.swift */; };
 /* End PBXBuildFile section */
@@ -354,6 +355,7 @@
 		C9D6B9302BC3312A00E80EE5 /* 2024_May_B767_OAK_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_May_B767_OAK_LINES.asc; sourceTree = "<group>"; };
 		C9D6B9312BC3312A00E80EE5 /* 2024_May_B777_ANC_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2024_May_B777_ANC_LINES.asc; sourceTree = "<group>"; };
 		C9E12B352B543FB8002A788C /* MenuItemLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemLabel.swift; sourceTree = "<group>"; };
+		C9FAD8962BFECE6E0099B221 /* MovableLineListSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovableLineListSectionView.swift; sourceTree = "<group>"; };
 		C9FF3A3B2BF80838006F6C53 /* TripCaptionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCaptionModifier.swift; sourceTree = "<group>"; };
 		C9FF3A3E2BF809C2006F6C53 /* TripCaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCaptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -389,6 +391,7 @@
 				C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */,
 				C920AC5F2AF29094001344BC /* LineListView.swift */,
 				C9A615C42AE6F0DC00822B26 /* LineListSectionView.swift */,
+				C9FAD8962BFECE6E0099B221 /* MovableLineListSectionView.swift */,
 				C9AFBC252AA7A47700F6EF65 /* LineView.swift */,
 				C91093A92ABF45C5002C7474 /* BidpackDateView.swift */,
 				C90A4E5E2AA68D6F00C50F3F /* BidpackDatesStripView.swift */,
@@ -918,6 +921,7 @@
 				C9FF3A3C2BF80838006F6C53 /* TripCaptionModifier.swift in Sources */,
 				C9A4A4F02B1ABD6D00744A3E /* WebViewModel.swift in Sources */,
 				C9D487722ACCD8BC001BC17C /* Color+background.swift in Sources */,
+				C9FAD8972BFECE6E0099B221 /* MovableLineListSectionView.swift in Sources */,
 				C920AC602AF29094001344BC /* LineListView.swift in Sources */,
 				C9ACFC072A9E4AAA009ACF28 /* AeroItinApp.swift in Sources */,
 				C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */,

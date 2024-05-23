@@ -24,12 +24,13 @@ struct TabViewLines: View {
                     }
                     LineListView(
                         bids: $bidManager.bidpack.bids,
-                        lines: $bidManager.bidpack.lines,
+                        lines: bidManager.filteredLines,
                         avoids: $bidManager.bidpack.avoids,
                         dates: bidManager.bidpack.dates,
                         timeZone: bidManager.bidpack.base.timeZone,
                         transferLine: bidManager.transferLine,
-                        selectedTripText: $bidManager.selectedTripText
+                        selectedTripText: $bidManager.selectedTripText,
+                        sortDescending: $bidManager.bidpack.sortDescending
                     )
                         .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
                         .autocorrectionDisabled()

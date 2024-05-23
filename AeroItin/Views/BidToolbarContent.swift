@@ -51,11 +51,7 @@ struct BidToolbarContent: ToolbarContent {
             Menu {
                 Picker(selection: $bidManager.bidpack.sortLinesBy) {
                     ForEach(Bidpack.SortOptions.allCases, id: \.self) { sortItem in
-                        Button { 
-                            
-                        } label: {
-                            Label(sortItem.rawValue, systemImage: sortItem.symbol)
-                        }
+                        Label(sortItem.rawValue, systemImage: sortItem.symbol)
                     }
                 } label: {
                     Text("Sort")

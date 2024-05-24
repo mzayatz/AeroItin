@@ -16,7 +16,7 @@ class BidManager: ObservableObject {
     static let testingUrl = urls[8]
     static let bidpackExtension = "asc"
     
-    var snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
+    static let snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
     @Published var bidpack: Bidpack {
         didSet {
@@ -89,8 +89,8 @@ class BidManager: ObservableObject {
 //            .assign(to: &$debouncedSearchFilter)
     }
     
-    func transferLine(line: Line, action: Bidpack.TransferActions, atIndex destIndex: Int? = nil) {
-        bidpack.transferLine(line: line, action: action, atIndex: destIndex)
+    func transferLine(line: Line, action: Bidpack.TransferActions) {
+        bidpack.transferLine(line: line, action: action)
     }
     
     var suggestedBidFileName: String {
@@ -101,7 +101,7 @@ class BidManager: ObservableObject {
     func saveSnapshot() async throws {
         let task = Task {
             let data = try JSONEncoder().encode(bidpack)
-            try data.write(to: snapshotUrlFragment)
+            try data.write(to: BidManager.snapshotUrlFragment)
         }
         _ = try await task.value
     }
@@ -116,7 +116,7 @@ class BidManager: ObservableObject {
     
     private func makeLoadSnapshotTask(data: Data? = nil) throws -> Task<Bidpack, Error> {
         let task = Task<Bidpack, Error> {
-            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data ?? Data(contentsOf: snapshotUrlFragment))
+            let bidpack = try JSONDecoder().decode(Bidpack.self, from: data ?? Data(contentsOf: BidManager.snapshotUrlFragment))
             return bidpack
         }
         return task

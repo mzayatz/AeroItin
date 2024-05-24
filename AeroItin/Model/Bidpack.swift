@@ -123,6 +123,7 @@ struct Bidpack: Equatable, Codable {
         return monthDictionary[month] ?? ""
     }
     
+    var bookmark: Int? = nil
     
     private var comparator: KeyPathComparator<Line> {
         sortLinesBy.getKeyPath()
@@ -307,7 +308,7 @@ struct Bidpack: Equatable, Codable {
         startDateLocal.distance(to: date)
     }
 
-    mutating func transferLine(line: Line, action: TransferActions, atIndex destIndex: Int?) {
+    mutating func transferLine(line: Line, action: TransferActions) {
         let keyPaths = action.getKeyPaths()
         guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
             return
@@ -316,14 +317,16 @@ struct Bidpack: Equatable, Codable {
         case .fromBidsToLines:
             self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
         case .fromLinesToBids:
-            if let destIndex,
-               destIndex < bids.endIndex && destIndex >= bids.startIndex {
-                if destIndex == bids.startIndex {
+            if let bookmark,
+               bookmark < bids.endIndex && bookmark >= bids.startIndex {
+                if bookmark == bids.startIndex {
                     self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bids.startIndex)
-                } else if destIndex == bids.endIndex - 1 {
+                } else if bookmark == bids.endIndex - 1 {
                     self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
+                    self.bookmark = bids.endIndex - 1
                 } else {
-                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: destIndex)
+                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bookmark)
+                    self.bookmark = bookmark + 1
                 }
             } else {
                 self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))

@@ -13,7 +13,7 @@ struct LineListSectionView: View {
     @Environment(\.lineHeight) var lineHeight
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
-    let transferLine: (Line, Bidpack.TransferActions, Int?) -> ()
+    let transferLine: (Line, Bidpack.TransferActions) -> ()
     @Binding var bookmark: Int?
     @Binding var selectedTripText: String?
     @Binding var sortDescending: Bool
@@ -40,10 +40,10 @@ struct LineListSectionView: View {
                 LineView(line: line, section: section, dates: dates, timeZone: timeZone, selectedTripText: $selectedTripText)
                     .frame(height: lineHeight)
                     .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                        LineButton(line: line, action: section.plusTransferAction, transferLine: transferLine, destinationIndex: $bookmark)
+                        LineButton(line: line, action: section.plusTransferAction, transferLine: transferLine)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        LineButton(line: line, action: section.minusTransferAction, transferLine: transferLine, destinationIndex: $bookmark)
+                        LineButton(line: line, action: section.minusTransferAction, transferLine: transferLine)
                     }
             }
         } header: {

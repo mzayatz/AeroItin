@@ -15,7 +15,7 @@ struct LineListView: View {
     
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
-    let transferLine: (Line, Bidpack.TransferActions) -> ()
+    let transferLine: (Line, BidManager.TransferActions) -> ()
     @Binding var selectedTripText: String?
     @Binding var sortDescending: Bool
     @Binding var bookmark: Int?

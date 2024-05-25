@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LineButton: View {
     let line: Line
-    let action: Bidpack.TransferActions
-    let transferLine: (Line, Bidpack.TransferActions) -> ()
+    let action: BidManager.TransferActions
+    let transferLine: (Line, BidManager.TransferActions) -> ()
     
     var buttonImage: some View {
         switch action {

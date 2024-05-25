@@ -73,7 +73,7 @@ struct TabSubmitView: View {
                     }
                     Section {
                         Button("Submit Bid") {
-                            guard bidManager.bidpack.isStartInFuture || overrideExpiredBid else {
+                            guard bidManager.isStartInFuture || overrideExpiredBid else {
                                 showExpiredBidPackAlert = true
                                 return
                             }
@@ -87,7 +87,7 @@ struct TabSubmitView: View {
                                 Task {
                                     try await settingsManager.save()
                                 }
-                                bid = try Bid(settings: settingsManager.settings, lineSelection: bidManager.bidpack.lineNumbersOfBids)
+                                bid = try Bid(settings: settingsManager.settings, lineSelection: bidManager.lineNumbersOfBids)
                                 showBidSubmitPage = true
 //                                webViewModel.loadRequest(bid.createPostRequest())
                             }

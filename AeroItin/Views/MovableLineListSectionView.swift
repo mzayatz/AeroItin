@@ -13,7 +13,7 @@ struct MovableLineListSectionView: View {
     @Environment(\.lineHeight) var lineHeight
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
-    let transferLine: (Line, Bidpack.TransferActions) -> ()
+    let transferLine: (Line, BidManager.TransferActions) -> ()
     @Binding var bookmark: Int?
     @Binding var selectedTripText: String?
 

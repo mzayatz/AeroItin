@@ -8,9 +8,6 @@
 import Foundation
 
 struct Bidpack: Equatable, Codable {
-    static func == (lhs: Bidpack, rhs: Bidpack) -> Bool {
-        lhs.bes == rhs.bes
-    }
     
     static let sectionDivider = "#####"
     static let tripDivider = "--------------------------------------------------------------------------------------------"
@@ -25,7 +22,6 @@ struct Bidpack: Equatable, Codable {
     let equipment: Equipment
     let month: String
     let year: String
-//    let dates: [Date]
     var dates: [BidPeriodDate]
     let trips: [Trip]
     private let captainLines: [Line]
@@ -34,99 +30,18 @@ struct Bidpack: Equatable, Codable {
     var bids = [Line]()
     var avoids = [Line]()
     
-    var sortLinesBy: SortOptions = .number {
-        didSet {
-            sortLines()
-        }
-    }
-    var sortDescending = false {
-        didSet {
-            sortLines()
-        }
-    }
     var seat: Seat {
         didSet {
             resetBid()
         }
     }
     
-    private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
-    
-    var showReserveLines = false {
-        didSet {
-            _ = showReserveLines ? categoryFilter.remove(.reserve) : categoryFilter.update(with: .reserve)
-        }
-    }
-    var showSecondaryLines = false {
-        didSet {
-            _ = showSecondaryLines ? categoryFilter.remove(.secondary) : categoryFilter.update(with: .secondary)
-        }
-    }
-    
-    var showRegularLines = true {
-        didSet {
-            _ = showRegularLines ? categoryFilter.remove(.regular) : categoryFilter.update(with: .regular)
-        }
-    }
-    
-    var linesForCurrentSeat: [Line] {
-        seat == .firstOfficer ? firstOfficerLines : captainLines
-    }
-    
-    var lineNumbersOfBids: [String] {
-        bids.map { $0.number }
-    }
-    
-    var bes: String {
-        base.rawValue + equipment.rawValue + seat.abbreviatedSeat
-    }
-    
-    var besWithBidMonth: String {
-        "\(shortMonth) \(year.suffix(2)) (" + bes + ")"
-    }
-    
     var startDateLocal: Date {
         dates.first?.calendarDate ?? Date(timeIntervalSince1970: .day * 365)
     }
     
-    var isStartInFuture: Bool {
-       startDateLocal.timeIntervalSinceNow > 0
-    }
-    
     var endDateLocal: Date {
         dates.last?.calendarDate ?? Date(timeIntervalSince1970: .day * 366)
-    }
-    
-    var dateRange: Range<Date> {
-        startDateLocal..<endDateLocal.addingTimeInterval(.day)
-    }
-    
-    var dateCount: Int {
-        dates.count
-    }
-    
-    var shortMonth: String {
-        let monthDictionary = [
-            "JANUARY": "Jan",
-            "FEBRUARY": "Feb",
-            "MARCH": "Mar",
-            "APRIL": "Apr",
-            "MAY": "May",
-            "JUNE": "Jun",
-            "JULY": "Jul",
-            "AUGUST": "Aug",
-            "SEPTEMBER": "Sep",
-            "OCTOBER": "Oct",
-            "NOVEMBER": "Nov",
-            "DECEMBER": "Dec"
-        ]
-        return monthDictionary[month] ?? ""
-    }
-    
-    var bookmark: Int? = nil
-    
-    private var comparator: KeyPathComparator<Line> {
-        sortLinesBy.getKeyPath()
     }
     
     init() {
@@ -141,13 +56,7 @@ struct Bidpack: Equatable, Codable {
         self.lines = []
         self.bids = []
         self.avoids = []
-        self.sortLinesBy = .number
-        self.sortDescending = false
         self.seat = .firstOfficer
-        self.categoryFilter = []
-        self.showReserveLines = true
-        self.showSecondaryLines = true
-        self.showRegularLines = true
     }
     
     init(text: String, seat: Seat) async throws {
@@ -308,39 +217,14 @@ struct Bidpack: Equatable, Codable {
         startDateLocal.distance(to: date)
     }
 
-    mutating func transferLine(line: Line, action: TransferActions) {
-        let keyPaths = action.getKeyPaths()
-        guard let i = self[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
-            return
-        }
-        switch action {
-        case .fromBidsToLines:
-            self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: self[keyPath: keyPaths.destination].startIndex)
-        case .fromLinesToBids:
-            if let bookmark,
-               bookmark < bids.endIndex && bookmark >= bids.startIndex {
-                if bookmark == bids.startIndex {
-                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bids.startIndex)
-                } else if bookmark == bids.endIndex - 1 {
-                    self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
-                    self.bookmark = bids.endIndex - 1
-                } else {
-                    self[keyPath: keyPaths.destination].insert(self[keyPath: keyPaths.source].remove(at: i), at: bookmark)
-                    self.bookmark = bookmark + 1
-                }
-            } else {
-                self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
-            }
-        default:
-            self[keyPath: keyPaths.destination].append(self[keyPath: keyPaths.source].remove(at: i))
-        }
-    }
-    
     mutating func resetBid() {
         bids.removeAll()
         avoids.removeAll()
-        lines = linesForCurrentSeat
-        sortLinesBy = .number
+        lines = restoreLines()
+    }
+    
+    private mutating func restoreLines() -> [Line] {
+        seat == .firstOfficer ? firstOfficerLines : captainLines
     }
     
     mutating func moveLine(from source: IndexSet, toOffset destination: Int) {
@@ -348,13 +232,6 @@ struct Bidpack: Equatable, Codable {
             return
         }
         lines.move(fromOffsets: source, toOffset: destination)
-    }
-    
-    mutating func sortLines() {
-        lines.sort(using: comparator)
-        if sortDescending {
-            lines.reverse()
-        }
     }
     
     static private func findFirstLineSectionHeaderIn<T: RandomAccessCollection>(
@@ -426,7 +303,6 @@ struct Bidpack: Equatable, Codable {
         }
         return lines
     }
-    
     
     static private func findAllTripsIn(
         _ textRows: [String],
@@ -535,8 +411,6 @@ struct Bidpack: Equatable, Codable {
         }
     }
     
-    
-    
     enum Base: String, Codable {
         case mem = "MEM"
         case ind = "IND"
@@ -585,75 +459,6 @@ struct Bidpack: Equatable, Codable {
         }
     }
     
-    enum TransferActions: Codable {
-        case fromLinesToBids
-        case fromLinesToAvoids
-        case fromBidsToLines
-        case fromBidsToAvoids
-        case fromAvoidsToLines
-        case fromAvoidsToBids
-        
-        func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
-            switch self {
-            case .fromLinesToBids:
-                return (\.lines, \.bids)
-            case .fromLinesToAvoids:
-                return (\.lines, \.avoids)
-            case .fromBidsToLines:
-                return (\.bids, \.lines)
-            case .fromBidsToAvoids:
-                return (\.bids, \.avoids)
-            case .fromAvoidsToLines:
-                return (\.avoids, \.lines)
-            case .fromAvoidsToBids:
-                return (\.avoids, \.bids)
-            }
-        }
-    }
-    
-    enum SortOptions: String, CaseIterable, Codable {
-        case number = "Number"
-        case creditHours = "Credit hours"
-        case blockHours = "Block hours"
-        case landings = "Landings"
-        case daysOff = "Days off"
-        case dutyPeriods = "Duty periods"
-        
-        func getKeyPath() -> KeyPathComparator<Line> {
-            switch self {
-            case .number:
-                return KeyPathComparator(\Line.number)
-            case .creditHours:
-                return KeyPathComparator(\Line.summary.creditHours)
-            case .blockHours:
-                return KeyPathComparator(\Line.summary.blockHours)
-            case .landings:
-                return KeyPathComparator(\Line.summary.landings)
-            case .daysOff:
-                return KeyPathComparator(\Line.summary.daysOff)
-            case .dutyPeriods:
-                return KeyPathComparator(\Line.summary.dutyPeriods)
-            }
-        }
-        
-        var symbol: String {
-            switch self {
-            case .number:
-                return "number"
-            case .creditHours:
-                return "creditcard"
-            case .blockHours:
-                return "clock"
-            case .landings:
-                return "airplane.arrival"
-            case .daysOff:
-                return "sunglasses.fill"
-            case .dutyPeriods:
-                return "mappin.and.ellipse"
-            }
-        }
-    }
-    
     enum Equipment: String, Codable {
         case md11 = "11"
         case a300 = "30"
@@ -681,37 +486,3 @@ struct Bidpack: Equatable, Codable {
     }
 }
 
-extension Line.Flag {
-    var associatedArrayKeypath: WritableKeyPath<Bidpack, [Line]> {
-        switch self {
-        case .avoid:
-            return \Bidpack.avoids
-        case .bid:
-            return \Bidpack.bids
-        case .neutral:
-            return \Bidpack.lines
-        }
-    }
-    
-    var plusTransferAction: Bidpack.TransferActions {
-        switch self {
-        case .avoid:
-            return .fromAvoidsToBids
-        case .bid:
-            return .fromBidsToLines
-        case .neutral:
-            return .fromLinesToBids
-        }
-    }
-    
-    var minusTransferAction: Bidpack.TransferActions {
-        switch self {
-        case .avoid:
-            return .fromAvoidsToLines
-        case .bid:
-            return .fromBidsToAvoids
-        case .neutral:
-            return .fromLinesToAvoids
-        }
-    }
-}

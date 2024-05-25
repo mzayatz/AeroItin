@@ -30,8 +30,8 @@ struct TabViewLines: View {
                         timeZone: bidManager.bidpack.base.timeZone,
                         transferLine: bidManager.transferLine,
                         selectedTripText: $bidManager.selectedTripText,
-                        sortDescending: $bidManager.bidpack.sortDescending,
-                        bookmark: $bidManager.bidpack.bookmark
+                        sortDescending: $bidManager.sortDescending,
+                        bookmark: $bidManager.bookmark
                     )
                         .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
                         .autocorrectionDisabled()

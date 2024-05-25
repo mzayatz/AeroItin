@@ -39,9 +39,9 @@ struct BidToolbarContent: ToolbarContent {
         
         ToolbarItem {
             Menu {
-                Toggle("Show Regular Lines", isOn: $bidManager.bidpack.showRegularLines)
-                Toggle("Show Secondary Lines", isOn: $bidManager.bidpack.showSecondaryLines)
-                Toggle("Show Reserve Lines", isOn: $bidManager.bidpack.showReserveLines)
+                Toggle("Show Regular Lines", isOn: $bidManager.showRegularLines)
+                Toggle("Show Secondary Lines", isOn: $bidManager.showSecondaryLines)
+                Toggle("Show Reserve Lines", isOn: $bidManager.showReserveLines)
                 Toggle("Show only deadheads", isOn: $bidManager.filterDeadheads)
             } label: {
                 Image(systemName: "line.3.horizontal.decrease")
@@ -49,8 +49,8 @@ struct BidToolbarContent: ToolbarContent {
         }
         ToolbarItem {
             Menu {
-                Picker(selection: $bidManager.bidpack.sortLinesBy) {
-                    ForEach(Bidpack.SortOptions.allCases, id: \.self) { sortItem in
+                Picker(selection: $bidManager.sortLinesBy) {
+                    ForEach(BidManager.SortOptions.allCases, id: \.self) { sortItem in
                         Label(sortItem.rawValue, systemImage: sortItem.symbol)
                     }
                 } label: {
@@ -96,7 +96,7 @@ struct BidToolbarContent: ToolbarContent {
                         bidManager.avoidedDateComponents.removeAll()
                     }
                     #if os(iOS)
-                    MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.bidpack.dateRange)
+                    MultiDatePicker("Dates", selection: $bidManager.avoidedDateComponents, in: bidManager.dateRange)
                     #endif
                 }.padding()
             }

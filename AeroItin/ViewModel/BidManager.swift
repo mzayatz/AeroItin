@@ -30,6 +30,8 @@ class BidManager: ObservableObject {
         }
     }
     
+    @Published var bookmark: Int? = nil
+
     @Published var selectedTripText: String? = nil
     @Published var searchFilter = ""
 //    @Published var debouncedSearchFilter = ""
@@ -53,16 +55,64 @@ class BidManager: ObservableObject {
     }
     @Published var avoidedDates = [Date]()
     
+    @Published var sortLinesBy: SortOptions = .number {
+        didSet {
+            sortLines()
+        }
+    }
+    
+    @Published var sortDescending = false {
+        didSet {
+            sortLines()
+        }
+    }
+    
+    @Published private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
+
+    @Published var showReserveLines = false {
+        didSet {
+            _ = showReserveLines ? categoryFilter.remove(.reserve) : categoryFilter.update(with: .reserve)
+        }
+    }
+    
+    @Published var showSecondaryLines = false {
+        didSet {
+            _ = showSecondaryLines ? categoryFilter.remove(.secondary) : categoryFilter.update(with: .secondary)
+        }
+    }
+    
+    @Published var showRegularLines = true {
+        didSet {
+            _ = showRegularLines ? categoryFilter.remove(.regular) : categoryFilter.update(with: .regular)
+        }
+    }
+    
+    private var comparator: KeyPathComparator<Line> {
+        sortLinesBy.getKeyPath()
+    }
+    
     var bidpackDescription: String {
         guard bidpack.year != "1971" else {
             return "No Bidpack Loaded"
         }
-        return "\(bidpack.shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
+        return "\(shortMonth) \(bidpack.year.suffix(2)) - \(bidpack.base.rawValue) \(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)"
+    }
+    
+    var dateRange: Range<Date> {
+        bidpack.startDateLocal..<bidpack.endDateLocal.addingTimeInterval(.day)
+    }
+    
+    var lineNumbersOfBids: [String] {
+        bidpack.bids.map { $0.number }
+    }
+    
+    var isStartInFuture: Bool {
+        bidpack.startDateLocal.timeIntervalSinceNow > 0
     }
     
     var filteredLines: [Line] {
         return bidpack.lines.filter { line in
-            let isCategoryFiltered = !bidpack.categoryFilter.contains(line.category)
+            let isCategoryFiltered = !categoryFilter.contains(line.category)
             let isDeadheadFiltered = !filterDeadheads || line.hasDeadhead
             let isIATAMatched = line.layovers.contains { searchIatas.contains($0) }
             return (searchIatas.isEmpty || isIATAMatched) && isCategoryFiltered && isDeadheadFiltered
@@ -89,13 +139,35 @@ class BidManager: ObservableObject {
 //            .assign(to: &$debouncedSearchFilter)
     }
     
-    func transferLine(line: Line, action: Bidpack.TransferActions) {
-        bidpack.transferLine(line: line, action: action)
-    }
-    
     var suggestedBidFileName: String {
         return bidpack.year == "1971" ? "no bidpack loaded" :
-            "\(DateFormatter.fileTimeStamp)-\(bidpack.besWithBidMonth)"
+            "\(DateFormatter.fileTimeStamp)-\(besWithBidMonth)"
+    }
+    
+    var besWithBidMonth: String {
+        "\(shortMonth) \(bidpack.year.suffix(2)) (" + bes + ")"
+    }
+    
+    var bes: String {
+        bidpack.base.rawValue + bidpack.equipment.rawValue + bidpack.seat.abbreviatedSeat
+    }
+    
+    var shortMonth: String {
+        let monthDictionary = [
+            "JANUARY": "Jan",
+            "FEBRUARY": "Feb",
+            "MARCH": "Mar",
+            "APRIL": "Apr",
+            "MAY": "May",
+            "JUNE": "Jun",
+            "JULY": "Jul",
+            "AUGUST": "Aug",
+            "SEPTEMBER": "Sep",
+            "OCTOBER": "Oct",
+            "NOVEMBER": "Nov",
+            "DECEMBER": "Dec"
+        ]
+        return monthDictionary[bidpack.month] ?? ""
     }
     
     func saveSnapshot() async throws {
@@ -104,6 +176,13 @@ class BidManager: ObservableObject {
             try data.write(to: BidManager.snapshotUrlFragment)
         }
         _ = try await task.value
+    }
+    
+    func sortLines() {
+        bidpack.lines.sort(using: comparator)
+        if sortDescending {
+            bidpack.lines.reverse()
+        }
     }
     
     func loadSnapshot() async throws {
@@ -160,6 +239,101 @@ class BidManager: ObservableObject {
         bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)
     }
     
+    func transferLine(line: Line, action: TransferActions) {
+        let keyPaths = action.getKeyPaths()
+        guard let i = bidpack[keyPath: keyPaths.source].firstIndex(where: { $0.number == line.number }) else {
+            return
+        }
+        switch action {
+        case .fromBidsToLines:
+            bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bidpack[keyPath: keyPaths.destination].startIndex)
+        case .fromLinesToBids:
+            if let bookmark,
+               bookmark < bidpack.bids.endIndex && bookmark >= bidpack.bids.startIndex {
+                if bookmark == bidpack.bids.startIndex {
+                    bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bidpack.bids.startIndex)
+                } else if self.bookmark == bidpack.bids.endIndex - 1 {
+                    bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))
+                    self.bookmark = bidpack.bids.endIndex - 1
+                } else {
+                    bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bookmark)
+                    self.bookmark = bookmark + 1
+                }
+            } else {
+                bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))
+            }
+        default:
+            bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))
+        }
+    }
+    
+    enum TransferActions: Codable {
+        case fromLinesToBids
+        case fromLinesToAvoids
+        case fromBidsToLines
+        case fromBidsToAvoids
+        case fromAvoidsToLines
+        case fromAvoidsToBids
+        
+        func getKeyPaths() -> (source: WritableKeyPath<Bidpack, [Line]>, destination: WritableKeyPath<Bidpack, [Line]>) {
+            switch self {
+            case .fromLinesToBids:
+                return (\.lines, \.bids)
+            case .fromLinesToAvoids:
+                return (\.lines, \.avoids)
+            case .fromBidsToLines:
+                return (\.bids, \.lines)
+            case .fromBidsToAvoids:
+                return (\.bids, \.avoids)
+            case .fromAvoidsToLines:
+                return (\.avoids, \.lines)
+            case .fromAvoidsToBids:
+                return (\.avoids, \.bids)
+            }
+        }
+    }
+    enum SortOptions: String, CaseIterable, Codable {
+        case number = "Number"
+        case creditHours = "Credit hours"
+        case blockHours = "Block hours"
+        case landings = "Landings"
+        case daysOff = "Days off"
+        case dutyPeriods = "Duty periods"
+        
+        func getKeyPath() -> KeyPathComparator<Line> {
+            switch self {
+            case .number:
+                return KeyPathComparator(\Line.number)
+            case .creditHours:
+                return KeyPathComparator(\Line.summary.creditHours)
+            case .blockHours:
+                return KeyPathComparator(\Line.summary.blockHours)
+            case .landings:
+                return KeyPathComparator(\Line.summary.landings)
+            case .daysOff:
+                return KeyPathComparator(\Line.summary.daysOff)
+            case .dutyPeriods:
+                return KeyPathComparator(\Line.summary.dutyPeriods)
+            }
+        }
+        
+        var symbol: String {
+            switch self {
+            case .number:
+                return "number"
+            case .creditHours:
+                return "creditcard"
+            case .blockHours:
+                return "clock"
+            case .landings:
+                return "airplane.arrival"
+            case .daysOff:
+                return "sunglasses.fill"
+            case .dutyPeriods:
+                return "mappin.and.ellipse"
+            }
+        }
+    }
 }
 
 extension BidPeriodDate {
@@ -171,4 +345,40 @@ extension BidPeriodDate {
             return .red.opacity(0.25)
         }
     }
+}
+
+extension Line.Flag {
+    var associatedArrayKeypath: WritableKeyPath<Bidpack, [Line]> {
+        switch self {
+        case .avoid:
+            return \Bidpack.avoids
+        case .bid:
+            return \Bidpack.bids
+        case .neutral:
+            return \Bidpack.lines
+        }
+    }
+    
+    var plusTransferAction: BidManager.TransferActions {
+        switch self {
+        case .avoid:
+            return .fromAvoidsToBids
+        case .bid:
+            return .fromBidsToLines
+        case .neutral:
+            return .fromLinesToBids
+        }
+    }
+    
+    var minusTransferAction: BidManager.TransferActions {
+        switch self {
+        case .avoid:
+            return .fromAvoidsToLines
+        case .bid:
+            return .fromBidsToAvoids
+        case .neutral:
+            return .fromLinesToAvoids
+        }
+    }
+    
 }

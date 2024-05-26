@@ -33,10 +33,10 @@ struct TabViewLines: View {
                     
                     
                 }
+                .zIndex(1)
                 .toolbar {
                     BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView)
                 }
-                .zIndex(1)
                 TripTextView()
                     .scaleEffect(bidManager.showTripText ? 1 : 0, anchor: .center)
                     .animation(.easeInOut, value: bidManager.showTripText)

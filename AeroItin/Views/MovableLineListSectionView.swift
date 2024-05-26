@@ -11,12 +11,8 @@ struct MovableLineListSectionView: View {
     @Binding var lines: [Line]
     let section: Line.Flag
     @Environment(\.lineHeight) var lineHeight
-    let dates: [BidPeriodDate]
-    let timeZone: TimeZone
-    let transferLine: (Line, BidManager.TransferActions) -> ()
-    @Binding var bookmark: Int?
-    @Binding var selectedTripText: String?
-
+    @Environment(BidManager.self) private var bidManager: BidManager
+    
     var sectionTitle: String {
         switch section {
         case .avoid:
@@ -32,27 +28,28 @@ struct MovableLineListSectionView: View {
     }
     
     var body: some View {
+        @Bindable var bidManager = bidManager
         Section {
             ForEach(lines) { line in
-                LineView(line: line, section: section, dates: dates, timeZone: timeZone, selectedTripText: $selectedTripText)
+                LineView(line: line, section: section, dates: bidManager.bidpack.dates, timeZone: bidManager.bidpack.base.timeZone)
                     .frame(height: lineHeight)
                     .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                        LineButton(line: line, action: section.plusTransferAction, transferLine: transferLine)
+                        LineButton(line: line, action: section.plusTransferAction, transferLine: bidManager.transferLine)
                         if(section == .bid) {
                             Button {
                                 withAnimation {
-                                    lines.moveElementToIndex(element: line, index: bookmark ?? lines.startIndex)
-                                    if let bookmark { self.bookmark = bookmark + 1 }
+                                    lines.moveElementToIndex(element: line, index: bidManager.bookmark ?? lines.startIndex)
+                                    if let bookmark = bidManager.bookmark { bidManager.bookmark = bookmark + 1 }
                                 }
                             } label: {
                                 Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
                             }.tint(.yellow)
                             Button {
                                 let newBookmark = lines.firstIndex(of: line) ?? 0
-                                if newBookmark == bookmark {
-                                    bookmark = nil
+                                if newBookmark == bidManager.bookmark {
+                                    bidManager.bookmark = nil
                                 } else {
-                                    bookmark = newBookmark
+                                    bidManager.bookmark = newBookmark
                                 }
                             } label: {
                                 Image(systemName: "bookmark.square")
@@ -60,7 +57,7 @@ struct MovableLineListSectionView: View {
                         }
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        LineButton(line: line, action: section.minusTransferAction, transferLine: transferLine)
+                        LineButton(line: line, action: section.minusTransferAction, transferLine: bidManager.transferLine)
                     }
             }.onMove {
                 lines.move(fromOffsets: $0, toOffset: $1)

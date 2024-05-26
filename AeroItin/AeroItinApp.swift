@@ -9,14 +9,14 @@ import SwiftUI
 
 @main
 struct AeroItinApp: App {
-    @StateObject var bidManager = BidManager()
+    @State var bidManager = BidManager()
     @StateObject var settingsManager = SettingsManager()
     
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(bidManager)
+                .environment(bidManager)
                 .environmentObject(settingsManager)
                 .task {
                     do {

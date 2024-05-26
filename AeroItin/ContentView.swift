@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @EnvironmentObject var bidManager: BidManager
+    @Environment(BidManager.self) private var bidManager: BidManager
     @EnvironmentObject var settingsManager: SettingsManager
     
     @Environment(\.scenePhase) private var scenePhase

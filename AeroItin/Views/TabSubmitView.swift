@@ -15,7 +15,7 @@ struct TabSubmitView: View {
     
     @State private var showBidSubmitPage = false
     @StateObject private var webViewModel = WebViewModel()
-    @EnvironmentObject var bidManager: BidManager
+    @Environment(BidManager.self) private var bidManager: BidManager
     @EnvironmentObject var settingsManager: SettingsManager
     
     @State private var bid: Bid?

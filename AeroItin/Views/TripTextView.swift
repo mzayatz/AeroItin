@@ -9,12 +9,13 @@ import SwiftUI
 
 struct TripTextView: View {
     
-    @Binding var selectedTripText: String?
-//    @GestureState var offset = CGSize()
+    //    @GestureState var offset = CGSize()
+    @Environment(BidManager.self) private var bidManager: BidManager
     
     let font: Font = .system(size: 12, weight: .regular, design: .monospaced)
     let largerFont: Font = .system(size: 12, weight: .bold, design: .monospaced)
     var body: some View {
+        @Bindable var bidManager = bidManager
         ZStack {
             RoundedRectangle(cornerRadius: 5.0).foregroundStyle(.regularMaterial)
             RoundedRectangle(cornerRadius: 5.0).stroke(lineWidth: 1.0)
@@ -23,30 +24,19 @@ struct TripTextView: View {
                     .font(font)
                     .padding(EdgeInsets(top: 20, leading: 20, bottom: 5, trailing: 20))
                 Button("dismiss") {
-                    withAnimation {
-                        selectedTripText = nil
-                    }
+                    bidManager.showTripText = false
                 }.padding(.bottom)
             }
         }.frame(width: 800)
             .fixedSize(horizontal: false, vertical: true)
             .zIndex(2)
-//            .offset(offset)
             .onTapGesture(count: 2) {
-                withAnimation {
-                    selectedTripText = nil
-                }
+                bidManager.showTripText = false
             }
-//            .gesture(
-//                DragGesture()
-//                    .updating($offset) { value, state, transaction in
-//                        state = value.translation
-//                    }
-//            )
     }
     
     var attText: AttributedString? {
-        guard let tripText = selectedTripText else {
+        guard let tripText = bidManager.selectedTripText else {
             return nil
         }
         var attributedTripText = AttributedString(tripText)
@@ -55,24 +45,24 @@ struct TripTextView: View {
             attributedTripText[match].font = largerFont
         }
         
-//        for match in tripText.attributedRanges(of: /\b\w\w\d\d\d\d\b/, using: attributedTripText) {
-//            attributedTripText[match].foregroundColor = .accentColor
-//            attributedTripText[match].font = font.bold()
-//
-//        }
-//        for match in tripText.attributedRanges(of: /\b[A-Z]{3}\b(?= \d\d\d\d)/, using: attributedTripText) {
-//            attributedTripText[match].foregroundColor = .accentColor
-//            attributedTripText[match].font = font.bold()
-//        }
+        //        for match in tripText.attributedRanges(of: /\b\w\w\d\d\d\d\b/, using: attributedTripText) {
+        //            attributedTripText[match].foregroundColor = .accentColor
+        //            attributedTripText[match].font = font.bold()
+        //
+        //        }
+        //        for match in tripText.attributedRanges(of: /\b[A-Z]{3}\b(?= \d\d\d\d)/, using: attributedTripText) {
+        //            attributedTripText[match].foregroundColor = .accentColor
+        //            attributedTripText[match].font = font.bold()
+        //        }
         
-
+        
         return attributedTripText
     }
 }
 
 struct TripTextView_Previews: PreviewProvider {
     static var previews: some View {
-        TripTextView(selectedTripText: Binding.constant("test"))
+        TripTextView()
     }
 }
 

@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-@MainActor
-class BidManager: ObservableObject {
+@Observable
+class BidManager {
     static let urls = filenames.map {
         Bundle.main.url(forResource: $0, withExtension: bidpackExtension)!
     }
@@ -18,7 +18,7 @@ class BidManager: ObservableObject {
     
     static let snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
-    @Published var bidpack: Bidpack {
+   var bidpack: Bidpack {
         didSet {
             Task {
                 do {
@@ -30,15 +30,16 @@ class BidManager: ObservableObject {
         }
     }
     
-    @Published var bookmark: Int? = nil
+    var bookmark: Int? = nil
 
-    @Published var selectedTripText: String? = nil
-    @Published var searchFilter = ""
+    var selectedTripText: String? = nil
+    var showTripText = false
+    var searchFilter = ""
 //    @Published var debouncedSearchFilter = ""
-    @Published var scrollSnap: Line.Flag = .neutral
-    @Published var scrollNow = false
-    @Published var filterDeadheads = false
-    @Published var avoidedDateComponents = Set<DateComponents>() {
+    var scrollSnap: Line.Flag = .neutral
+    var scrollNow = false
+    var filterDeadheads = false
+    var avoidedDateComponents = Set<DateComponents>() {
         didSet {
             avoidedDates = avoidedDateComponents.compactMap {
                 Calendar.localCalendarFor(timeZone: bidpack.base.timeZone).date(from: $0)
@@ -53,35 +54,35 @@ class BidManager: ObservableObject {
             }
         }
     }
-    @Published var avoidedDates = [Date]()
+    var avoidedDates = [Date]()
     
-    @Published var sortLinesBy: SortOptions = .number {
+    var sortLinesBy: SortOptions = .number {
         didSet {
             sortLines()
         }
     }
     
-    @Published var sortDescending = false {
+    var sortDescending = false {
         didSet {
             sortLines()
         }
     }
     
-    @Published private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
+    private(set) var categoryFilter: Set<Line.Category> = [.reserve, .secondary]
 
-    @Published var showReserveLines = false {
+    var showReserveLines = false {
         didSet {
             _ = showReserveLines ? categoryFilter.remove(.reserve) : categoryFilter.update(with: .reserve)
         }
     }
     
-    @Published var showSecondaryLines = false {
+    var showSecondaryLines = false {
         didSet {
             _ = showSecondaryLines ? categoryFilter.remove(.secondary) : categoryFilter.update(with: .secondary)
         }
     }
     
-    @Published var showRegularLines = true {
+    var showRegularLines = true {
         didSet {
             _ = showRegularLines ? categoryFilter.remove(.regular) : categoryFilter.update(with: .regular)
         }

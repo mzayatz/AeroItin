@@ -14,11 +14,12 @@ struct BidToolbarContent: ToolbarContent {
     @State var showSavedBidExporter = false
     @Binding var showResetAlert: Bool
     @Binding var showProgressView: Bool
-    @EnvironmentObject var bidManager: BidManager
+    @Environment(BidManager.self) private var bidManager: BidManager
     @EnvironmentObject var settingsManager: SettingsManager
     @State var showSheet = false
     
     var body: some ToolbarContent {
+        @Bindable var bidManager = bidManager
         ToolbarItem {
             Menu {
                 Picker(selection:

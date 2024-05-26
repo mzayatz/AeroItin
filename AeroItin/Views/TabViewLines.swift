@@ -9,46 +9,39 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct TabViewLines: View {
-    @EnvironmentObject var bidManager: BidManager
+    @Environment(BidManager.self) private var bidManager: BidManager
     @State var showProgressView = false
     @State var searchText = ""
     @State var showResetAlert = false
     
     var body: some View {
+        @Bindable var bidManager = bidManager
         NavigationStack {
             ZStack(alignment: .bottom) {
-
+                
                 LineListScrollView {
                     if showProgressView {
                         ProgressView("Bidpack Loading... Please wait.")
                     }
-                    LineListView(
-                        bids: $bidManager.bidpack.bids,
-                        lines: bidManager.filteredLines,
-                        avoids: $bidManager.bidpack.avoids,
-                        dates: bidManager.bidpack.dates,
-                        timeZone: bidManager.bidpack.base.timeZone,
-                        transferLine: bidManager.transferLine,
-                        selectedTripText: $bidManager.selectedTripText,
-                        sortDescending: $bidManager.sortDescending,
-                        bookmark: $bidManager.bookmark
-                    )
-                        .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
-                        .autocorrectionDisabled()
+                    LineListView()
+                    .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
+                    .autocorrectionDisabled()
 #if os(iOS)
-                        .textInputAutocapitalization(.never)
+                    .textInputAutocapitalization(.never)
 #endif
-                        .navigationTitle("\(bidManager.bidpackDescription)")
-
-                        
-                                }
+                    .navigationTitle("\(bidManager.bidpackDescription)")
+                    
+                    
+                }
                 .toolbar {
                     BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView)
                 }
-                if bidManager.selectedTripText != nil {
-                    TripTextView(selectedTripText: $bidManager.selectedTripText)
-                        .transition(AnyTransition.move(edge: .bottom))
-                }
+                .zIndex(1)
+                TripTextView()
+                    .scaleEffect(bidManager.showTripText ? 1 : 0, anchor: .center)
+                    .animation(.easeInOut, value: bidManager.showTripText)
+                    .padding(.bottom)
+                    .zIndex(2)
             }
         }.alert(isPresented: $showResetAlert) {
             Alert(
@@ -85,3 +78,4 @@ struct TabViewLines: View {
 //#Preview {
 //    LinesTabView()
 //}
+

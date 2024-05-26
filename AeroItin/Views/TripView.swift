@@ -11,7 +11,7 @@ struct TripView: View {
     let trip: Trip
     let dayWidth: CGFloat
     let startDateLocal: Date?
-    @Binding var selectedTripText: String?
+    @Environment(BidManager.self) private var bidManager: BidManager
     
     var secondWidth: CGFloat {
         dayWidth / (24 * 3600)
@@ -46,8 +46,14 @@ struct TripView: View {
     }
     
     private func tripTapHandler() {
-        withAnimation {
-           selectedTripText = trip.text.joined(separator: "\n")
+        @Bindable var bidManager = bidManager
+        if(bidManager.showTripText) {
+            withAnimation(.bouncy) {
+                bidManager.selectedTripText = trip.text.joined(separator: "\n")
+            }
+        } else {
+            bidManager.selectedTripText = trip.text.joined(separator: "\n")
+            bidManager.showTripText = true
         }
     }
 }

@@ -66,6 +66,7 @@
 		C942D7A72B1FDAAB00FCE4A7 /* TabViewLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */; };
 		C94B8F182BAC69D700E3C22C /* BidPeriodDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */; };
 		C959D7E12B0815A500D9ACC1 /* String+suffixUsingInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */; };
+		C9640E1C2C050A8600F18D37 /* Pilot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9640E1B2C050A8600F18D37 /* Pilot.swift */; };
 		C973B5882B0D2C9D009EBAAA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B5872B0D2C9D009EBAAA /* WebView.swift */; };
 		C975D4E62BFC2E3900AE0E47 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */; };
 		C975D4E82BFCCFAD00AE0E47 /* UIProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */; };
@@ -249,6 +250,7 @@
 		C942D7A62B1FDAAB00FCE4A7 /* TabViewLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewLines.swift; sourceTree = "<group>"; };
 		C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidPeriodDate.swift; sourceTree = "<group>"; };
 		C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+suffixUsingInt.swift"; sourceTree = "<group>"; };
+		C9640E1B2C050A8600F18D37 /* Pilot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pilot.swift; sourceTree = "<group>"; };
 		C973B5872B0D2C9D009EBAAA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C975D4E52BFC2E3900AE0E47 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		C975D4E72BFCCFAD00AE0E47 /* UIProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProperties.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				C9ACFC322A9E4ACB009ACF28 /* Bidpack.swift */,
+				C9640E1B2C050A8600F18D37 /* Pilot.swift */,
 				C94B8F172BAC69D600E3C22C /* BidPeriodDate.swift */,
 				C9ACFC3D2A9E5F0F009ACF28 /* Trip.swift */,
 				C9ACFC492AA0B592009ACF28 /* Line.swift */,
@@ -945,6 +948,7 @@
 				C9AFBC262AA7A47700F6EF65 /* LineView.swift in Sources */,
 				C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */,
 				C9A8ACF52B24A4B100078057 /* TabSubmitView.swift in Sources */,
+				C9640E1C2C050A8600F18D37 /* Pilot.swift in Sources */,
 				C9ACFC4A2AA0B592009ACF28 /* Line.swift in Sources */,
 				C91093AA2ABF45C5002C7474 /* BidpackDateView.swift in Sources */,
 				C9A615C92AE87F8E00822B26 /* UTType+asc.swift in Sources */,

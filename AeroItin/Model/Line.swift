@@ -15,6 +15,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let layovers: Set<String>
     let category: Line.Category
     let hasDeadhead: Bool
+    var pilot: Pilot? = nil
     
     var id: String {
         number

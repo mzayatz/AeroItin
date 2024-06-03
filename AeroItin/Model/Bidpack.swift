@@ -223,6 +223,17 @@ struct Bidpack: Equatable, Codable {
         lines = restoreLines()
     }
     
+    mutating func integratePilots(_ pilots: [Pilot]) {
+        resetBid()
+        for pilot in pilots {
+            if let i = lines.firstIndex(where: { line in
+                line.number == pilot.awardedLine
+            }) {
+                lines[i].pilot = pilot
+            }
+        }
+    }
+    
     private mutating func restoreLines() -> [Line] {
         seat == .firstOfficer ? firstOfficerLines : captainLines
     }

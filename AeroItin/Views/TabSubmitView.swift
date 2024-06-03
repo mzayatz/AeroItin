@@ -130,6 +130,15 @@ struct TabSubmitView: View {
                     }.textCase(nil)
                 }.sheet(isPresented: $showBidSubmitPage) {
                     VStack {
+                        Button("test") {
+                            Task {
+                                let pilots = await webViewModel.getCurrentHtml()
+                                bidManager.bidpack.integratePilots(pilots)
+                                for line in bidManager.bidpack.lines {
+                                    print(line.pilot)
+                                }
+                            }
+                        }
                         Button(webViewModel.title != "VIPS Monthly Bid Input" ? "Please Login" : "Submit Now") {
                             if let bid {
                                 webViewModel.loadRequest(bid.createPostRequest())

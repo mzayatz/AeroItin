@@ -16,10 +16,9 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
     let category: Line.Category
     let hasDeadhead: Bool
     var pilot: Pilot? = nil
+    var userAward = false
     
-    var id: String {
-        number
-    }
+    let id: UUID
     
     init(number: String) {
         self.number = number
@@ -29,6 +28,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         layovers = Set<String>()
         category = .secondary
         hasDeadhead = false
+        id = UUID()
     }
     
     init(number: String, trips: [Trip], creditHours: TimeInterval = 0) {
@@ -39,6 +39,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         layovers = Set<String>()
         category = .reserve
         hasDeadhead = false
+        id = UUID()
     }
     
     init?(textRows: ArraySlice<String>, startDateLocal: Date, timeZone: TimeZone, allTrips: [Trip]) {
@@ -96,6 +97,7 @@ struct Line: CustomStringConvertible, Identifiable, Equatable, Codable {
         layovers = layoversBuffer
         category = .regular
         hasDeadhead = deadheadBuffer
+        id = UUID()
     }
     
     static func matchTrip(tripList: [Trip], dayIndex: Int, calendarLocal: Calendar, startDateLocal: Date, subtractDayFromEffectiveDates: Bool = false) -> Trip? {

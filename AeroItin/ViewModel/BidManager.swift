@@ -18,18 +18,7 @@ class BidManager {
     
     static let snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
-   var bidpack: Bidpack {
-        didSet {
-            Task {
-                do {
-                    try await saveSnapshot()
-                } catch {
-                    fatalError(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
+    var bidpack: Bidpack
     var bookmark: Int? = nil
 
     var selectedTripText: String? = nil
@@ -153,6 +142,10 @@ class BidManager {
         bidpack.base.rawValue + bidpack.equipment.rawValue + bidpack.seat.abbreviatedSeat
     }
     
+    var awardString: String {
+        "\(shortMonth.uppercased())\(bidpack.year.suffix(2))+\(bidpack.base.rawValue)+\(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)+Monthly+Bid+Awards+by+Line"
+    }
+    
     var shortMonth: String {
         let monthDictionary = [
             "JANUARY": "Jan",
@@ -177,6 +170,7 @@ class BidManager {
             try data.write(to: BidManager.snapshotUrlFragment)
         }
         _ = try await task.value
+        print("saved")
     }
     
     func sortLines() {
@@ -195,6 +189,7 @@ class BidManager {
     }
     
     private func makeLoadSnapshotTask(data: Data? = nil) throws -> Task<Bidpack, Error> {
+        print("loaded")
         let task = Task<Bidpack, Error> {
             let bidpack = try JSONDecoder().decode(Bidpack.self, from: data ?? Data(contentsOf: BidManager.snapshotUrlFragment))
             return bidpack
@@ -266,6 +261,10 @@ class BidManager {
         default:
             bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))
         }
+        Task {
+            //TODO: Error handling
+            try? await saveSnapshot()
+        }
     }
     
     enum TransferActions: Codable {
@@ -300,6 +299,7 @@ class BidManager {
         case landings = "Landings"
         case daysOff = "Days off"
         case dutyPeriods = "Duty periods"
+        case pilotSeniority = "Pilot seniority"
         
         func getKeyPath() -> KeyPathComparator<Line> {
             switch self {
@@ -315,6 +315,8 @@ class BidManager {
                 return KeyPathComparator(\Line.summary.daysOff)
             case .dutyPeriods:
                 return KeyPathComparator(\Line.summary.dutyPeriods)
+            case .pilotSeniority:
+                return KeyPathComparator(\Line.pilot?.senority)
             }
         }
         
@@ -332,6 +334,8 @@ class BidManager {
                 return "sunglasses.fill"
             case .dutyPeriods:
                 return "mappin.and.ellipse"
+            case .pilotSeniority:
+                return "person"
             }
         }
     }

@@ -30,6 +30,8 @@ struct Bidpack: Equatable, Codable {
     var bids = [Line]()
     var avoids = [Line]()
     
+    var pilotsIntegrated = false
+    
     var seat: Seat {
         didSet {
             resetBid()
@@ -223,15 +225,29 @@ struct Bidpack: Equatable, Codable {
         lines = restoreLines()
     }
     
-    mutating func integratePilots(_ pilots: [Pilot]) {
+    mutating func integratePilots(_ pilots: [Pilot], userEmployeeNumber: String) {
+        //TODO: Save bid and reload after pilot integration
         resetBid()
+        lines.sort(using: BidManager.SortOptions.number.getKeyPath())
         for pilot in pilots {
             if let i = lines.firstIndex(where: { line in
                 line.number == pilot.awardedLine
             }) {
                 lines[i].pilot = pilot
+                if userEmployeeNumber == pilot.employeeNumber {
+                    lines[i].userAward = true
+                }
             }
         }
+        pilotsIntegrated = true
+    }
+    
+    mutating func removePilots() {
+        resetBid()
+        for i in lines.indices {
+            lines[i].pilot = nil
+        }
+        pilotsIntegrated = false
     }
     
     private mutating func restoreLines() -> [Line] {

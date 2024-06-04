@@ -11,13 +11,14 @@ import SwiftUI
 struct AeroItinApp: App {
     @State var bidManager = BidManager()
     @StateObject var settingsManager = SettingsManager()
-    
+    @StateObject private var webViewModel = WebViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(bidManager)
                 .environmentObject(settingsManager)
+                .environmentObject(webViewModel)
                 .task {
                     do {
                         try await settingsManager.load()

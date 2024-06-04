@@ -13,7 +13,10 @@ struct TabViewLines: View {
     @State var showProgressView = false
     @State var searchText = ""
     @State var showResetAlert = false
-    
+    @State var showPilotAwardSheet = false
+    @EnvironmentObject var webViewModel: WebViewModel
+    @EnvironmentObject var settingsManager: SettingsManager
+
     var body: some View {
         @Bindable var bidManager = bidManager
         NavigationStack {
@@ -24,18 +27,18 @@ struct TabViewLines: View {
                         ProgressView("Bidpack Loading... Please wait.")
                     }
                     LineListView()
-                    .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
-                    .autocorrectionDisabled()
+                        .searchable(text:$bidManager.searchFilter, prompt: "IATA search")
+                        .autocorrectionDisabled()
 #if os(iOS)
-                    .textInputAutocapitalization(.never)
+                        .textInputAutocapitalization(.never)
 #endif
-                    .navigationTitle("\(bidManager.bidpackDescription)")
+                        .navigationTitle("\(bidManager.bidpackDescription)")
                     
                     
                 }
                 .zIndex(1)
                 .toolbar {
-                    BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView)
+                    BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView, showPilotAwardSheet: $showPilotAwardSheet)
                 }
                 TripTextView()
                     .scaleEffect(bidManager.showTripText ? 1 : 0, anchor: .center)
@@ -43,12 +46,28 @@ struct TabViewLines: View {
                     .padding(.bottom)
                     .zIndex(2)
             }
-        }.alert(isPresented: $showResetAlert) {
+        }
+        .alert(isPresented: $showResetAlert) {
             Alert(
                 title: Text("Clear bids and avoids?"),
                 primaryButton: .cancel(),
                 secondaryButton: .destructive(Text("Clear all"), action: bidManager.resetBid)
             )
+        }
+        .sheet(isPresented: $showPilotAwardSheet) {
+            VStack {
+                Button(webViewModel.title != "VIPS Monthly Bid Award" ? "Please Login" : "Get Awards") {
+                    Task {
+                        let pilots = await webViewModel.getPilotAwardsWith(webViewModel.awardRequest)
+                        bidManager.bidpack.integratePilots(pilots, userEmployeeNumber: settingsManager.settings.employeeNumber)
+                        showPilotAwardSheet = false
+                    }
+                }.disabled(webViewModel.title != "VIPS Monthly Bid Award").buttonStyle(.bordered).font(.title).padding()
+                WebView(webView: webViewModel.webView, title: $webViewModel.title).onAppear {
+                    webViewModel.awardRequest = webViewModel.createAwardRequestWith(bidManager.awardString)
+                    webViewModel.loadAwardRequest()
+                }.padding()
+            }
         }
     }
     
@@ -58,7 +77,7 @@ struct TabViewLines: View {
                 content()
                     .onChange(of: bidManager.scrollNow) {
                         withAnimation {
-                            proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
+                            proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? UUID(), anchor: .topLeading)
                         }
                         bidManager.scrollNow = false
                     }
@@ -66,7 +85,7 @@ struct TabViewLines: View {
                 content()
                     .onChange(of: bidManager.scrollNow, perform: { _ in
                         withAnimation {
-                            proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? "", anchor: .topLeading)
+                            proxy.scrollTo(bidManager.bidpack[keyPath: bidManager.scrollSnap.associatedArrayKeypath].first?.id ?? UUID(), anchor: .topLeading)
                         }
                         bidManager.scrollNow = false
                     })

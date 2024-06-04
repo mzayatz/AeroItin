@@ -17,3 +17,12 @@ struct Pilot: Codable, Identifiable, Equatable {
         employeeNumber
     }
 }
+
+extension Pilot {
+    init(awardedLine: String) {
+        name = "Error!"
+        employeeNumber = "9999999"
+        senority = "9999"
+        self.awardedLine = awardedLine
+    }
+}

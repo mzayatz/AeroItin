@@ -48,6 +48,7 @@ struct LineButton: View {
     
     var body: some View {
         Button {
+            print("swipe action fired")
             withAnimation {
                 transferLine(line, action)
             }

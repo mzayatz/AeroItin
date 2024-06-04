@@ -14,9 +14,9 @@ struct TabSubmitView: View {
     @State private var overrideExpiredBid = false
     
     @State private var showBidSubmitPage = false
-    @StateObject private var webViewModel = WebViewModel()
     @Environment(BidManager.self) private var bidManager: BidManager
     @EnvironmentObject var settingsManager: SettingsManager
+    @EnvironmentObject var webViewModel: WebViewModel
     
     @State private var bid: Bid?
     
@@ -89,7 +89,6 @@ struct TabSubmitView: View {
                                 }
                                 bid = try Bid(settings: settingsManager.settings, lineSelection: bidManager.lineNumbersOfBids)
                                 showBidSubmitPage = true
-//                                webViewModel.loadRequest(bid.createPostRequest())
                             }
                             catch (BidError.numberOfLinesBidError) {
                                showNumberOfLinesBidAlert = true
@@ -130,15 +129,6 @@ struct TabSubmitView: View {
                     }.textCase(nil)
                 }.sheet(isPresented: $showBidSubmitPage) {
                     VStack {
-                        Button("test") {
-                            Task {
-                                let pilots = await webViewModel.getCurrentHtml()
-                                bidManager.bidpack.integratePilots(pilots)
-                                for line in bidManager.bidpack.lines {
-                                    print(line.pilot)
-                                }
-                            }
-                        }
                         Button(webViewModel.title != "VIPS Monthly Bid Input" ? "Please Login" : "Submit Now") {
                             if let bid {
                                 webViewModel.loadRequest(bid.createPostRequest())

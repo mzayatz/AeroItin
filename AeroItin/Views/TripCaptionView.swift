@@ -20,6 +20,7 @@ struct TripCaptionView: View {
         .padding(1.5)
         .font(isRfo ? .caption2.italic() : .caption2)
         .underline(isRfo)
+        .bold()
     }
 }
 

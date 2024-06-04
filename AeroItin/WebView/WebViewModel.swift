@@ -13,7 +13,9 @@ class WebViewModel: ObservableObject {
     @Published var title = ""
     
     let initialUrlString = "https://pilot.fedex.com/vips-bin/vipscgi?webmtb"
-    let awardUrl = URL(string:"https://pilot.fedex.com/vips-bin/vipscgi?webawd")!
+    static let awardUrl = URL(string:"https://pilot.fedex.com/vips-bin/vipscgi?webawd")!
+    
+    var awardRequest = URLRequest(url: WebViewModel.awardUrl)
     
     private static let awardRegex = /(?<line>\d+) +(?<employee>\d+) +(?<senority>\d+) (?<name>[[:print:]]{1,20})(?<payOrFlex> *Pay| *Flex)?/
     
@@ -32,8 +34,12 @@ class WebViewModel: ObservableObject {
         webView.load(urlRequest)
     }
     
+    func loadAwardRequest() {
+        loadRequest(awardRequest)
+    }
+    
     @MainActor
-    func getCurrentHtml() async -> [Pilot]  {
+    func getPilotAwardsWith(_ urlRequest: URLRequest) async -> [Pilot]  {
         let cookies = await self.webView.configuration.websiteDataStore.httpCookieStore.allCookies()
         
         for cookie in cookies {
@@ -43,7 +49,7 @@ class WebViewModel: ObservableObject {
         let downloadTask = Task { () -> [Pilot] in
             var awardsListBuffer = [Pilot]()
             //TODO: Enhance error handling here. It just returns an empty list of pilots
-            if let data = try? await URLSession.shared.data(for: createAwardRequest(month: "FEB", year: "24", base: .mem, equipment: .b777, seat: .firstOfficer)) {
+            if let data = try? await URLSession.shared.data(for: urlRequest) {
                 guard let dataString = String(data: data.0, encoding: .utf8) else {
                     return awardsListBuffer
                 }
@@ -65,22 +71,17 @@ class WebViewModel: ObservableObject {
         return (try? result.get()) ?? [Pilot]()
     }
     
-    private func createAwardRequestString(month: String, year: String, base: Bidpack.Base, equipment: Bidpack.Equipment, seat: Bidpack.Seat) -> String {
-        return "\(month)\(year)+\(base.rawValue)+\(equipment.rawValue)\(seat.abbreviatedSeat)+Monthly+Bid+Awards+by+Line"
-    }
-    
-    func createAwardRequest(month: String, year: String, base: Bidpack.Base, equipment: Bidpack.Equipment, seat: Bidpack.Seat) -> URLRequest{
+    func createAwardRequestWith(_ awardString: String) -> URLRequest {
         
         var items = URLComponents()
         items.queryItems = [URLQueryItem]()
         
         items.queryItems!.append(URLQueryItem(
             name: "n001",
-            value: createAwardRequestString(
-                month: month, year: year, base: base, equipment: equipment, seat: seat
+            value: awardString
             )
-        ))
-        let postUrl = awardUrl.appending(queryItems: items.queryItems!)
+        )
+        let postUrl = WebViewModel.awardUrl.appending(queryItems: items.queryItems!)
         var request = URLRequest(url: postUrl)
         request.httpMethod = "POST"
         request.httpBody = items.percentEncodedQuery?.data(using: .utf8)

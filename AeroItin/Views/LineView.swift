@@ -16,11 +16,16 @@ struct LineView: View {
     
     var body: some View {
         HStack {
-            Text(line.number).font(.caption.monospaced())
+            VStack {
+                Text(line.number).font(.caption.monospaced())
+                if(line.pilot != nil) {
+                    Text(line.pilot!.senority).font(.caption.monospaced()).bold()
+                }
+            }
             GeometryReader { geometry in
                 let dayWidth = dayWidthFrom(geometry)
                 ZStack(alignment: .leading) {
-                    Rectangle().fill(backgroundColor())
+                    Rectangle().fill(line.userAward ? .green.opacity(0.50) : .clear)
                     BidpackDatesStripView(dates: dates, timeZone: timeZone, dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
                         ForEach(line.trips) { trip in

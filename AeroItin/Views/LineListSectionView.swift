@@ -23,11 +23,6 @@ struct LineListSectionView: View {
             return "Lines"
         }
     }
-    var sectionHeaderText: String {
-        "\(sectionTitle) " +
-        "\(lines.count)" 
-//        (" (\(bidManager.bidpack.lines.count - bidManager.filteredLines.count) filtered)")
-    }
     
     var body: some View {
         @Bindable var bidManager = bidManager
@@ -43,31 +38,7 @@ struct LineListSectionView: View {
                     }
             }
         } header: {
-            HStack {
-                Text(section == .neutral ? (bidManager.sortDescending ? "⌄ descending" : "⌃ ascending") : "").foregroundStyle(Color.accentColor)
-                    .onTapGesture {
-                        bidManager.sortDescending.toggle()
-                    }
-                Spacer()
-                Text(sectionHeaderText)
-                Spacer()
-                Text("Bids").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .bid
-//                        bidManager.scrollNow = true
-//                    }
-                Text("Lines").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .neutral
-//                        bidManager.scrollNow = true
-//                    }
-                Text("Avoids").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .avoid
-//                        bidManager.scrollNow = true
-//                    }
-            }
-            
+            LineListSectionHeader(section: section, lineCount: lines.count)
         }
     }
 }

@@ -23,19 +23,6 @@ struct ContentView: View {
                 Label("Submit", systemImage: "globe")
             }
         }
-//        .onChange(of: scenePhase) { phase in
-//            if phase == .inactive || phase == .background {
-//                Task {
-//                    do {
-//                        try await settingsManager.save()
-//                        try await bidManager.saveSnapshot()
-//                    }
-//                    catch {
-//                        fatalError(error.localizedDescription)
-//                    }
-//                }
-//            } 
-//        }
     }
 }
 

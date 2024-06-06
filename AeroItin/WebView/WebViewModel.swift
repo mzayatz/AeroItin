@@ -13,11 +13,15 @@ class WebViewModel: ObservableObject {
     @Published var title = ""
     
     let initialUrlString = "https://pilot.fedex.com/vips-bin/vipscgi?webmtb"
-    static let awardUrl = URL(string:"https://pilot.fedex.com/vips-bin/vipscgi?webawd")!
+    static let awardUrl = URL(string: "https://pilot.fedex.com/vips-bin/vipscgi?webawd")!
+    static let reviewUrl = URL(string: "https://pilot.fedex.com/vips-bin/vipscgi?webmbd")!
     
     var awardRequest = URLRequest(url: WebViewModel.awardUrl)
+    var reviewRequest = URLRequest(url: WebViewModel.reviewUrl)
     
     private static let awardRegex = /(?<line>\d+) +(?<employee>\d+) +(?<senority>\d+) (?<name>[[:print:]]{1,20})(?<payOrFlex> *Pay| *Flex)?/
+    
+    private static let bidReviewRegex = /<TD NOWRAP>\s*([S?\d\s]+)\s*&nbsp;/
     
     func loadUrlString(_ string: String) {
         guard let url = URL(string: string) else {
@@ -36,6 +40,33 @@ class WebViewModel: ObservableObject {
     
     func loadAwardRequest() {
         loadRequest(awardRequest)
+    }
+    
+    @MainActor
+    func getCurrentBidWith(_ urlRequest: URLRequest) async -> [String] {
+        let cookies = await self.webView.configuration.websiteDataStore.httpCookieStore.allCookies()
+        
+        for cookie in cookies {
+            URLSession.shared.configuration.httpCookieStorage?.setCookie(cookie)
+        }
+        
+        let downloadTask = Task { () -> [String] in
+            var bidLinesBuffer = [String]()
+            //TODO: Enhance error handling here.
+            if let data = try? await URLSession.shared.data(for: urlRequest) {
+                guard let dataString = String(data: data.0, encoding: .utf8) else {
+                    return bidLinesBuffer
+                }
+                let matches = dataString.matches(of: WebViewModel.bidReviewRegex)
+                for match in matches {
+                    let lineNumbers = match.1.split(separator: " ", omittingEmptySubsequences: true).map { String($0) }
+                    bidLinesBuffer.append(contentsOf: lineNumbers)
+                }
+            }
+            return bidLinesBuffer
+        }
+        let result = await downloadTask.result
+        return (try? result.get()) ?? [String]()
     }
     
     @MainActor
@@ -72,16 +103,23 @@ class WebViewModel: ObservableObject {
     }
     
     func createAwardRequestWith(_ awardString: String) -> URLRequest {
-        
+        return createRequestWith(string: awardString, url: WebViewModel.awardUrl)
+    }
+    
+    func createReviewRequestWith(_ reviewString: String, url: URL) -> URLRequest {
+        return createRequestWith(string: reviewString, url: url)
+    }
+    
+    private func createRequestWith(string: String, url: URL) -> URLRequest {
         var items = URLComponents()
         items.queryItems = [URLQueryItem]()
         
         items.queryItems!.append(URLQueryItem(
             name: "n001",
-            value: awardString
+            value: string
             )
         )
-        let postUrl = WebViewModel.awardUrl.appending(queryItems: items.queryItems!)
+        let postUrl = url.appending(queryItems: items.queryItems!)
         var request = URLRequest(url: postUrl)
         request.httpMethod = "POST"
         request.httpBody = items.percentEncodedQuery?.data(using: .utf8)

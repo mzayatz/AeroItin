@@ -9,7 +9,14 @@ import Foundation
 
 class SettingsManager: ObservableObject {
     
-    var settings = Settings()
+    var settings = Settings() {
+        didSet {
+            Task {
+                //FIXME: Error handling?
+                try? await self.save()
+            }
+        }
+    }
     var settingsUrl = URL.documentsDirectory.appending(component: "settings.json")
 
     func load() async throws {

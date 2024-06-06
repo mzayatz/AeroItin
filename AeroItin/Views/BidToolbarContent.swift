@@ -12,20 +12,31 @@ struct BidToolbarContent: ToolbarContent {
     @State var showAscFileImporter = false
     @State var showSavedBidImporter = false
     @State var showSavedBidExporter = false
-    @Binding var showResetAlert: Bool
+    @Binding var alertType: TabViewLines.AlertType?
     @Binding var showProgressView: Bool
     @Environment(BidManager.self) private var bidManager: BidManager
     @EnvironmentObject var settingsManager: SettingsManager
     @State var showSheet = false
     @Binding var showPilotAwardSheet: Bool
+    @Binding var showVerifyBidSheet: Bool
     
     var body: some ToolbarContent {
         @Bindable var bidManager = bidManager
         ToolbarItem {
-            Button {
-                showPilotAwardSheet = true
+            Menu {
+                Button {
+                    showVerifyBidSheet = true
+                } label: {
+                    Label("Confirm bid", systemImage: "checkmark.shield")
+                }
+                
+                Button {
+                    showPilotAwardSheet = true
+                } label: {
+                    Label("Get awards", systemImage: "medal")
+                }
             } label: {
-                Image(systemName: "medal")
+                Label("VIPS Options", systemImage: "checkmark.icloud")
             }
         }
         
@@ -89,7 +100,7 @@ struct BidToolbarContent: ToolbarContent {
                                 }
                             }
                         case .failure(let error):
-                            print("failure")
+                            print("failure + \(error.localizedDescription)")
                         }
                     }
             }
@@ -118,7 +129,7 @@ struct BidToolbarContent: ToolbarContent {
                     }
                     
                     Button(role: .destructive) {
-                        showResetAlert = true
+                        alertType = .resetAlert
                     } label: {
                         Label("Clear Bids & Avoids", systemImage: "clear")
                     }
@@ -153,12 +164,12 @@ struct BidToolbarContent: ToolbarContent {
                                 }
                             }
                         case .failure(let error):
-                            print("failure")
+                            print("failure \(error.localizedDescription)")
                         }
                     }
                     .fileExporter(isPresented: $showSavedBidExporter, document: BidpackDocument(bidpack: bidManager.bidpack), contentType: .json, defaultFilename: bidManager.suggestedBidFileName) { result in
                         switch result {
-                        case .success(let url):
+                        case .success(_):
                             print("success")
                         case .failure(let error):
                             print(error.localizedDescription)

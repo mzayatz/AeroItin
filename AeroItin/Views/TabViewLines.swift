@@ -8,12 +8,23 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+
+
 struct TabViewLines: View {
     @Environment(BidManager.self) private var bidManager: BidManager
     @State var showProgressView = false
     @State var searchText = ""
-    @State var showResetAlert = false
     @State var showPilotAwardSheet = false
+    @State var showVerifyBidSheet = false
+    @State var showAlert = false
+    @State var alertType: AlertType? = nil {
+        didSet {
+            showAlert = true
+        }
+    }
+    
+    @State private var currentVipsBid = [String]()
+    
     @EnvironmentObject var webViewModel: WebViewModel
     @EnvironmentObject var settingsManager: SettingsManager
 
@@ -38,7 +49,8 @@ struct TabViewLines: View {
                 }
                 .zIndex(1)
                 .toolbar {
-                    BidToolbarContent(showResetAlert: $showResetAlert, showProgressView: $showProgressView, showPilotAwardSheet: $showPilotAwardSheet)
+                    BidToolbarContent(alertType: $alertType, showProgressView: $showProgressView, showPilotAwardSheet: $showPilotAwardSheet, showVerifyBidSheet: $showVerifyBidSheet
+                    )
                 }
                 TripTextView()
                     .scaleEffect(bidManager.showTripText ? 1 : 0, anchor: .center)
@@ -47,12 +59,37 @@ struct TabViewLines: View {
                     .zIndex(2)
             }
         }
-        .alert(isPresented: $showResetAlert) {
-            Alert(
-                title: Text("Clear bids and avoids?"),
-                primaryButton: .cancel(),
-                secondaryButton: .destructive(Text("Clear all"), action: bidManager.resetBid)
-            )
+        .alert(isPresented: $showAlert) {
+            switch alertType {
+            case .resetAlert:
+                Alert(
+                    title: Text("Clear bids and avoids?"),
+                    primaryButton: .cancel(),
+                    secondaryButton: .destructive(Text("Clear all"), action: bidManager.resetBid)
+                )
+            case .bidOkAlert:
+                Alert(
+                    title: Text("Bid verified OK!"),
+                    message: Text("Latest bid downloaded in VIPS and it matches the bid in this app.")
+                )
+            case .bidErrorAlert:
+                Alert(
+                    title: Text("Warning! Bid Error!"),
+                    message: Text("Bid downloaded from VIPS does NOT match current bid. Tap \"Load VIPS\" to load VIPS bid into the app."),
+                    primaryButton: .cancel(),
+                    secondaryButton: .destructive(Text("Load VIPS")) {
+                        //FIXME: Some sort of error handling if vipsBid contains a line not in our lines databaseß
+                        let _ = bidManager.replaceBidWith(currentVipsBid)
+                        currentVipsBid.removeAll()
+                        Task {
+                            //FIXME: Error handling?
+                            try? await bidManager.saveSnapshot()
+                        }
+                    }
+                )
+            case .none:
+                Alert(title: Text("Unknown error..."))
+            }
         }
         .sheet(isPresented: $showPilotAwardSheet) {
             VStack {
@@ -66,6 +103,45 @@ struct TabViewLines: View {
                 WebView(webView: webViewModel.webView, title: $webViewModel.title).onAppear {
                     webViewModel.awardRequest = webViewModel.createAwardRequestWith(bidManager.awardString)
                     webViewModel.loadAwardRequest()
+                }.padding()
+            }
+        }
+        .sheet(isPresented: $showVerifyBidSheet) {
+            VStack {
+                Button(webViewModel.title != "VIPS Monthly Bid Review" ? "Please Login" : "Check bid") {
+                    Task {
+                        currentVipsBid = await webViewModel.getCurrentBidWith(webViewModel.reviewRequest)
+                        var bidVerified = true
+                        let lineNumbersOfBids = bidManager.lineNumbersOfBids
+                        if currentVipsBid.count == bidManager.bidpack.bids.count {
+                            for i in currentVipsBid.indices {
+                                if currentVipsBid[i] != lineNumbersOfBids[i] {
+                                    bidVerified = false
+                                    break
+                                }
+                            }
+                        } else {
+                            bidVerified = false
+                            print("VIPS: \(currentVipsBid.count) - App: \(lineNumbersOfBids.count)")
+                        }
+
+                        if bidVerified {
+                            alertType = .bidOkAlert
+                        } else {
+                            alertType = .bidErrorAlert
+                        }
+                    }
+                    showVerifyBidSheet = false
+                }.disabled(webViewModel.title != "VIPS Monthly Bid Review").buttonStyle(.bordered).font(.title).padding()
+                WebView(webView: webViewModel.webView, title: $webViewModel.title).onAppear {
+                    if settingsManager.settings.employeeNumber != "" {
+                        let url = URL(string: "https://pilot.fedex.com/vips-bin/vipscgi?webmbd?\(settingsManager.settings.employeeNumber)?\(bidManager.shortMonthAndYear)?AAAA")!
+                        let request = URLRequest(url: url)
+                    
+                        webViewModel.reviewRequest = request
+                        webViewModel.loadRequest(URLRequest(url: WebViewModel.reviewUrl))
+                    }
+                    
                 }.padding()
             }
         }
@@ -91,6 +167,12 @@ struct TabViewLines: View {
                     })
             }
         }
+    }
+    
+    enum AlertType {
+        case resetAlert
+        case bidOkAlert
+        case bidErrorAlert
     }
 }
 

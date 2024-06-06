@@ -146,6 +146,10 @@ class BidManager {
         "\(shortMonth.uppercased())\(bidpack.year.suffix(2))+\(bidpack.base.rawValue)+\(bidpack.equipment.rawValue)\(bidpack.seat.abbreviatedSeat)+Monthly+Bid+Awards+by+Line"
     }
     
+    var shortMonthAndYear: String {
+        "\(shortMonth.uppercased())\(bidpack.year.suffix(2))"
+    }
+    
     var shortMonth: String {
         let monthDictionary = [
             "JANUARY": "Jan",
@@ -233,6 +237,37 @@ class BidManager {
             return
         }
         bidpack.moveLine(from: IndexSet(integer: i), toOffset: i + 2)
+    }
+    
+    func replaceBidWith(_ vipsBid: [String]) -> Bool {
+        bidpack.resetBid()
+        if checkLineNumbersOfVipsBid(vipsBid) {
+            for bidLineNumber in vipsBid {
+                if let i = bidpack.lines.firstIndex(where: { line in
+                    line.number == bidLineNumber
+                }) {
+                    bidpack.bids.append(bidpack.lines.remove(at: i))
+                } else {
+                    return false
+                }
+            }
+        } else {
+            return false
+        }
+        return true
+    }
+    
+    func checkLineNumbersOfVipsBid(_ vipsBid: [String]) -> Bool {
+        var success = true
+        for bidLineNumber in vipsBid {
+            if !bidpack.lines.contains(where: { line in
+                line.number == bidLineNumber
+            }) {
+                success = false
+                break
+            }
+        }
+        return success
     }
     
     func transferLine(line: Line, action: TransferActions) {

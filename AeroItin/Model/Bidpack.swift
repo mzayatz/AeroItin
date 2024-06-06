@@ -227,6 +227,7 @@ struct Bidpack: Equatable, Codable {
     
     mutating func integratePilots(_ pilots: [Pilot], userEmployeeNumber: String) {
         //TODO: Save bid and reload after pilot integration
+        let oldBids = bids
         resetBid()
         lines.sort(using: BidManager.SortOptions.number.getKeyPath())
         for pilot in pilots {
@@ -237,6 +238,14 @@ struct Bidpack: Equatable, Codable {
                 if userEmployeeNumber == pilot.employeeNumber {
                     lines[i].userAward = true
                 }
+            }
+        }
+        //TODO: THIS SHOULD PROBABLY USE THE TRANSFER LINE PROCESS IN BIDMANAGER?
+        for bid in oldBids {
+            if let i = lines.firstIndex(where: { line in
+                line.number == bid.number }) 
+            {
+                bids.append(lines.remove(at: i))
             }
         }
         pilotsIntegrated = true

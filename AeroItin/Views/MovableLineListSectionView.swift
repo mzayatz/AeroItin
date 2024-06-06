@@ -63,27 +63,7 @@ struct MovableLineListSectionView: View {
                 lines.move(fromOffsets: $0, toOffset: $1)
             }
         } header: {
-            HStack {
-                Spacer()
-                Text(sectionHeaderText)
-                Spacer()
-                Text("Bids").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .bid
-//                        bidManager.scrollNow = true
-//                    }
-                Text("Lines").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .neutral
-//                        bidManager.scrollNow = true
-//                    }
-                Text("Avoids").foregroundStyle(Color.accentColor)
-//                    .onTapGesture {
-//                        bidManager.scrollSnap = .avoid
-//                        bidManager.scrollNow = true
-//                    }
-            }
-            
+            LineListSectionHeader(section: section, lineCount: lines.count)
         }
     }
 }

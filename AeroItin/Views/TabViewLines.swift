@@ -17,11 +17,7 @@ struct TabViewLines: View {
     @State var showPilotAwardSheet = false
     @State var showVerifyBidSheet = false
     @State var showAlert = false
-    @State var alertType: AlertType? = nil {
-        didSet {
-            showAlert = true
-        }
-    }
+    @State var alertType: AlertType? = nil
     
     @State private var currentVipsBid = [String]()
     
@@ -49,7 +45,7 @@ struct TabViewLines: View {
                 }
                 .zIndex(1)
                 .toolbar {
-                    BidToolbarContent(alertType: $alertType, showProgressView: $showProgressView, showPilotAwardSheet: $showPilotAwardSheet, showVerifyBidSheet: $showVerifyBidSheet
+                    BidToolbarContent(alertType: $alertType, showProgressView: $showProgressView, showPilotAwardSheet: $showPilotAwardSheet, showVerifyBidSheet: $showVerifyBidSheet, showAlert: $showAlert
                     )
                 }
                 TripTextView()
@@ -98,6 +94,10 @@ struct TabViewLines: View {
                         let pilots = await webViewModel.getPilotAwardsWith(webViewModel.awardRequest)
                         bidManager.bidpack.integratePilots(pilots, userEmployeeNumber: settingsManager.settings.employeeNumber)
                         showPilotAwardSheet = false
+                        Task {
+                            //FIXME: Some sort of error handling?
+                            try? await bidManager.saveSnapshot()
+                        }
                     }
                 }.disabled(webViewModel.title != "VIPS Monthly Bid Award").buttonStyle(.bordered).font(.title).padding()
                 WebView(webView: webViewModel.webView, title: $webViewModel.title).onAppear {
@@ -127,8 +127,10 @@ struct TabViewLines: View {
 
                         if bidVerified {
                             alertType = .bidOkAlert
+                            showAlert = true
                         } else {
                             alertType = .bidErrorAlert
+                            showAlert = true
                         }
                     }
                     showVerifyBidSheet = false

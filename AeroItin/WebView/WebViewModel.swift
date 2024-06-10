@@ -91,7 +91,8 @@ class WebViewModel: ObservableObject {
                             name: String(match.name.components(separatedBy: ",").first ?? "Error!"),
                             employeeNumber: String(match.employee),
                             senority: String(match.senority),
-                            awardedLine: String(match.line)
+                            awardedLine: String(match.line),
+                            payOnlyOrFlex: match.payOrFlex != nil
                         )
                     )
                 }

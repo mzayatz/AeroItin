@@ -19,6 +19,7 @@ struct BidToolbarContent: ToolbarContent {
     @State var showSheet = false
     @Binding var showPilotAwardSheet: Bool
     @Binding var showVerifyBidSheet: Bool
+    @Binding var showAlert: Bool
     
     var body: some ToolbarContent {
         @Bindable var bidManager = bidManager
@@ -130,6 +131,7 @@ struct BidToolbarContent: ToolbarContent {
                     
                     Button(role: .destructive) {
                         alertType = .resetAlert
+                        showAlert = true
                     } label: {
                         Label("Clear Bids & Avoids", systemImage: "clear")
                     }

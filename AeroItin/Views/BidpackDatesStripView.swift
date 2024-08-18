@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BidpackDatesStripView: View {
     let dates: [BidPeriodDate]
-    let timeZone: TimeZone
     
     let strokeWidth = 2.0
     let dayWidth: CGFloat
@@ -18,7 +17,7 @@ struct BidpackDatesStripView: View {
         HStack(spacing: 0) {
             ForEach(dates.indices, id: \.self) { i in
                 ZStack {
-                    BidpackDateView(date: dates[i], timeZone: timeZone)
+                    BidpackDateView(date: dates[i])
                         .frame(width: dayWidth)
                     if(i > dates.count - 8) {
                         Color.yellow.opacity(0.2)

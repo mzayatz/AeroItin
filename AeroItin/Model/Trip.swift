@@ -193,7 +193,12 @@ struct Trip: CustomStringConvertible, Equatable, Codable, Identifiable {
     
     static private func findDeadheads(in rows: ArraySlice<String>) -> Deadheads {
         let isFrontDeadhead = rows[rows.startIndex + 3].split(separator: " ")[1].isDeadheadFlightCode
-        let isBackDeadhead = rows[rows.endIndex - 3].split(separator: " ")[1].isDeadheadFlightCode
+        var isBackDeadhead = false
+        if rows[rows.endIndex - 3].contains(/\b\d\d:\d\d  \d\d:\d\d  \d\d:\d\d$/) {
+            isBackDeadhead = rows[rows.endIndex - 4].split(separator: " ")[1].isDeadheadFlightCode
+        } else {
+            isBackDeadhead = rows[rows.endIndex - 3].split(separator: " ")[1].isDeadheadFlightCode
+        }
         
         if isFrontDeadhead && isBackDeadhead {
             return .double

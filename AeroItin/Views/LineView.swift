@@ -26,7 +26,7 @@ struct LineView: View {
                 let dayWidth = dayWidthFrom(geometry)
                 ZStack(alignment: .leading) {
                     Rectangle().fill(line.userAward ? .green.opacity(0.50) : .clear)
-                    BidpackDatesStripView(dates: dates, timeZone: timeZone, dayWidth: dayWidth)
+                    BidpackDatesStripView(dates: dates, dayWidth: dayWidth)
                     ZStack(alignment: .leading) {
                         ForEach(line.trips) { trip in
                             TripView(trip: trip, dayWidth: dayWidth, startDateLocal: dates.first?.calendarDate)

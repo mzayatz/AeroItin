@@ -88,7 +88,7 @@ struct Bidpack: Equatable, Codable {
         let baseCalendar = Calendar.localCalendarFor(timeZone: base.timeZone)
         for date in lineSectionHeader.dates {
             let isWeekend = baseCalendar.isDateInWeekend(date)
-            datesBuffer.append(BidPeriodDate(calendarDate: date, isWeekend: isWeekend))
+            datesBuffer.append(BidPeriodDate(calendarDate: date, isWeekend: isWeekend, formatted: date.formatted(.dateTime.day().inTimeZone(base.timeZone))))
         }
         
         dates = datesBuffer

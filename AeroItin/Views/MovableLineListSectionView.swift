@@ -38,14 +38,29 @@ struct MovableLineListSectionView: View {
                         if(section == .bid) {
                             Button {
                                 withAnimation {
-                                    lines.moveElementToIndex(element: line, index: bidManager.bookmark ?? lines.startIndex)
-                                    if let bookmark = bidManager.bookmark { bidManager.bookmark = bookmark + 1 }
+                                    lines.moveElementToIndex(element: line, index: lines.startIndex)
+                                }
+                            } label: {
+                                Image(systemName: "arrow.up.to.line.compact")
+                            }
+                            Button {
+                                withAnimation {
+                                    lines.moveElementToIndex(element: line, index: lines.endIndex)
+                                }
+                            } label: {
+                                Image(systemName: "arrow.down.to.line.compact")
+                            }
+                            Button {
+                                withAnimation {
+                                    if let bookmarkIndex = bidManager.bookmarkIndex {
+                                        lines.moveElementToIndex(element: line, index: bookmarkIndex)
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "point.topleft.down.to.point.bottomright.curvepath.fill")
                             }.tint(.yellow)
                             Button {
-                                let newBookmark = lines.firstIndex(of: line) ?? 0
+                                let newBookmark = line
                                 if newBookmark == bidManager.bookmark {
                                     bidManager.bookmark = nil
                                 } else {

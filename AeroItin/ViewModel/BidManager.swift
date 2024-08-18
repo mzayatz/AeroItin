@@ -19,7 +19,14 @@ class BidManager {
     static let snapshotUrlFragment = URL.documentsDirectory.appending(component: "snapshot.json")
     
     var bidpack: Bidpack
-    var bookmark: Int? = nil
+    var bookmark: Line? = nil
+    
+    var bookmarkIndex: Int? {
+        guard let bookmark else {
+            return nil
+        }
+        return bidpack.bids.firstIndex(of: bookmark)
+    }
 
     var selectedTripText: String? = nil
     var showTripText = false
@@ -279,16 +286,14 @@ class BidManager {
         case .fromBidsToLines:
             bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bidpack[keyPath: keyPaths.destination].startIndex)
         case .fromLinesToBids:
-            if let bookmark,
-               bookmark < bidpack.bids.endIndex && bookmark >= bidpack.bids.startIndex {
-                if bookmark == bidpack.bids.startIndex {
+            if let bookmarkIndex,
+               bookmarkIndex < bidpack.bids.endIndex && bookmarkIndex >= bidpack.bids.startIndex {
+                if bookmarkIndex == bidpack.bids.startIndex {
                     bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bidpack.bids.startIndex)
-                } else if self.bookmark == bidpack.bids.endIndex - 1 {
+                } else if bookmarkIndex == bidpack.bids.endIndex - 1 {
                     bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))
-                    self.bookmark = bidpack.bids.endIndex - 1
                 } else {
-                    bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bookmark)
-                    self.bookmark = bookmark + 1
+                    bidpack[keyPath: keyPaths.destination].insert(bidpack[keyPath: keyPaths.source].remove(at: i), at: bookmarkIndex)
                 }
             } else {
                 bidpack[keyPath: keyPaths.destination].append(bidpack[keyPath: keyPaths.source].remove(at: i))

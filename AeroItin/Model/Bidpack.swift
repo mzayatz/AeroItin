@@ -14,10 +14,6 @@ struct Bidpack: Equatable, Codable {
     static let lineDividerPrefix = "___________________________"
     static let sectionCount = 6
     
-    
-    static let testOutputFilenameWithExtension = "testOutput.txt"
-    static let testOutputUrl = URL.documentsDirectory.appending(path: testOutputFilenameWithExtension)
-    
     let base: Base
     let equipment: Equipment
     let month: String
@@ -260,7 +256,12 @@ struct Bidpack: Equatable, Codable {
     }
     
     private mutating func restoreLines() -> [Line] {
-        seat == .firstOfficer ? firstOfficerLines : captainLines
+        switch seat {
+        case .captain:
+            return captainLines
+        case .firstOfficer:
+            return firstOfficerLines
+        }
     }
     
     mutating func moveLine(from source: IndexSet, toOffset destination: Int) {

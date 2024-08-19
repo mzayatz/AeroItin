@@ -17,6 +17,7 @@ struct TripView: View {
         dayWidth / (24 * 3600)
     }
     
+    //TODO: Needs error handling, not 1971...
     var startDateLocalOr1971: Date {
         startDateLocal ?? Date(timeIntervalSince1970: .day * 365)
     }

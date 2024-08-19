@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90394FA2C72851C009BDED7 /* CaseIterable+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90394F92C72851C009BDED7 /* CaseIterable+next.swift */; };
 		C9044B192AB919DA00F46EBD /* Date+isWeekend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */; };
 		C906BBB32AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBA82AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc */; };
 		C906BBB42AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc in Resources */ = {isa = PBXBuildFile; fileRef = C906BBA92AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc */; };
@@ -192,6 +193,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C90394F92C72851C009BDED7 /* CaseIterable+next.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+next.swift"; sourceTree = "<group>"; };
 		C9044B182AB919DA00F46EBD /* Date+isWeekend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isWeekend.swift"; sourceTree = "<group>"; };
 		C906BBA82AD0A2F7004D331E /* 2023_Nov_B757_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B757_MEM_LINES.asc; sourceTree = "<group>"; };
 		C906BBA92AD0A2F7004D331E /* 2023_Nov_B777_MEM_LINES.asc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2023_Nov_B777_MEM_LINES.asc; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				C959D7E02B0815A500D9ACC1 /* String+suffixUsingInt.swift */,
 				C975D4E92BFD1D3100AE0E47 /* Array+moveToBookmark.swift */,
 				C9169A112BFE1BF0001BE241 /* Color+random.swift */,
+				C90394F92C72851C009BDED7 /* CaseIterable+next.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -945,6 +948,7 @@
 				C9E12B362B543FB8002A788C /* MenuItemLabel.swift in Sources */,
 				C930F05E2B17B3D000D635C0 /* WebError.swift in Sources */,
 				C984FFDC2AA1742500DFB924 /* StringProtocol+Helpers.swift in Sources */,
+				C90394FA2C72851C009BDED7 /* CaseIterable+next.swift in Sources */,
 				C9FF3A3F2BF809C2006F6C53 /* TripCaptionView.swift in Sources */,
 				C920AC622AF291D4001344BC /* BidToolbarContent.swift in Sources */,
 				C9ACFC3A2A9E4FDE009ACF28 /* ParserError.swift in Sources */,

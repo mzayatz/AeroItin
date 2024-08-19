@@ -14,13 +14,28 @@ struct LineView: View {
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
     
+    @State private var lineOne: Attribute
+    @State private var lineTwo: Attribute
+    
+    init(line: Line, section: Line.Flag, dates: [BidPeriodDate], timeZone: TimeZone) {
+        self.line = line
+        self.section = section
+        self.dates = dates
+        self.timeZone = timeZone
+        
+        self.lineOne = Attribute.number
+        self.lineTwo = line.pilot != nil ? .pilot : .creditHours
+    }
+    
     var body: some View {
         HStack {
             VStack {
-                Text(line.number).font(.caption.monospaced())
-                if(line.pilot != nil) {
-                    Text(line.pilot!.senority).font(.caption.monospaced()).bold()
+                Text(lineOne.text(line: line)).font(.caption.monospaced())
+                HStack {
+                    Text(lineTwo.text(line: line)).font(.caption.monospaced()).bold()
                 }
+            }.onTapGesture {
+                lineTwo = lineTwo.next()
             }
             GeometryReader { geometry in
                 let dayWidth = dayWidthFrom(geometry)
@@ -49,41 +64,54 @@ struct LineView: View {
         }
     }
     
-//    var attributeSymbol: Image {
-//        switch bidManager.bidpack.sortLinesBy {
-//        case .blockHours:
-//            return Image(systemName: "clock")
-//        case .creditHours:
-//            return Image(systemName: "creditcard")
-//        case .daysOff:
-//            return Image(systemName: "sunglasses.fill")
-//        case .dutyPeriods:
-//            return Image(systemName: "mappin.and.ellipse")
-//        case .landings:
-//            return Image(systemName: "airplane.arrival")
-//        case .number:
-//            return Image(systemName: "creditcard")
-//        }
-//    }
+    //    var attributeSymbol: Image {
+    //        switch bidManager.bidpack.sortLinesBy {
+    //        case .blockHours:
+    //            return Image(systemName: "clock")
+    //        case .creditHours:
+    //            return Image(systemName: "creditcard")
+    //        case .daysOff:
+    //            return Image(systemName: "sunglasses.fill")
+    //        case .dutyPeriods:
+    //            return Image(systemName: "mappin.and.ellipse")
+    //        case .landings:
+    //            return Image(systemName: "airplane.arrival")
+    //        case .number:
+    //            return Image(systemName: "creditcard")
+    //        }
+    //    }
     
-//    var attributeText: String {
-//        switch bidManager.bidpack.sortLinesBy {
-//        case .blockHours:
-//            return line.summary.blockHours.asHours.formatted(.number.precision(.fractionLength(1)))
-//        case .creditHours:
-//            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
-//        case .daysOff:
-//            return String(line.summary.daysOff)
-//        case .dutyPeriods:
-//            return String(line.summary.dutyPeriods)
-//        case .landings:
-//            return String(line.summary.landings)
-//        case .number:
-//            return line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
-//        }
-//    }
+    enum Attribute: CaseIterable {
+        case creditHours
+        case blockHours
+        case daysOff
+        case dutyPeriods
+        case landings
+        case number
+        case pilot
+        
+        func text(line: Line) -> String {
+            switch self {
+            case .blockHours:
+                return "BLK: " + line.summary.blockHours.asHours.formatted(.number.precision(.fractionLength(1)))
+            case .creditHours:
+                return " CR: " + line.summary.creditHours.asHours.formatted(.number.precision(.fractionLength(1)))
+            case .daysOff:
+                return "OFF: " + String(line.summary.daysOff)
+            case .dutyPeriods:
+                return "DTY: " + String(line.summary.dutyPeriods)
+            case .landings:
+                return "LDG: " + String(line.summary.landings)
+            case .number:
+                return line.number
+            case .pilot:
+                return line.pilot?.name.centerPadding(toLength: 10, withPad: " ") ?? "no pilot"
+            }
+        }
+    }
     
     func dayWidthFrom(_ geometry: GeometryProxy) -> CGFloat {
         geometry.size.width / CGFloat(dates.count)
     }
 }
+

@@ -14,8 +14,8 @@ struct LineView: View {
     let dates: [BidPeriodDate]
     let timeZone: TimeZone
     
-    @State private var lineOne: Attribute
-    @State private var lineTwo: Attribute
+    @State private var textOne: Attribute
+    @State private var textTwo: Attribute
     
     init(line: Line, section: Line.Flag, dates: [BidPeriodDate], timeZone: TimeZone) {
         self.line = line
@@ -23,19 +23,19 @@ struct LineView: View {
         self.dates = dates
         self.timeZone = timeZone
         
-        self.lineOne = Attribute.number
-        self.lineTwo = line.pilot != nil ? .pilot : .creditHours
+        self.textOne = Attribute.number
+        self.textTwo = line.pilot != nil ? .pilot : .creditHours
     }
     
     var body: some View {
         HStack {
             VStack {
-                Text(lineOne.text(line: line)).font(.caption.monospaced())
+                Text(textOne.text(line: line)).font(.caption.monospaced())
                 HStack {
-                    Text(lineTwo.text(line: line)).font(.caption.monospaced()).bold()
+                    Text(textTwo.text(line: line)).font(.caption.monospaced()).bold()
                 }
             }.onTapGesture {
-                lineTwo = lineTwo.next()
+                textTwo = textTwo.next()
             }
             GeometryReader { geometry in
                 let dayWidth = dayWidthFrom(geometry)
